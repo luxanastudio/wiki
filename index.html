@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxanaStudio Plugin Wiki & Documentation</title>
+    <title>LuxanaStudio Documentation</title>
     <style>
         :root {
-            --bg: #0b0e14;
-            --surface: #141a24;
-            --surface-hover: #1c2433;
-            --border: #232c3b;
-            --text: #f2f5fa;
-            --text-muted: #93a1b5;
-            --pink: #ff66b2;
-            --magenta: #e024c3;
-            --purple: #8b5cf6;
-            --gradient: linear-gradient(135deg, #ff66b2, #e024c3, #8b5cf6);
-            --cyan: #35e0c8;
-            --gold: #ffa502;
-            --green: #2ed573;
-            --red: #ff4757;
-            --code-bg: #080b10;
+            --bg-body: #0d1117;
+            --bg-sidebar: #010409;
+            --bg-card: #161b22;
+            --bg-code: #0d1117;
+            --border: #30363d;
+            --border-muted: #21262d;
+            --text-main: #e6edf3;
+            --text-muted: #8b949e;
+            --text-heading: #ffffff;
+            --accent-pink: #f43f5e;
+            --accent-magenta: #d946ef;
+            --accent-purple: #8b5cf6;
+            --accent: #d946ef;
+            --accent-light: rgba(217, 70, 239, 0.15);
+            --callout-info-bg: rgba(56, 189, 248, 0.08);
+            --callout-info-border: #38bdf8;
+            --callout-warn-bg: rgba(245, 158, 11, 0.08);
+            --callout-warn-border: #f59e0b;
+            --callout-tip-bg: rgba(34, 197, 94, 0.08);
+            --callout-tip-border: #22c55e;
         }
 
         * {
@@ -30,237 +35,435 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
             line-height: 1.6;
+            font-size: 15px;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
         }
 
-        /* Sidebar */
-        aside {
-            width: 300px;
-            background: var(--surface);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            position: fixed;
+        /* Top Navigation Header */
+        header.top-nav {
+            position: sticky;
             top: 0;
-            bottom: 0;
-            left: 0;
+            height: 60px;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
             z-index: 100;
         }
 
-        .brand {
-            padding: 24px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .brand-title {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .nav-brand {
             display: flex;
             align-items: center;
+            gap: 12px;
+            text-decoration: none;
         }
 
-        .brand-tag {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .brand-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-magenta), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-divider {
+            color: var(--border);
+            font-weight: 300;
+        }
+
+        .nav-docs-title {
             color: var(--text-muted);
-            margin-top: 4px;
+            font-size: 14px;
+            font-weight: 500;
         }
 
-        .plugin-selector {
+        .top-nav-center {
             display: flex;
-            background: var(--code-bg);
-            border-radius: 8px;
+            gap: 6px;
+            background: var(--bg-sidebar);
             padding: 4px;
-            margin: 16px 20px 8px;
+            border-radius: 8px;
             border: 1px solid var(--border);
-            gap: 4px;
         }
 
-        .plugin-tab {
-            flex: 1;
-            padding: 9px 12px;
+        .plugin-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 6px;
             font-size: 13px;
             font-weight: 600;
-            text-align: center;
-            border-radius: 6px;
             cursor: pointer;
-            color: var(--text-muted);
-            transition: all 0.2s;
-            border: none;
-            background: transparent;
+            transition: all 0.15s ease;
         }
 
-        .plugin-tab.active {
-            background: var(--surface);
-            color: var(--text);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            border: 1px solid rgba(224, 36, 195, 0.3);
+        .plugin-btn.active {
+            background: var(--bg-card);
+            color: var(--text-main);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
         }
 
-        .search-box {
-            padding: 12px 20px;
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
-        .search-input {
-            width: 100%;
-            padding: 10px 14px;
-            background: var(--code-bg);
+        .search-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 13px;
+            width: 220px;
+        }
+
+        .search-pill input {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
             font-size: 13px;
             outline: none;
-            transition: border-color 0.2s;
+            width: 100%;
         }
 
-        .search-input:focus {
-            border-color: var(--pink);
-        }
-
-        .nav-links {
-            flex: 1;
-            overflow-y: auto;
-            padding: 8px 12px 24px;
-        }
-
-        .nav-category {
+        .search-key {
             font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            color: var(--text-muted);
-            padding: 14px 12px 6px;
-            font-weight: 700;
+            background: var(--border-muted);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
         }
 
-        .nav-item {
-            display: block;
-            padding: 8px 12px;
+        .nav-icon-link {
             color: var(--text-muted);
             text-decoration: none;
             font-size: 14px;
-            border-radius: 6px;
-            transition: all 0.15s;
-            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.15s;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background: var(--surface-hover);
-            color: var(--pink);
+        .nav-icon-link:hover {
+            color: var(--text-main);
         }
 
-        /* Main Content */
-        main {
-            margin-left: 300px;
+        /* Documentation Layout */
+        .doc-layout {
+            display: flex;
             flex: 1;
-            padding: 40px 60px 120px;
-            max-width: 1100px;
+            max-width: 1440px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        header {
-            margin-bottom: 40px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--border);
+        /* Left Sidebar Tree */
+        aside.doc-sidebar {
+            width: 260px;
+            padding: 24px 16px;
+            position: sticky;
+            top: 60px;
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+            border-right: 1px solid var(--border-muted);
+            flex-shrink: 0;
         }
 
-        .badge {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 20px;
-            background: rgba(224, 36, 195, 0.12);
-            color: var(--pink);
-            border: 1px solid rgba(224, 36, 195, 0.3);
-            margin-bottom: 12px;
-        }
-
-        .badge.gold {
-            background: rgba(255, 165, 2, 0.12);
-            color: var(--gold);
-            border-color: rgba(255, 165, 2, 0.3);
-        }
-
-        .title {
-            font-size: 38px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-size: 18px;
-            color: var(--text-muted);
-        }
-
-        section {
-            margin-bottom: 48px;
-            scroll-margin-top: 30px;
-        }
-
-        h2 {
-            font-size: 24px;
+        .sidebar-section-title {
+            font-size: 11px;
+            text-transform: uppercase;
             font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.8px;
+            padding: 14px 12px 6px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 7px 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13.5px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            margin-bottom: 2px;
+        }
+
+        .sidebar-item:hover {
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .sidebar-item.active {
+            background: var(--accent-light);
+            color: var(--accent-magenta);
+            font-weight: 600;
+        }
+
+        /* Main Content Area */
+        main.doc-content {
+            flex: 1;
+            padding: 36px 48px 80px;
+            max-width: 860px;
+            min-width: 0;
+        }
+
+        /* Right TOC */
+        aside.doc-toc {
+            width: 240px;
+            padding: 36px 20px;
+            position: sticky;
+            top: 60px;
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .toc-header {
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 12px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toc-link {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 4px 0;
+            transition: color 0.15s;
+            line-height: 1.4;
+        }
+
+        .toc-link:hover {
+            color: var(--text-main);
+        }
+
+        /* Action Buttons & Button Groups */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0 28px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-magenta));
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(217, 70, 239, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(217, 70, 239, 0.35);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            border-color: var(--border);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: #1c2128;
+            border-color: var(--text-muted);
+        }
+
+        .btn-discord {
+            background: rgba(88, 101, 242, 0.15);
+            border-color: rgba(88, 101, 242, 0.35);
+            color: #8591f7;
+        }
+
+        .btn-discord:hover {
+            background: #5865f2;
+            color: #ffffff;
+        }
+
+        /* Document Images */
+        .doc-banner-wrapper {
+            margin: 0 0 24px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+
+        .doc-banner-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .doc-feature-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin: 16px 0 24px;
+            display: block;
+            background: var(--bg-card);
+        }
+
+        /* Typography */
+        .breadcrumbs {
+            font-size: 13px;
+            color: var(--text-muted);
             margin-bottom: 16px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid var(--border);
+            gap: 6px;
+        }
+
+        .breadcrumbs span {
+            color: var(--border);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-heading);
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .lead-text {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin: 40px 0 16px;
             padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-muted);
+            scroll-margin-top: 80px;
         }
 
         h3 {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
-            margin: 24px 0 12px;
-            color: var(--pink);
+            color: var(--text-heading);
+            margin: 28px 0 12px;
+            scroll-margin-top: 80px;
         }
 
         p {
-            margin-bottom: 14px;
-            color: #d1d8e6;
+            margin-bottom: 16px;
+            color: #c9d1d9;
         }
 
         ul, ol {
-            margin: 10px 0 18px 24px;
-            color: #d1d8e6;
+            margin: 12px 0 20px 24px;
+            color: #c9d1d9;
         }
 
         li {
             margin-bottom: 6px;
         }
 
+        /* Callouts / Admonitions */
+        .callout {
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            border-left: 4px solid;
+            background: var(--bg-card);
+        }
+
+        .callout-info {
+            background: var(--callout-info-bg);
+            border-left-color: var(--callout-info-border);
+            color: #e0f2fe;
+        }
+
+        .callout-warn {
+            background: var(--callout-warn-bg);
+            border-left-color: var(--callout-warn-border);
+            color: #fef3c7;
+        }
+
+        .callout-tip {
+            background: var(--callout-tip-bg);
+            border-left-color: var(--callout-tip-border);
+            color: #dcfce7;
+        }
+
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         /* Tables */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 16px 0 24px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            margin: 20px 0 28px;
+            font-size: 13.5px;
+            background: var(--bg-card);
+            border-radius: 6px;
             overflow: hidden;
-            font-size: 14px;
-        }
-
-        th, td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
+            border: 1px solid var(--border-muted);
         }
 
         th {
-            background: var(--surface-hover);
-            color: var(--text);
+            background: #1c2128;
+            color: var(--text-heading);
+            text-align: left;
+            padding: 10px 14px;
             font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-muted);
+            color: #c9d1d9;
         }
 
         tr:last-child td {
@@ -268,27 +471,58 @@
         }
 
         /* Code Blocks */
-        pre {
-            background: var(--code-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 16px;
-            overflow-x: auto;
-            position: relative;
-            margin: 14px 0 24px;
-            font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
-            font-size: 13px;
-            line-height: 1.5;
-            color: #e2e8f0;
-        }
-
         code {
-            font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
-            font-size: 13px;
-            background: rgba(255,255,255,0.06);
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12.5px;
+            background: rgba(110, 118, 129, 0.2);
             padding: 2px 6px;
             border-radius: 4px;
-            color: var(--pink);
+            color: #ff7b72;
+        }
+
+        .code-container {
+            margin: 18px 0 24px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-code);
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #161b22;
+            padding: 6px 14px;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        }
+
+        .code-header button {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .code-header button:hover {
+            color: var(--text-main);
+            background: var(--bg-card);
+        }
+
+        pre {
+            padding: 14px 16px;
+            overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #e6edf3;
         }
 
         pre code {
@@ -297,378 +531,336 @@
             color: inherit;
         }
 
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .copy-btn:hover {
-            background: var(--surface-hover);
-            color: var(--text);
-        }
-
-        /* Cards & Alerts */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-            margin: 20px 0;
-        }
-
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .card:hover {
-            border-color: var(--magenta);
-            transform: translateY(-2px);
-        }
-
-        .card-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .card-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        .alert {
-            padding: 16px 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            font-size: 14px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-
-        .alert.info {
-            background: rgba(224, 36, 195, 0.08);
-            border: 1px solid rgba(224, 36, 195, 0.3);
-            color: #fbcfe8;
-        }
-
-        .alert.warning {
-            background: rgba(255, 165, 2, 0.08);
-            border: 1px solid rgba(255, 165, 2, 0.3);
-            color: #fed7aa;
-        }
-
-        .pill-badge {
+        /* Badges */
+        .tag-perm {
             display: inline-block;
+            font-family: ui-monospace, SFMono-Regular, monospace;
+            font-size: 12px;
+            background: rgba(139, 92, 246, 0.15);
+            color: #c084fc;
             padding: 2px 8px;
             border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .pill-perm {
-            background: rgba(139, 92, 246, 0.15);
-            color: var(--purple);
             border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
-        .pill-op {
-            background: rgba(255, 71, 87, 0.15);
-            color: var(--red);
-            border: 1px solid rgba(255, 71, 87, 0.3);
+        .tag-default {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Release card */
+        .release-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-card);
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .release-header {
+            padding: 14px 18px;
+            background: #1c2128;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .release-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .release-tag {
+            font-size: 11px;
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            padding: 2px 8px;
+            border-radius: 12px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .release-date {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .release-body {
+            padding: 16px 20px;
         }
 
         .hidden {
-            display: none;
+            display: none !important;
+        }
+
+        @media (max-width: 1080px) {
+            aside.doc-toc {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            aside.doc-sidebar {
+                display: none;
+            }
+            main.doc-content {
+                padding: 20px;
+            }
+            .search-pill {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR -->
-    <aside>
-        <div class="brand">
-            <div class="brand-title">
-                <span>LuxanaStudio</span>
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-nav">
+        <div class="nav-brand">
+            <span class="brand-logo-text">LuxanaStudio</span>
+            <span class="nav-divider">/</span>
+            <span class="nav-docs-title">Documentation</span>
+        </div>
+
+        <div class="top-nav-center">
+            <button class="plugin-btn active" id="btn-lcc" onclick="setPlugin('lcc')">LuxChatColor</button>
+            <button class="plugin-btn" id="btn-lcr" onclick="setPlugin('lcr')">LuxCustomRank</button>
+        </div>
+
+        <div class="top-nav-right">
+            <div class="search-pill">
+                <span>🔍</span>
+                <input type="text" id="docSearch" placeholder="Search docs..." onkeyup="handleSearch()">
+                <span class="search-key">/</span>
             </div>
-            <div class="brand-tag">Premium Minecraft Plugins</div>
+            <a href="https://github.com/LuxanaStudio" target="_blank" class="nav-icon-link">GitHub ↗</a>
         </div>
+    </header>
 
-        <div class="plugin-selector">
-            <button class="plugin-tab active" onclick="switchPlugin('luxchatcolor')">LuxChatColor</button>
-            <button class="plugin-tab" onclick="switchPlugin('luxcustomrank')">LuxCustomRank</button>
-        </div>
+    <!-- MAIN DOCUMENTATION LAYOUT -->
+    <div class="doc-layout">
 
-        <div class="search-box">
-            <input type="text" class="search-input" id="search-input" placeholder="Search documentation..." onkeyup="filterDocs()">
-        </div>
+        <!-- LEFT SIDEBAR -->
+        <aside class="doc-sidebar">
+            <!-- LUXCHATCOLOR NAV -->
+            <div id="sidebar-lcc">
+                <div class="sidebar-section-title">Getting Started</div>
+                <a href="#lcc-overview" class="sidebar-item active" onclick="activateLink(this)">Overview</a>
+                <a href="#lcc-installation" class="sidebar-item" onclick="activateLink(this)">Installation</a>
 
-        <!-- NAV LUXCHATCOLOR -->
-        <nav class="nav-links" id="nav-luxchatcolor">
-            <div class="nav-category">Overview</div>
-            <a class="nav-item active" href="#lcc-intro">Introduction</a>
-            <a class="nav-item" href="#lcc-features">Key Features</a>
-            <a class="nav-item" href="#lcc-install">Installation</a>
+                <div class="sidebar-section-title">Reference</div>
+                <a href="#lcc-commands" class="sidebar-item" onclick="activateLink(this)">Commands & Aliases</a>
+                <a href="#lcc-permissions" class="sidebar-item" onclick="activateLink(this)">Permissions</a>
+                <a href="#lcc-configuration" class="sidebar-item" onclick="activateLink(this)">Configuration</a>
 
-            <div class="nav-category">Commands & Perms</div>
-            <a class="nav-item" href="#lcc-commands">Commands List</a>
-            <a class="nav-item" href="#lcc-permissions">Permissions Matrix</a>
+                <div class="sidebar-section-title">Features</div>
+                <a href="#lcc-color-gui" class="sidebar-item" onclick="activateLink(this)">Color Selection GUI</a>
+                <a href="#lcc-previews" class="sidebar-item" onclick="activateLink(this)">Item & Inv Previews</a>
+                <a href="#lcc-moderation" class="sidebar-item" onclick="activateLink(this)">Chat Moderation</a>
+                <a href="#lcc-editor" class="sidebar-item" onclick="activateLink(this)">In-Game Editor</a>
 
-            <div class="nav-category">Features Guide</div>
-            <a class="nav-item" href="#lcc-menu">Color Picker GUI</a>
-            <a class="nav-item" href="#lcc-previews">Item & Inv Previews</a>
-            <a class="nav-item" href="#lcc-moderation">Chat Filter & Ladder</a>
-            <a class="nav-item" href="#lcc-admin-gui">In-Game Editor</a>
-            <a class="nav-item" href="#lcc-config">Configuration</a>
-        </nav>
+                <div class="sidebar-section-title">Community</div>
+                <a href="#lcc-support" class="sidebar-item" onclick="activateLink(this)">Support & Discord</a>
+                <a href="#lcc-releases" class="sidebar-item" onclick="activateLink(this)">Releases & History</a>
+            </div>
 
-        <!-- NAV LUXCUSTOMRANK -->
-        <nav class="nav-links hidden" id="nav-luxcustomrank">
-            <div class="nav-category">Overview</div>
-            <a class="nav-item" href="#lcr-intro">Introduction</a>
-            <a class="nav-item" href="#lcr-mechanics">How It Works (LuckPerms)</a>
-            <a class="nav-item" href="#lcr-install">Installation</a>
+            <!-- LUXCUSTOMRANK NAV -->
+            <div id="sidebar-lcr" class="hidden">
+                <div class="sidebar-section-title">Getting Started</div>
+                <a href="#lcr-overview" class="sidebar-item active" onclick="activateLink(this)">Overview</a>
+                <a href="#lcr-how-it-works" class="sidebar-item" onclick="activateLink(this)">LuckPerms Integration</a>
+                <a href="#lcr-installation" class="sidebar-item" onclick="activateLink(this)">Installation</a>
 
-            <div class="nav-category">Commands & Perms</div>
-            <a class="nav-item" href="#lcr-commands">Commands List</a>
-            <a class="nav-item" href="#lcr-permissions">Permissions Matrix</a>
+                <div class="sidebar-section-title">Reference</div>
+                <a href="#lcr-commands" class="sidebar-item" onclick="activateLink(this)">Commands & Aliases</a>
+                <a href="#lcr-permissions" class="sidebar-item" onclick="activateLink(this)">Permissions</a>
+                <a href="#lcr-configuration" class="sidebar-item" onclick="activateLink(this)">Configuration</a>
 
-            <div class="nav-category">Customization</div>
-            <a class="nav-item" href="#lcr-gui">Rank Colour Head GUI</a>
-            <a class="nav-item" href="#lcr-customrank">Custom Prefix / Titles</a>
-            <a class="nav-item" href="#lcr-filtering">Anti-Abuse Word Filter</a>
-            <a class="nav-item" href="#lcr-config">Configuration</a>
-        </nav>
-    </aside>
+                <div class="sidebar-section-title">Features</div>
+                <a href="#lcr-rankcolor-gui" class="sidebar-item" onclick="activateLink(this)">Rank Color GUI</a>
+                <a href="#lcr-custom-titles" class="sidebar-item" onclick="activateLink(this)">Custom Titles & Prefixes</a>
+                <a href="#lcr-anti-abuse" class="sidebar-item" onclick="activateLink(this)">Anti-Abuse Filter</a>
 
-    <!-- MAIN CONTENT -->
-    <main>
+                <div class="sidebar-section-title">Community</div>
+                <a href="#lcr-support" class="sidebar-item" onclick="activateLink(this)">Support & Discord</a>
+                <a href="#lcr-releases" class="sidebar-item" onclick="activateLink(this)">Releases & History</a>
+            </div>
+        </aside>
 
-        <!-- ==================== LUXCHATCOLOR SECTION ==================== -->
-        <div id="content-luxchatcolor">
-            <header>
-                <div class="badge">Paper 1.21+ • Java 21 • MiniMessage</div>
-                <h1 class="title">LuxChatColor</h1>
-                <p class="subtitle">Next-generation chat colors, interactive item previews, and automated chat moderation.</p>
-            </header>
+        <!-- CENTER DOCUMENTATION CONTENT -->
+        <main class="doc-content">
 
-            <section id="lcc-intro">
-                <h2>Introduction</h2>
-                <p><strong>LuxChatColor</strong> is an all-in-one chat customization powerhouse for modern Minecraft Paper servers. It replaces 3 to 4 fragmented plugins with a single, high-performance, asynchronous engine supporting full RGB hex colors, multi-stop gradients, hoverable item tooltips, snapshot inventory links, and an automated rule-based chat filter.</p>
-            </section>
-
-            <section id="lcc-features">
-                <h2>Key Features</h2>
-                <div class="card-grid">
-                    <div class="card">
-                        <div class="card-title">🎨 Custom Head GUI</div>
-                        <div class="card-desc">Interactive 54-slot menu built with custom skull skins, lock/unlock indicators, permission hints, and player statistics card.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">🌈 22+ Colors & Gradients</div>
-                        <div class="card-desc">Pre-configured legacy codes, modern hex palettes, multi-stop gradients, rainbow text, and bold/italic styles.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">🗡️ [item] Hover Previews</div>
-                        <div class="card-desc">Shows localized item name in chat with native client hover tooltips including enchantments, lore, attributes, and custom model data.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">🎒 [inv] Click Previews</div>
-                        <div class="card-desc">Generates expiring, single-use clickable inventory snapshots in chat revealing inventory, armor, and offhand contents.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">🛡️ Smart Chat Moderation</div>
-                        <div class="card-desc">Regex & word blacklist with violation ladders: automatic chat warnings, temporary mutes, and kicks.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">⚙️ In-Game Visual Editor</div>
-                        <div class="card-desc">Run <code>/lccadmin gui</code> to visually create, edit, reorder colors, permissions, and icons on the fly.</div>
-                    </div>
+            <!-- ========================================================================= -->
+            <!-- LUXCHATCOLOR DOCUMENTATION                                                -->
+            <!-- ========================================================================= -->
+            <div id="doc-lcc">
+                <div class="breadcrumbs">
+                    <span>Plugins</span> <span>/</span> <span>LuxChatColor</span> <span>/</span> <span style="color:var(--text-main);">Documentation</span>
                 </div>
-            </section>
 
-            <section id="lcc-install">
-                <h2>Installation</h2>
-                <ol>
-                    <li>Download <code>LuxChatColor-1.2.0.jar</code>.</li>
-                    <li>Drop the file into your server's <code>plugins/</code> folder.</li>
-                    <li>Start your server to generate the configuration folder.</li>
-                    <li>Grant permissions to your donor or player groups, customize <code>config.yml</code>, and enjoy!</li>
-                </ol>
-            </section>
+                <div class="doc-banner-wrapper">
+                    <img src="images/lcc-banner.png" alt="LuxChatColor Banner" class="doc-banner-img">
+                </div>
 
-            <section id="lcc-commands">
-                <h2>Commands List</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Aliases</th>
-                            <th>Permission</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>/chatcolors</code></td>
-                            <td><code>/color</code>, <code>/colors</code></td>
-                            <td><span class="pill-badge pill-perm">luxchatcolor.use</span></td>
-                            <td>Opens the interactive color selection GUI.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/chatcolors &lt;name&gt;</code></td>
-                            <td><code>/color &lt;name&gt;</code></td>
-                            <td><span class="pill-badge pill-perm">luxchatcolor.color.&lt;name&gt;</span></td>
-                            <td>Directly equips a color via name tag.</td>
-                        </tr>
-                        <tr>
-                            <td><code>[item]</code> or <code>/item</code></td>
-                            <td>-</td>
-                            <td><span class="pill-badge pill-perm">luxchatcolor.preview.item</span></td>
-                            <td>Inserts hoverable preview of held item into chat.</td>
-                        </tr>
-                        <tr>
-                            <td><code>[inv]</code> or <code>/inv</code></td>
-                            <td>-</td>
-                            <td><span class="pill-badge pill-perm">luxchatcolor.preview.inventory</span></td>
-                            <td>Shares a clickable snapshot of inventory in chat.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/lccadmin gui</code></td>
-                            <td><code>/luxchatcoloradmin gui</code></td>
-                            <td><span class="pill-badge pill-op">luxchatcolor.admin</span></td>
-                            <td>Opens the in-game visual color editor.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/lccadmin reload</code></td>
-                            <td><code>/luxchatcoloradmin reload</code></td>
-                            <td><span class="pill-badge pill-op">luxchatcolor.admin</span></td>
-                            <td>Reloads configuration and filters from disk.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+                <h1>LuxChatColor</h1>
+                <p class="lead-text">
+                    Next-generation chat colors, interactive item previews, and automated chat moderation built for modern Paper servers.
+                </p>
 
-            <section id="lcc-permissions">
-                <h2>Permissions Matrix</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Permission Node</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>luxchatcolor.use</code></td>
-                            <td>True</td>
-                            <td>Access to <code>/chatcolors</code> menu.</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxchatcolor.color.*</code></td>
-                            <td>OP</td>
-                            <td>Access to all chat colors and gradient styles.</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxchatcolor.color.&lt;id&gt;</code></td>
-                            <td>OP</td>
-                            <td>Access to a specific color (e.g. <code>luxchatcolor.color.crimson</code>).</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxchatcolor.preview.item</code></td>
-                            <td>True</td>
-                            <td>Permission to post <code>[item]</code> tags in chat.</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxchatcolor.preview.inventory</code></td>
-                            <td>True</td>
-                            <td>Permission to post <code>[inv]</code> links in chat.</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxchatcolor.filter.bypass</code></td>
-                            <td>OP</td>
-                            <td>Bypass the chat filter and anti-spam moderation.</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxchatcolor.admin</code></td>
-                            <td>OP</td>
-                            <td>Access to all administrative commands.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+                <!-- Action Button Group -->
+                <div class="btn-group">
+                    <a href="https://builtbybit.com" target="_blank" class="btn btn-primary">🛒 Get on BuiltByBit</a>
+                    <a href="https://polymart.org" target="_blank" class="btn btn-secondary">🛍️ Get on Polymart</a>
+                    <a href="https://discord.gg/luxanastudio" target="_blank" class="btn btn-discord">💬 Join Discord Community</a>
+                    <a href="#lcc-releases" class="btn btn-secondary">📦 Latest Releases (v1.2.0)</a>
+                </div>
 
-            <section id="lcc-menu">
-                <h2>Color Picker GUI</h2>
-                <p>When players run <code>/chatcolors</code>, they are presented with a 54-slot menu populated by custom-textured player skulls:</p>
-                <ul>
-                    <li><strong>Status Indicators:</strong> Unlocked colors display a green checkmark and preview of the player's name with that color. Locked colors show a red cross with the exact permission required.</li>
-                    <li><strong>Profile Head Card:</strong> Positioned in the bottom center slot, rendered with the player's real Minecraft skin. It displays total unlocked colors, active style, and quick stats.</li>
-                    <li><strong>Reset / Clear:</strong> Clicking your active color unselects it, restoring normal white chat. Players can also type <code>/chatcolors none</code>.</li>
-                </ul>
-            </section>
+                <section id="lcc-overview">
+                    <h2>Overview</h2>
+                    <p>
+                        LuxChatColor is designed as an all-in-one chat customization solution. Rather than installing separate plugins for chat colors, item previews, inventory previews, and swearing filters, LuxChatColor provides all four under a single, unified, asynchronous framework.
+                    </p>
+                    <div class="callout callout-info">
+                        <div class="callout-title">ℹ️ Platform Requirements</div>
+                        Compatible with <strong>Paper</strong>, <strong>Purpur</strong>, and fork distributions running <strong>1.21 or newer</strong>. Requires <strong>Java 21</strong>.
+                    </div>
+                </section>
 
-            <section id="lcc-previews">
-                <h2>Item & Inventory Previews</h2>
-                <p>LuxChatColor brings rich, client-native hover and click previews directly to your chat:</p>
-                <h3>Item Tooltips ([item])</h3>
-                <p>Typing <code>[item]</code> in any chat message replaces the tag with the localized name and stack size of the item in the sender's main hand. Hovering over the chat name displays the client's exact tooltip, including custom lore, enchantments, potion effects, damage values, and CustomModelData.</p>
-                <h3>Inventory Snapshots ([inv])</h3>
-                <p>Typing <code>[inv]</code> generates a clickable link in chat. Clicking opens a read-only GUI showing the sender's full inventory, equipped armor, and offhand item at the time of sending.</p>
-                <ul>
-                    <li><strong>Single-use & Expiring:</strong> Snapshot links expire after a configurable timer (default: 60s) to prevent spam.</li>
-                    <li><strong>Tamper-Proof:</strong> The inventory is a cloned read-only snapshot—items cannot be removed or stolen.</li>
-                </ul>
-            </section>
+                <section id="lcc-installation">
+                    <h2>Installation</h2>
+                    <ol>
+                        <li>Download <code>LuxChatColor-1.2.0.jar</code>.</li>
+                        <li>Place the jar into your server's <code>plugins/</code> folder.</li>
+                        <li>Restart your server to generate the configuration files.</li>
+                        <li>Configure permissions for your ranks using LuckPerms or your permission provider.</li>
+                    </ol>
+                </section>
 
-            <section id="lcc-moderation">
-                <h2>Chat Filter & Ladder</h2>
-                <p>Automate your chat moderation with regular expression and keyword filters located under <code>plugins/LuxChatColor/filters/</code>:</p>
-                <ul>
-                    <li><strong>Actions:</strong> Matches can be masked with asterisks, blocked with a warning, or forwarded to online staff via private alerts.</li>
-                    <li><strong>Automated Escalation Ladder:</strong> Violations accumulate per player and trigger automated punishments:
-                        <ul>
-                            <li><strong>3 Violations:</strong> Formal chat warning sent to player.</li>
-                            <li><strong>6 Violations:</strong> Automatic 15-minute mute applied across server.</li>
-                            <li><strong>9 Violations:</strong> Automatic kick from server.</li>
-                        </ul>
-                    </li>
-                    <li>Staff members with <code>luxchatcolor.filter.bypass</code> are exempt from filtering.</li>
-                </ul>
-            </section>
+                <section id="lcc-commands">
+                    <h2>Commands & Aliases</h2>
+                    <p>Comprehensive command suite with tab-completion support for both players and administrators:</p>
+                    <img src="images/lcc-commands.png" alt="LuxChatColor Commands" class="doc-feature-img">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Command</th>
+                                <th>Aliases</th>
+                                <th>Permission</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>/chatcolors</code></td>
+                                <td><code>/color</code>, <code>/colors</code></td>
+                                <td><span class="tag-perm">luxchatcolor.use</span></td>
+                                <td>Opens the color picker menu.</td>
+                            </tr>
+                            <tr>
+                                <td><code>/chatcolors &lt;name&gt;</code></td>
+                                <td><code>/color &lt;name&gt;</code></td>
+                                <td><span class="tag-perm">luxchatcolor.color.&lt;name&gt;</span></td>
+                                <td>Applies a specific color directly by name.</td>
+                            </tr>
+                            <tr>
+                                <td><code>/chatcolors none</code></td>
+                                <td><code>/color reset</code></td>
+                                <td><span class="tag-perm">luxchatcolor.use</span></td>
+                                <td>Removes active chat color and resets to default white.</td>
+                            </tr>
+                            <tr>
+                                <td><code>[item]</code></td>
+                                <td><code>/item</code></td>
+                                <td><span class="tag-perm">luxchatcolor.preview.item</span></td>
+                                <td>Displays held item with interactive client tooltip.</td>
+                            </tr>
+                            <tr>
+                                <td><code>[inv]</code></td>
+                                <td><code>/inv</code></td>
+                                <td><span class="tag-perm">luxchatcolor.preview.inventory</span></td>
+                                <td>Posts a secure, clickable snapshot link to your inventory.</td>
+                            </tr>
+                            <tr>
+                                <td><code>/lccadmin gui</code></td>
+                                <td><code>/luxchatcoloradmin gui</code></td>
+                                <td><span class="tag-perm">luxchatcolor.admin</span></td>
+                                <td>Opens the in-game visual editor.</td>
+                            </tr>
+                            <tr>
+                                <td><code>/lccadmin reload</code></td>
+                                <td><code>/luxchatcoloradmin reload</code></td>
+                                <td><span class="tag-perm">luxchatcolor.admin</span></td>
+                                <td>Reloads <code>config.yml</code> and moderation filters.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-            <section id="lcc-admin-gui">
-                <h2>In-Game Visual Editor</h2>
-                <p>Administrators with <code>luxchatcolor.admin</code> can type <code>/lccadmin gui</code> to open the visual live editor:</p>
-                <ul>
-                    <li>Create new color entries directly in-game.</li>
-                    <li>Tweak names, descriptions, head textures, and slots without touching YAML files.</li>
-                    <li>Assign wrappers (Hex codes, MiniMessage gradients, or legacy codes) with instant live preview.</li>
-                    <li>Save changes immediately with automatic hot-reload.</li>
-                </ul>
-            </section>
+                <section id="lcc-permissions">
+                    <h2>Permissions</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Permission Node</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>luxchatcolor.use</code></td>
+                                <td><span class="tag-default">Everyone (true)</span></td>
+                                <td>Allows players to run <code>/chatcolors</code>.</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxchatcolor.color.*</code></td>
+                                <td><span class="tag-default">OP</span></td>
+                                <td>Grants access to all 22+ colors and gradients.</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxchatcolor.color.&lt;id&gt;</code></td>
+                                <td><span class="tag-default">OP</span></td>
+                                <td>Grants access to a specific color (e.g. <code>luxchatcolor.color.crimson</code>).</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxchatcolor.preview.item</code></td>
+                                <td><span class="tag-default">Everyone (true)</span></td>
+                                <td>Allows players to type <code>[item]</code> in chat.</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxchatcolor.preview.inventory</code></td>
+                                <td><span class="tag-default">Everyone (true)</span></td>
+                                <td>Allows players to type <code>[inv]</code> in chat.</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxchatcolor.filter.bypass</code></td>
+                                <td><span class="tag-default">OP</span></td>
+                                <td>Bypasses swearing and anti-spam chat filters.</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxchatcolor.admin</code></td>
+                                <td><span class="tag-default">OP</span></td>
+                                <td>Grants access to administrator commands.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-            <section id="lcc-config">
-                <h2>Configuration (config.yml)</h2>
-                <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>previews:
+                <section id="lcc-configuration">
+                    <h2>Configuration</h2>
+                    <p>The main configuration file is located at <code>plugins/LuxChatColor/config.yml</code>:</p>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>config.yml</span>
+                            <button onclick="copySnippet(this)">Copy</button>
+                        </div>
+                        <pre><code># Chat Preview Settings
+previews:
   item:
     enabled: true
     token: "[item]"
@@ -679,6 +871,7 @@
     expiry-seconds: 60
     show-ender-chest: false
 
+# Automated Moderation Settings
 moderation:
   enabled: true
   escalation:
@@ -686,171 +879,272 @@ moderation:
     mute-violations: 6
     mute-duration-minutes: 15
     kick-violations: 9</code></pre>
-            </section>
-        </div>
-
-        <!-- ==================== LUXCUSTOMRANK SECTION ==================== -->
-        <div id="content-luxcustomrank" class="hidden">
-            <header>
-                <div class="badge gold">Paper 1.21+ • Java 21 • LuckPerms Hook</div>
-                <h1 class="title">LuxCustomRank</h1>
-                <p class="subtitle">Self-service rank colors, custom titles, and user meta prefixes for LuckPerms.</p>
-            </header>
-
-            <section id="lcr-intro">
-                <h2>Introduction</h2>
-                <p><strong>LuxCustomRank</strong> is the ultimate LuckPerms companion. It gives your VIPs, Donators, and players full self-service power to change their rank prefix color via a sleek player-head GUI or type a custom rank title using <code>/customrank</code>—<strong>without changing the global server group</strong>!</p>
-            </section>
-
-            <section id="lcr-mechanics">
-                <h2>How It Works (LuckPerms User Meta)</h2>
-                <div class="alert info">
-                    <div>
-                        <strong>Pure User-Level Scoping:</strong> LuxCustomRank injects a LuckPerms <code>PrefixNode</code> on the individual <em>User</em> (at priority weight <code>100</code>).
                     </div>
+                </section>
+
+                <section id="lcc-color-gui">
+                    <h2>Color Selection GUI</h2>
+                    <p>
+                        Executing <code>/chatcolors</code> opens a 54-slot visual menu populated by textured player skulls. Each skull corresponds to a distinct color, hex palette, or MiniMessage gradient.
+                    </p>
+                    <img src="images/lcc-features.png" alt="Color GUI and Features" class="doc-feature-img">
+                    <ul>
+                        <li><strong>Live Permission State:</strong> Unlocked colors display a green checkmark and an active name preview. Locked colors show a red mark with the exact permission required.</li>
+                        <li><strong>Profile Card:</strong> Located at the bottom center (slot 49), rendered with the player's personal Minecraft skin. Displays total unlocked colors and active style.</li>
+                        <li><strong>Click to Toggle:</strong> Clicking your active color unselects it, restoring default white chat.</li>
+                    </ul>
+                </section>
+
+                <section id="lcc-previews">
+                    <h2>Item & Inventory Previews</h2>
+                    <h3>Item Tooltip Previews ([item])</h3>
+                    <p>
+                        Typing <code>[item]</code> in chat replaces the placeholder with the localized name and stack count of the item held in your main hand. Hovering over the message in chat renders the client's native tooltip, displaying custom names, enchants, lore, and NBT data.
+                    </p>
+                    <h3>Inventory Snapshot Previews ([inv])</h3>
+                    <p>
+                        Typing <code>[inv]</code> generates a clickable link in chat. Clicking opens a read-only GUI showing the sender's main inventory, armor slots, and offhand item at the time of sending.
+                    </p>
+                    <div class="callout callout-tip">
+                        <div class="callout-title">💡 Security & Cleanup</div>
+                        Snapshot links expire automatically after a configurable duration (default: 60 seconds) and are cleaned from memory upon server restarts.
+                    </div>
+                </section>
+
+                <section id="lcc-moderation">
+                    <h2>Chat Moderation</h2>
+                    <p>
+                        LuxChatColor includes a built-in rule engine located under <code>plugins/LuxChatColor/filters/</code>.
+                    </p>
+                    <ul>
+                        <li><strong>Regex & Blacklists:</strong> Block, mask, or alert staff when prohibited words are detected.</li>
+                        <li><strong>Violation Escalation:</strong>
+                            <ul>
+                                <li>3 Violations: Automated formal warning message sent to the player.</li>
+                                <li>6 Violations: Automated 15-minute mute applied across the server.</li>
+                                <li>9 Violations: Automated kick from the server.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+
+                <section id="lcc-editor">
+                    <h2>In-Game Editor</h2>
+                    <p>
+                        Server administrators with <code>luxchatcolor.admin</code> can execute <code>/lccadmin gui</code> to open the in-game editor. From this interface, you can adjust names, permissions, slots, and wrappers without opening YAML files.
+                    </p>
+                </section>
+
+                <section id="lcc-support">
+                    <h2>Support & Discord</h2>
+                    <p>
+                        Need assistance, feature requests, or encountered an issue? Our team is available on Discord with average ticket response times under 15 minutes.
+                    </p>
+                    <img src="images/lcc-support.png" alt="Discord Support" class="doc-feature-img">
+                    <div class="btn-group">
+                        <a href="https://discord.gg/luxanastudio" target="_blank" class="btn btn-discord">💬 Join Discord Support</a>
+                        <a href="https://github.com/LuxanaStudio" target="_blank" class="btn btn-secondary">Report an Issue on GitHub ↗</a>
+                    </div>
+                </section>
+
+                <section id="lcc-releases">
+                    <h2>Releases & History</h2>
+                    <div class="release-item">
+                        <div class="release-header">
+                            <div class="release-title">
+                                <span>LuxChatColor v1.2.0</span>
+                                <span class="release-tag">Latest</span>
+                            </div>
+                            <span class="release-date">October 2026</span>
+                        </div>
+                        <div class="release-body">
+                            <ul>
+                                <li>Separated rank prefix coloring into the dedicated sister plugin (<code>LuxCustomRank</code>).</li>
+                                <li>Added null check in <code>ColorRegistry.iconNameOf()</code> resolving NPE when unselecting colors.</li>
+                                <li>Enhanced <code>[inv]</code> snapshot performance under high chat loads.</li>
+                                <li>Added support for modern Paper 1.21.x Adventure component serializers.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="release-item">
+                        <div class="release-header">
+                            <div class="release-title">
+                                <span>LuxChatColor v1.1.0</span>
+                            </div>
+                            <span class="release-date">October 2026</span>
+                        </div>
+                        <div class="release-body">
+                            <ul>
+                                <li>Added in-game visual editor (<code>/lccadmin gui</code>).</li>
+                                <li>Introduced regex rule matcher with violation escalation ladders.</li>
+                                <li>Added 8 new multi-stop gradient color presets.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- LUXCUSTOMRANK DOCUMENTATION                                               -->
+            <!-- ========================================================================= -->
+            <div id="doc-lcr" class="hidden">
+                <div class="breadcrumbs">
+                    <span>Plugins</span> <span>/</span> <span>LuxCustomRank</span> <span>/</span> <span style="color:var(--text-main);">Documentation</span>
                 </div>
-                <p>Because the node is saved to the player's personal meta, it overrides their inherited group rank (weight 10-50) cleanly. Other players with the same group rank are completely untouched. When <code>/rankclear</code> is executed, the user node is cleared and the player seamlessly returns to their normal rank.</p>
-            </section>
 
-            <section id="lcr-install">
-                <h2>Installation</h2>
-                <ol>
-                    <li>Make sure <strong>LuckPerms</strong> is installed and running on your server.</li>
-                    <li>Download <code>LuxCustomRank-1.0.0.jar</code> and place it into <code>plugins/</code>.</li>
-                    <li>Start your server to generate the configuration files.</li>
-                    <li>Grant permissions (e.g. <code>luxcustomrank.color</code>, <code>luxcustomrank.prefix</code>) to your donor ranks!</li>
-                </ol>
-            </section>
+                <div class="doc-banner-wrapper">
+                    <img src="images/lcr-banner.png" alt="LuxCustomRank Banner" class="doc-banner-img">
+                </div>
 
-            <section id="lcr-commands">
-                <h2>Commands List</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Aliases</th>
-                            <th>Permission</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>/rankcolor</code></td>
-                            <td><code>/rc</code>, <code>/rankcolors</code></td>
-                            <td><span class="pill-badge pill-perm">luxcustomrank.color</span></td>
-                            <td>Opens the visual player-head rank color picker.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/customrank &lt;title&gt;</code></td>
-                            <td><code>/customprefix</code>, <code>/setrank</code></td>
-                            <td><span class="pill-badge pill-perm">luxcustomrank.prefix</span></td>
-                            <td>Sets your personal custom rank prefix.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/rankclear</code></td>
-                            <td><code>/resetrank</code>, <code>/resetprefix</code></td>
-                            <td><span class="pill-badge pill-perm">luxcustomrank.clear</span></td>
-                            <td>Clears custom prefix and restores group rank.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/luxcustomrankadmin reload</code></td>
-                            <td><code>/lcra reload</code></td>
-                            <td><span class="pill-badge pill-op">luxcustomrank.admin</span></td>
-                            <td>Reloads configuration and colors from disk.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+                <h1>LuxCustomRank</h1>
+                <p class="lead-text">
+                    Self-service rank colors, custom donor titles, and personal prefix management powered by LuckPerms user meta.
+                </p>
 
-            <section id="lcr-permissions">
-                <h2>Permissions Matrix</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Permission Node</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>luxcustomrank.use</code></td>
-                            <td>True</td>
-                            <td>Base permission to use plugin features.</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxcustomrank.color</code></td>
-                            <td>OP</td>
-                            <td>Permission to use <code>/rankcolor</code>.</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxcustomrank.prefix</code></td>
-                            <td>OP</td>
-                            <td>Permission to set custom titles with <code>/customrank</code>.</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxcustomrank.clear</code></td>
-                            <td>True</td>
-                            <td>Permission to reset rank back to default.</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxcustomrank.color.*</code></td>
-                            <td>OP</td>
-                            <td>Access to all rank colors in the GUI.</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxcustomrank.color.&lt;name&gt;</code></td>
-                            <td>OP</td>
-                            <td>Access to a specific rank color (e.g. <code>luxcustomrank.color.gold</code>).</td>
-                        </tr>
-                        <tr>
-                            <td><code>luxcustomrank.admin</code></td>
-                            <td>OP</td>
-                            <td>Admin reload command access.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+                <!-- Action Button Group -->
+                <div class="btn-group">
+                    <a href="https://builtbybit.com" target="_blank" class="btn btn-primary">🛒 Get on BuiltByBit</a>
+                    <a href="https://polymart.org" target="_blank" class="btn btn-secondary">🛍️ Get on Polymart</a>
+                    <a href="https://discord.gg/luxanastudio" target="_blank" class="btn btn-discord">💬 Join Discord Community</a>
+                    <a href="#lcr-releases" class="btn btn-secondary">📦 Latest Releases (v1.0.0)</a>
+                </div>
 
-            <section id="lcr-gui">
-                <h2>Rank Colour Head GUI</h2>
-                <p>Running <code>/rankcolor</code> opens a 36-slot menu loaded with custom textured player skulls representing vibrant Minecraft colors:</p>
-                <ul>
-                    <li><strong>Per-Color Permissions:</strong> Each head checks for <code>luxcustomrank.color.&lt;name&gt;</code> (or <code>luxcustomrank.color.*</code>).</li>
-                    <li><strong>Live Preview:</strong> Hovering over any color head shows how your name and rank will look in chat with that color applied.</li>
-                    <li><strong>One-Click Apply:</strong> Clicking any unlocked head updates your personal LuckPerms prefix color instantly without server restarts.</li>
-                    <li><strong>Reset Slot (Slot 31):</strong> A barrier icon allows players to wipe their custom color and restore their original rank prefix anytime.</li>
-                </ul>
-            </section>
+                <section id="lcr-overview">
+                    <h2>Overview</h2>
+                    <p>
+                        LuxCustomRank allows players, donors, and VIPs to change their prefix color through an interactive player-head menu or define a unique custom title with <code>/customrank</code>—without affecting anyone else in the group.
+                    </p>
+                </section>
 
-            <section id="lcr-customrank">
-                <h2>Custom Prefix & Titles</h2>
-                <p>Players with <code>luxcustomrank.prefix</code> can define their own title with <code>/customrank &lt;title&gt;</code>:</p>
-                <ul>
-                    <li>Supports color codes and custom titles (e.g. <code>/customrank &amp;b[WIZARD]</code>).</li>
-                    <li>Directly sets a personal LuckPerms <code>PrefixNode</code> at weight 100 on the player's UUID.</li>
-                    <li>To reset back to the default server rank, players simply type <code>/rankclear</code>.</li>
-                </ul>
-            </section>
+                <section id="lcr-how-it-works">
+                    <h2>LuckPerms Integration</h2>
+                    <p>
+                        Most custom prefix plugins incorrectly alter group-level settings or inject fragile prefix chat formatting. LuxCustomRank hooks directly into the <strong>LuckPerms API</strong> to apply a scoped <code>PrefixNode</code> to the individual <strong>User</strong> object.
+                    </p>
+                    <div class="callout callout-info">
+                        <div class="callout-title">ℹ️ Priority Weight Architecture</div>
+                        Custom prefixes are saved at weight <code>100</code> (configurable in <code>config.yml</code>). Because group ranks typically run at weights 10 through 50, the player's custom selection cleanly overrides their group prefix. When cleared via <code>/rankclear</code>, the user node is removed and the player automatically reverts to their default group prefix.
+                    </div>
+                </section>
 
-            <section id="lcr-filtering">
-                <h2>Anti-Abuse Word Filter</h2>
-                <p>LuxCustomRank prevents players from exploiting custom prefixes or impersonating server leadership:</p>
-                <ul>
-                    <li><strong>Length Constraints:</strong> Configurable <code>min-length</code> (default: 2) and <code>max-length</code> (default: 16) limits.</li>
-                    <li><strong>Blacklisted Words:</strong> Configurable <code>banned-words</code> list in <code>config.yml</code> (e.g. <code>admin</code>, <code>owner</code>, <code>mod</code>, <code>staff</code>, vulgar words) blocks unauthorized titles automatically.</li>
-                </ul>
-            </section>
+                <section id="lcr-installation">
+                    <h2>Installation</h2>
+                    <ol>
+                        <li>Verify that <strong>LuckPerms</strong> is installed and working on your server.</li>
+                        <li>Download <code>LuxCustomRank-1.0.0.jar</code>.</li>
+                        <li>Place the jar into your server's <code>plugins/</code> folder.</li>
+                        <li>Start or restart your server.</li>
+                        <li>Grant appropriate permissions (e.g. <code>luxcustomrank.color</code>, <code>luxcustomrank.prefix</code>) to your donor groups.</li>
+                    </ol>
+                </section>
 
-            <section id="lcr-config">
-                <h2>Configuration (config.yml)</h2>
-                <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>prefix:
-  # Maximum and minimum characters
+                <section id="lcr-commands">
+                    <h2>Commands & Aliases</h2>
+                    <p>All rank customization commands provide full tab-completion and permission checks:</p>
+                    <img src="images/lcr-commands.png" alt="LuxCustomRank Commands" class="doc-feature-img">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Command</th>
+                                <th>Aliases</th>
+                                <th>Permission</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>/rankcolor</code></td>
+                                <td><code>/rc</code>, <code>/rankcolors</code>, <code>/prefixcolor</code></td>
+                                <td><span class="tag-perm">luxcustomrank.color</span></td>
+                                <td>Opens the rank color head selection GUI.</td>
+                            </tr>
+                            <tr>
+                                <td><code>/customrank &lt;title&gt;</code></td>
+                                <td><code>/customprefix</code>, <code>/setrank</code>, <code>/myrank</code></td>
+                                <td><span class="tag-perm">luxcustomrank.prefix</span></td>
+                                <td>Sets a custom personal prefix/title.</td>
+                            </tr>
+                            <tr>
+                                <td><code>/rankclear</code></td>
+                                <td><code>/resetrank</code>, <code>/resetprefix</code></td>
+                                <td><span class="tag-perm">luxcustomrank.clear</span></td>
+                                <td>Clears your custom prefix and reverts to group rank.</td>
+                            </tr>
+                            <tr>
+                                <td><code>/luxcustomrankadmin reload</code></td>
+                                <td><code>/lcra reload</code></td>
+                                <td><span class="tag-perm">luxcustomrank.admin</span></td>
+                                <td>Reloads <code>config.yml</code> and color heads.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="lcr-permissions">
+                    <h2>Permissions</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Permission Node</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>luxcustomrank.use</code></td>
+                                <td><span class="tag-default">Everyone (true)</span></td>
+                                <td>Base permission for plugin usage.</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxcustomrank.color</code></td>
+                                <td><span class="tag-default">OP</span></td>
+                                <td>Allows players to run <code>/rankcolor</code>.</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxcustomrank.prefix</code></td>
+                                <td><span class="tag-default">OP</span></td>
+                                <td>Allows players to set titles with <code>/customrank</code>.</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxcustomrank.clear</code></td>
+                                <td><span class="tag-default">Everyone (true)</span></td>
+                                <td>Allows players to reset their rank via <code>/rankclear</code>.</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxcustomrank.color.*</code></td>
+                                <td><span class="tag-default">OP</span></td>
+                                <td>Access to all rank colors in the GUI.</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxcustomrank.color.&lt;name&gt;</code></td>
+                                <td><span class="tag-default">OP</span></td>
+                                <td>Access to a specific rank color (e.g. <code>luxcustomrank.color.gold</code>).</td>
+                            </tr>
+                            <tr>
+                                <td><code>luxcustomrank.admin</code></td>
+                                <td><span class="tag-default">OP</span></td>
+                                <td>Access to administrator reload commands.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="lcr-configuration">
+                    <h2>Configuration</h2>
+                    <p>The configuration file is located at <code>plugins/LuxCustomRank/config.yml</code>:</p>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>config.yml</span>
+                            <button onclick="copySnippet(this)">Copy</button>
+                        </div>
+                        <pre><code>prefix:
+  # Minimum and maximum character bounds
   min-length: 2
   max-length: 16
-  # LuckPerms meta weight (overrides default groups)
+  # LuckPerms User Meta weight
   weight: 100
-  # Blacklisted words
+  # Blacklisted words (case-insensitive)
   banned-words:
     - "admin"
     - "owner"
@@ -861,62 +1155,157 @@ gui:
   title: "&lt;dark_gray&gt;Pick your Rank Colour"
   size: 36
   filler: "GRAY_STAINED_GLASS_PANE"
-  reset-slot: 31
+  reset-slot: 31</code></pre>
+                    </div>
+                </section>
 
-colors:
-  red:
-    name: "&lt;red&gt;&lt;bold&gt;Ruby Red&lt;/bold&gt;&lt;/red&gt;"
-    color-code: "&amp;c"
-    permission: "luxcustomrank.color.red"
-    slot: 10
-    head-texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTRiZWMzN2RhNzg4NGJlZmM1NzRhNGVhYmIzMGVmMmQ4ZjY4YmRjY2NmNmFkNWU4MzhmMTM2NDhkOWE2YWRkIn19fQ=="</code></pre>
-            </section>
-        </div>
+                <section id="lcr-rankcolor-gui">
+                    <h2>Rank Color GUI</h2>
+                    <p>
+                        Executing <code>/rankcolor</code> opens a 36-slot GUI featuring custom-skinned player heads.
+                    </p>
+                    <img src="images/lcr-features.png" alt="LuxCustomRank Features" class="doc-feature-img">
+                    <ul>
+                        <li><strong>Instant LuckPerms Update:</strong> Clicking an unlocked color updates the player's prefix node immediately.</li>
+                        <li><strong>Reset Button (Slot 31):</strong> A barrier button lets players reset their custom prefix without running commands.</li>
+                    </ul>
+                </section>
 
-    </main>
+                <section id="lcr-custom-titles">
+                    <h2>Custom Titles & Prefixes</h2>
+                    <p>
+                        Players with <code>luxcustomrank.prefix</code> can run <code>/customrank &lt;title&gt;</code> to set their own prefix text.
+                    </p>
+                    <div class="callout callout-tip">
+                        <div class="callout-title">💡 Color Codes Supported</div>
+                        Players can use standard ampersand color codes (e.g. <code>/customrank &b[VIP]</code> or <code>/customrank &e[WARRIOR]</code>).
+                    </div>
+                </section>
+
+                <section id="lcr-anti-abuse">
+                    <h2>Anti-Abuse Filter</h2>
+                    <p>
+                        To protect your server's staff hierarchy and prevent inappropriate names, LuxCustomRank validates every custom prefix:
+                    </p>
+                    <ul>
+                        <li><strong>Character Bounds:</strong> Rejects prefixes shorter than <code>min-length</code> (default: 2) or longer than <code>max-length</code> (default: 16).</li>
+                        <li><strong>Word Blacklist:</strong> Automatically checks entries against <code>banned-words</code> in <code>config.yml</code>.</li>
+                    </ul>
+                </section>
+
+                <section id="lcr-support">
+                    <h2>Support & Discord</h2>
+                    <p>
+                        Need help configuring LuckPerms weights or setting up custom heads? Join our official community server for rapid assistance.
+                    </p>
+                    <img src="images/lcr-support.png" alt="Discord Support" class="doc-feature-img">
+                    <div class="btn-group">
+                        <a href="https://discord.gg/luxanastudio" target="_blank" class="btn btn-discord">💬 Join Discord Support</a>
+                        <a href="https://github.com/LuxanaStudio" target="_blank" class="btn btn-secondary">Report an Issue on GitHub ↗</a>
+                    </div>
+                </section>
+
+                <section id="lcr-releases">
+                    <h2>Releases & History</h2>
+                    <div class="release-item">
+                        <div class="release-header">
+                            <div class="release-title">
+                                <span>LuxCustomRank v1.0.0</span>
+                                <span class="release-tag">Latest</span>
+                            </div>
+                            <span class="release-date">October 2026</span>
+                        </div>
+                        <div class="release-body">
+                            <ul>
+                                <li>Initial public release of LuxCustomRank.</li>
+                                <li>Direct LuckPerms User Meta PrefixNode integration.</li>
+                                <li>Interactive 36-slot head color picker GUI.</li>
+                                <li>Configurable anti-abuse length bounds and banned word checks.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </main>
+
+        <!-- RIGHT TOC (ON THIS PAGE) -->
+        <aside class="doc-toc">
+            <div class="toc-header">On this page</div>
+            <div id="toc-lcc">
+                <a href="#lcc-overview" class="toc-link">Overview</a>
+                <a href="#lcc-installation" class="toc-link">Installation</a>
+                <a href="#lcc-commands" class="toc-link">Commands & Aliases</a>
+                <a href="#lcc-permissions" class="toc-link">Permissions</a>
+                <a href="#lcc-configuration" class="toc-link">Configuration</a>
+                <a href="#lcc-color-gui" class="toc-link">Color Selection GUI</a>
+                <a href="#lcc-previews" class="toc-link">Item & Inv Previews</a>
+                <a href="#lcc-moderation" class="toc-link">Chat Moderation</a>
+                <a href="#lcc-editor" class="toc-link">In-Game Editor</a>
+                <a href="#lcc-support" class="toc-link">Support & Discord</a>
+                <a href="#lcc-releases" class="toc-link">Releases & History</a>
+            </div>
+            <div id="toc-lcr" class="hidden">
+                <a href="#lcr-overview" class="toc-link">Overview</a>
+                <a href="#lcr-how-it-works" class="toc-link">LuckPerms Integration</a>
+                <a href="#lcr-installation" class="toc-link">Installation</a>
+                <a href="#lcr-commands" class="toc-link">Commands & Aliases</a>
+                <a href="#lcr-permissions" class="toc-link">Permissions</a>
+                <a href="#lcr-configuration" class="toc-link">Configuration</a>
+                <a href="#lcr-rankcolor-gui" class="toc-link">Rank Color GUI</a>
+                <a href="#lcr-custom-titles" class="toc-link">Custom Titles & Prefixes</a>
+                <a href="#lcr-anti-abuse" class="toc-link">Anti-Abuse Filter</a>
+                <a href="#lcr-support" class="toc-link">Support & Discord</a>
+                <a href="#lcr-releases" class="toc-link">Releases & History</a>
+            </div>
+        </aside>
+
+    </div>
 
     <script>
-        function switchPlugin(id) {
-            document.querySelectorAll('.plugin-tab').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+        function setPlugin(id) {
+            const isLcc = (id === 'lcc');
+            document.getElementById('btn-lcc').classList.toggle('active', isLcc);
+            document.getElementById('btn-lcr').classList.toggle('active', !isLcc);
 
-            // Navbars
-            document.getElementById('nav-luxchatcolor').classList.add('hidden');
-            document.getElementById('nav-luxcustomrank').classList.add('hidden');
-            document.getElementById('nav-' + id).classList.remove('hidden');
+            document.getElementById('sidebar-lcc').classList.toggle('hidden', !isLcc);
+            document.getElementById('sidebar-lcr').classList.toggle('hidden', isLcc);
 
-            // Content
-            document.getElementById('content-luxchatcolor').classList.add('hidden');
-            document.getElementById('content-luxcustomrank').classList.add('hidden');
-            document.getElementById('content-' + id).classList.remove('hidden');
+            document.getElementById('doc-lcc').classList.toggle('hidden', !isLcc);
+            document.getElementById('doc-lcr').classList.toggle('hidden', isLcc);
+
+            document.getElementById('toc-lcc').classList.toggle('hidden', !isLcc);
+            document.getElementById('toc-lcr').classList.toggle('hidden', isLcc);
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function copyCode(btn) {
-            const pre = btn.parentElement;
-            const code = pre.querySelector('code').innerText;
-            navigator.clipboard.writeText(code).then(() => {
+        function activateLink(el) {
+            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function copySnippet(btn) {
+            const pre = btn.closest('.code-container').querySelector('pre code');
+            navigator.clipboard.writeText(pre.innerText).then(() => {
                 const old = btn.innerText;
                 btn.innerText = 'Copied!';
-                btn.style.borderColor = 'var(--pink)';
-                btn.style.color = 'var(--pink)';
+                btn.style.color = '#38bdf8';
                 setTimeout(() => {
                     btn.innerText = old;
-                    btn.style.borderColor = '';
                     btn.style.color = '';
                 }, 2000);
             });
         }
 
-        function filterDocs() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const activeNav = document.querySelector('.nav-links:not(.hidden)');
-            const items = activeNav.querySelectorAll('.nav-item');
+        function handleSearch() {
+            const query = document.getElementById('docSearch').value.toLowerCase();
+            const activeSidebar = document.querySelector('.doc-sidebar > div:not(.hidden)');
+            const items = activeSidebar.querySelectorAll('.sidebar-item');
 
             items.forEach(item => {
-                const match = item.innerText.toLowerCase().includes(query);
-                item.style.display = match ? 'block' : 'none';
+                const text = item.innerText.toLowerCase();
+                item.style.display = text.includes(query) ? 'flex' : 'none';
             });
         }
     </script>
