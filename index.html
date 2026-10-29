@@ -747,9 +747,7 @@
 
             <!-- Plugin Selector Dropdown -->
             <div class="plugin-brand-box" onclick="toggleDropdown()">
-                <div class="plugin-icon-avatar" id="brand-avatar">
-                    <img src="images/lcc-icon.png" alt="icon" style="width: 100%; height: 100%; border-radius: 6px; display: block;">
-                </div>
+                <div class="plugin-icon-avatar" id="brand-avatar">🎨</div>
                 <div class="plugin-title">
                     <span id="brand-name">LuxChatColor</span>
                     <span class="docs-badge">Docs</span>
@@ -884,7 +882,7 @@
                 </div>
 
                 <div class="hero-banner-container">
-                    <img src="images/lcc-hero.png" alt="LuxChatColor Hero">
+                    <img src="images/lcc-banner.png" alt="LuxChatColor Banner">
                 </div>
 
                 <p class="lead-paragraph">
@@ -991,8 +989,8 @@
                             <td>Equips a color directly via name tag.</td>
                         </tr>
                         <tr>
-                            <td><code>[item]</code></td>
-                            <td><code>/item</code></td>
+                            <td><code>[item]</code> or <code>[i]</code></td>
+                            <td><code>/item</code>, <code>/i</code></td>
                             <td><span class="tag-pill">luxchatcolor.preview.item</span></td>
                             <td>Displays held item with native client tooltip.</td>
                         </tr>
@@ -1106,23 +1104,30 @@ moderation:
                 <h2 class="section-header" id="gui">
                     <span>🎨</span> Color Selection GUI
                 </h2>
-                <img src="images/lcc-gui-preview.png" alt="Color GUI Preview" class="section-image">
-                <img src="images/lcc-features.png" alt="Color GUI Features" class="section-image">
+                <img src="images/gui-chatcolors.png" alt="In-game /chatcolors GUI" style="max-width: 480px; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 16px 0 20px; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
                 <p>
-                    Players type <code>/chatcolors</code> to open a 54-slot menu built with custom textured skull skins:
+                    Players type <code>/chatcolors</code> (or <code>/color</code>) to open a 54-slot menu built with custom textured skull skins and color blocks:
                 </p>
                 <ul>
                     <li><strong>Status Feedback:</strong> Unlocked colors show a green checkmark and active name preview. Locked colors show a red mark with the exact permission required.</li>
-                    <li><strong>Player Card:</strong> Shows active style and total unlocked count.</li>
-                    <li><strong>Reset Button:</strong> Clicking your active color unselects it, restoring default white chat.</li>
+                    <li><strong>Player Head Card (Slot 49):</strong> Displays your active chat color style and personal skin.</li>
+                    <li><strong>Reset Barrier (Slot 45):</strong> Clicking the red barrier unselects your active color, restoring default white chat.</li>
                 </ul>
 
                 <h2 class="section-header" id="previews">
-                    <span>🗡️</span> Previews ([item] & [inv])
+                    <span>🗡️</span> Previews ([item], [i] & [inv])
                 </h2>
+                <h3 class="subsection-header">Item Tooltip Hover Previews ([item] or [i])</h3>
                 <p>
-                    Typing <code>[item]</code> renders the native Minecraft item tooltip including enchantments, custom lore, and NBT data. Typing <code>[inv]</code> posts an expiring snapshot link to the player's inventory.
+                    Typing <code>[item]</code> or <code>[i]</code> in chat replaces the tag with the held item's localized name. Hovering over it in chat renders the client's native tooltip, displaying custom names, enchantments, lore lines, attributes, and attack speed:
                 </p>
+                <img src="images/item-tooltip.png" alt="In-game item tooltip preview" style="max-width: 420px; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 12px 0 24px; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+
+                <h3 class="subsection-header">Inventory Snapshot Previews ([inv])</h3>
+                <p>
+                    Typing <code>[inv]</code> shares a clickable link in chat. Clicking opens a read-only snapshot GUI revealing the sender's main inventory, equipped armor, and offhand slots:
+                </p>
+                <img src="images/inv-preview.png" alt="In-game inventory snapshot preview" style="max-width: 480px; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 12px 0 24px; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
 
                 <h2 class="section-header" id="moderation">
                     <span>🛡️</span> Chat Filter
@@ -1166,7 +1171,7 @@ moderation:
                 </div>
 
                 <div class="hero-banner-container">
-                    <img src="images/lcr-hero.png" alt="LuxCustomRank Hero">
+                    <img src="images/lcr-banner.png" alt="LuxCustomRank Banner">
                 </div>
 
                 <p class="lead-paragraph">
@@ -1451,7 +1456,7 @@ gui:
             const isLcc = (id === 'lcc');
 
             document.getElementById('brand-name').innerText = isLcc ? 'LuxChatColor' : 'LuxCustomRank';
-            document.getElementById('brand-avatar').innerHTML = `<img src="images/${isLcc ? 'lcc' : 'lcr'}-icon.png" alt="icon" style="width: 100%; height: 100%; border-radius: 6px; display: block;">`;
+            document.getElementById('brand-avatar').innerText = isLcc ? '🎨' : '👑';
 
             document.getElementById('opt-lcc').classList.toggle('active', isLcc);
             document.getElementById('opt-lcr').classList.toggle('active', !isLcc);
