@@ -819,6 +819,9 @@
                 <a href="#moderation" class="nav-btn-item" onclick="makeActive(this)">
                     <span class="nav-icon">🛡️</span> Chat Filter
                 </a>
+                <a href="#welcomemsg" class="nav-btn-item" onclick="makeActive(this)">
+                    <span class="nav-icon">✨</span> Welcome Messages
+                </a>
                 <a href="#releases" class="nav-btn-item" onclick="makeActive(this)">
                     <span class="nav-icon">📜</span> Releases
                 </a>
@@ -851,6 +854,9 @@
                 </a>
                 <a href="#lcr-gui" class="nav-btn-item" onclick="makeActive(this)">
                     <span class="nav-icon">👑</span> Rank Colour GUI
+                </a>
+                <a href="#lcr-nameplates" class="nav-btn-item" onclick="makeActive(this)">
+                    <span class="nav-icon">✨</span> Gradient Nameplates
                 </a>
                 <a href="#lcr-custom" class="nav-btn-item" onclick="makeActive(this)">
                     <span class="nav-icon">✏️</span> Custom Titles
@@ -1012,6 +1018,42 @@
                             <td><span class="tag-pill">luxchatcolor.admin</span></td>
                             <td>Reloads configuration and filters.</td>
                         </tr>
+                        <tr>
+                            <td><code>/welcomemsg</code></td>
+                            <td><code>/welcome</code>, <code>/joinmsg</code></td>
+                            <td><span class="tag-pill">luxchatcolor.welcomemsg.use</span></td>
+                            <td>Opens the 54-slot Welcome Message Spaces GUI.</td>
+                        </tr>
+                        <tr>
+                            <td><code>/welcomemsg preview</code></td>
+                            <td><code>/welcome preview</code></td>
+                            <td><span class="tag-pill">luxchatcolor.welcomemsg.use</span></td>
+                            <td>Simulates your join message announcement in chat.</td>
+                        </tr>
+                        <tr>
+                            <td><code>/welcomemsg set &lt;space&gt; &lt;msg&gt;</code></td>
+                            <td><code>/welcome set</code></td>
+                            <td><span class="tag-pill">luxchatcolor.welcomemsg.spaces.&lt;N&gt;</span></td>
+                            <td>Sets custom join text for a specific space directly.</td>
+                        </tr>
+                        <tr>
+                            <td><code>/welcomemsg clear &lt;space&gt;</code></td>
+                            <td><code>/welcome clear</code></td>
+                            <td><span class="tag-pill">luxchatcolor.welcomemsg.spaces.&lt;N&gt;</span></td>
+                            <td>Clears custom join text for a specific space.</td>
+                        </tr>
+                        <tr>
+                            <td><code>/welcomemsg reset</code></td>
+                            <td><code>/welcome reset</code></td>
+                            <td><span class="tag-pill">luxchatcolor.welcomemsg.use</span></td>
+                            <td>Wipes all custom spaces and reverts to tier default.</td>
+                        </tr>
+                        <tr>
+                            <td><code>/lccadmin testjoin &lt;tier|firsttime&gt; [player]</code></td>
+                            <td><code>/luxchatcoloradmin testjoin</code></td>
+                            <td><span class="tag-pill">luxchatcolor.admin</span></td>
+                            <td>Broadcasts a test join banner or first-time join count.</td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -1062,6 +1104,26 @@
                             <td><code>luxchatcolor.admin</code></td>
                             <td><span class="tag-gray">OP</span></td>
                             <td>Access to admin commands and GUI editor.</td>
+                        </tr>
+                        <tr>
+                            <td><code>luxchatcolor.welcomemsg.use</code></td>
+                            <td><span class="tag-gray">Everyone (true)</span></td>
+                            <td>Access to open the welcome message spaces menu and customize join message.</td>
+                        </tr>
+                        <tr>
+                            <td><code>luxchatcolor.welcomemsg.spaces.*</code></td>
+                            <td><span class="tag-gray">OP</span></td>
+                            <td>Unlocks all 20 welcome message rotation spaces.</td>
+                        </tr>
+                        <tr>
+                            <td><code>luxchatcolor.welcomemsg.spaces.&lt;1-20&gt;</code></td>
+                            <td><span class="tag-gray">OP</span></td>
+                            <td>Unlocks a specific space slot (e.g. <code>luxchatcolor.welcomemsg.spaces.3</code>).</td>
+                        </tr>
+                        <tr>
+                            <td><code>luxchatcolor.welcomemsg.tier.&lt;tier&gt;</code></td>
+                            <td><span class="tag-gray">OP</span></td>
+                            <td>Grants access to a configured server rank tier join banner (e.g. <code>owner</code>, <code>vip</code>).</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1136,12 +1198,33 @@ moderation:
                     Rule files in <code>plugins/LuxChatColor/filters/</code> match prohibited words and regex patterns with automated escalation ladders (Warning at 3, Mute at 6, Kick at 9).
                 </p>
 
+                <!-- Welcome Messages Section -->
+                <h2 class="section-header" id="welcomemsg">
+                    <span>✨</span> Welcome Messages & Multi-Slot Spaces
+                </h2>
+                <p>
+                    LuxChatColor includes a high-end join broadcast engine with <strong>Multi-Slot Spaces</strong>. Players can configure up to 20 distinct custom join messages, which automatically rotate at random with equal probability whenever they connect to the server!
+                </p>
+                <div class="tip-banner">
+                    <strong>Chance-Based Message Rotation:</strong> If a player configures 3 spaces, each join message has an exact <code>33.3%</code> chance of being broadcast on join. The active probability is dynamically calculated and displayed in the player's profile card.
+                </div>
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>Up to 20 Customizable Spaces:</strong> Unlocked via permissions <code>luxchatcolor.welcomemsg.spaces.&lt;1-20&gt;</code> or <code>luxchatcolor.welcomemsg.spaces.*</code>.</li>
+                    <li><strong>Configurable Server Ranks & Tiers:</strong> Fully customizable ranks in <code>config.yml</code> (Owner, Admin, VIP, Member, etc.) with custom prefix symbols (👑, ✦, ★), gradient borders, sounds, and fallback default messages.</li>
+                    <li><strong>Interactive 54-Slot GUI (<code>/welcomemsg</code>):</strong> Sleek, anti-slant menu featuring a real-time Player Profile Card (Slot 4), active enchanted books with live chances, an instant chat banner preview button (Slot 49), and a reset barrier (Slot 46).</li>
+                    <li><strong>Chat Prompt Editing:</strong> Left-clicking an unlocked space safely prompts the player in chat to type their custom join text with length limits and <code>'cancel'</code> support.</li>
+                    <li><strong>First-Time Join Counter:</strong> Broadcasts a celebratory first-join announcement displaying the player's unique server join number (e.g., <code>Player number = #42</code>).</li>
+                    <li><strong>Rejoin Spam Cooldown:</strong> Configurable cooldown (default 30s) prevents players from spamming join broadcasts by rapidly reconnecting.</li>
+                </ul>
+
                 <!-- Releases Section -->
                 <h2 class="section-header" id="releases">
                     <span>📜</span> Releases
                 </h2>
                 <p><strong>v1.2.0 (Latest)</strong></p>
                 <ul>
+                    <li>Implemented dynamic <strong>Welcome Messages & 20-Slot Spaces System</strong> with chance-based rotation, chat prompt editing, server rank tiers, and first-join counter.</li>
                     <li>Separated rank prefix coloring into sister plugin (<code>LuxCustomRank</code>).</li>
                     <li>Fixed null component exception on <code>/chatcolors none</code>.</li>
                     <li>Enhanced inventory snapshot caching and garbage collection.</li>
@@ -1264,6 +1347,12 @@ moderation:
                             <td>Opens the visual rank color picker GUI.</td>
                         </tr>
                         <tr>
+                            <td><code>/nameplate</code></td>
+                            <td><code>/np</code>, <code>/gradient</code></td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate</span></td>
+                            <td>Opens the 45-slot gradient nameplate picker GUI.</td>
+                        </tr>
+                        <tr>
                             <td><code>/customrank &lt;title&gt;</code></td>
                             <td><code>/customprefix</code>, <code>/setrank</code></td>
                             <td><span class="tag-pill">luxcustomrank.prefix</span></td>
@@ -1274,6 +1363,24 @@ moderation:
                             <td><code>/resetrank</code>, <code>/resetprefix</code></td>
                             <td><span class="tag-pill">luxcustomrank.clear</span></td>
                             <td>Clears custom prefix and restores group rank.</td>
+                        </tr>
+                        <tr>
+                            <td><code>/nameplateadmin set &lt;player&gt; &lt;palette&gt;</code></td>
+                            <td><code>/npa set</code></td>
+                            <td><span class="tag-pill">luxcustomrank.admin</span></td>
+                            <td>Force-assigns a gradient nameplate to a player.</td>
+                        </tr>
+                        <tr>
+                            <td><code>/nameplateadmin clear &lt;player&gt;</code></td>
+                            <td><code>/npa clear</code></td>
+                            <td><span class="tag-pill">luxcustomrank.admin</span></td>
+                            <td>Clears a player's nameplate back to matching rank color.</td>
+                        </tr>
+                        <tr>
+                            <td><code>/nameplateadmin list</code></td>
+                            <td><code>/npa list</code></td>
+                            <td><span class="tag-pill">luxcustomrank.admin</span></td>
+                            <td>Lists all 14 pre-made gradient palettes.</td>
                         </tr>
                         <tr>
                             <td><code>/luxcustomrankadmin reload</code></td>
@@ -1306,6 +1413,21 @@ moderation:
                             <td><code>luxcustomrank.color</code></td>
                             <td><span class="tag-gray">OP</span></td>
                             <td>Allows opening <code>/rankcolor</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>luxcustomrank.nameplate</code></td>
+                            <td><span class="tag-gray">OP</span></td>
+                            <td>Allows opening <code>/nameplate</code> to select gradient nameplates.</td>
+                        </tr>
+                        <tr>
+                            <td><code>luxcustomrank.nameplate.*</code></td>
+                            <td><span class="tag-gray">OP</span></td>
+                            <td>Access to all gradient nameplate palettes.</td>
+                        </tr>
+                        <tr>
+                            <td><code>luxcustomrank.nameplate.&lt;id&gt;</code></td>
+                            <td><span class="tag-gray">OP</span></td>
+                            <td>Access to specific nameplate (e.g. <code>luxcustomrank.nameplate.sunset</code>).</td>
                         </tr>
                         <tr>
                             <td><code>luxcustomrank.prefix</code></td>
@@ -1368,11 +1490,141 @@ gui:
                 <h2 class="section-header" id="lcr-gui">
                     <span>👑</span> Rank Colour GUI
                 </h2>
-                <img src="images/lcr-gui-preview.png" alt="Rank Color GUI Preview" class="section-image">
-                <img src="images/lcr-features.png" alt="Features Overview" class="section-image">
+                <img src="images/lcr-gui-preview.png" alt="Rank Color GUI Preview" style="max-width: 480px; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 16px 0 20px; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
                 <p>
-                    Running <code>/rankcolor</code> opens a 36-slot GUI featuring custom-skinned player heads. Clicking any unlocked head updates the player's personal prefix color in LuckPerms without server restarts.
+                    Running <code>/rankcolor</code> opens a 36-slot GUI featuring 3D colored orb heads powered by Minecraft-Heads. Clicking any unlocked head updates the player's personal rank color in LuckPerms without server restarts.
                 </p>
+                <ul>
+                    <li><strong>Prestige Dual-Color Rule:</strong> The rank title is bolded in the chosen color (e.g. <code>&amp;e&amp;l[VIP]</code>), and the player's username automatically matches the rank color without bold (<code>&amp;ePlayerName</code>).</li>
+                    <li><strong>LuxChatColor Lore Engine:</strong> Lore cards feature authentic <code>&lt;smallcaps:rank color&gt;</code> headings, colorized bullet bars (<code>&amp;%code%| ▸</code>), and dynamic status pills (<code>&#FF0000&amp;lLOCKED</code>, <code>&lt;green&gt;&lt;bold&gt;SELECTED&lt;/bold&gt;</code>, <code>&amp;e&amp;lCLICK HERE</code>) with item glint on active selection.</li>
+                </ul>
+
+                <!-- Gradient Nameplates Section -->
+                <h2 class="section-header" id="lcr-nameplates">
+                    <span>✨</span> Gradient Nameplates (/nameplate &amp; /nameplateadmin)
+                </h2>
+                <p>
+                    Type <code>/nameplate</code> (or <code>/np</code>) to open a 45-slot visual palette menu with <strong>14 pre-made gradient styles</strong>. Selecting a nameplate applies a smooth multi-stop gradient directly across the player's username in chat while preserving their bold rank prefix!
+                </p>
+
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>Palette</th>
+                            <th>Gradient Tag</th>
+                            <th>Description</th>
+                            <th>Permission</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color: #FF6B35;">Sunset</strong></td>
+                            <td><code>&lt;gradient:#FF6B35:#FF2E63&gt;</code></td>
+                            <td>Warm twilight orange to hot pink</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.sunset</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #0099FF;">Ocean</strong></td>
+                            <td><code>&lt;gradient:#0099FF:#00D4AA&gt;</code></td>
+                            <td>Deep ocean blue to turquoise aqua wave</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.ocean</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #38EF7D;">Forest</strong></td>
+                            <td><code>&lt;gradient:#11998E:#38EF7D&gt;</code></td>
+                            <td>Deep pine teal to vivid emerald green</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.forest</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #E100FF;">Royal</strong></td>
+                            <td><code>&lt;gradient:#7F00FF:#E100FF&gt;</code></td>
+                            <td>Imperial violet to royal magenta</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.royal</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #FF416C;">Cherry</strong></td>
+                            <td><code>&lt;gradient:#FF416C:#FF4B2B&gt;</code></td>
+                            <td>Japanese sakura blossom to ember fire</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.cherry</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #11FFBD;">Ice</strong></td>
+                            <td><code>&lt;gradient:#AAFFA9:#11FFBD&gt;</code></td>
+                            <td>Frosted mint to arctic cyan freeze</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.ice</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #FFD200;">Gold</strong></td>
+                            <td><code>&lt;gradient:#F7971E:#FFD200&gt;</code></td>
+                            <td>Molten amber shimmer to 24k bright gold</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.gold</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rainbow</strong></td>
+                            <td><code>&lt;rainbow&gt;</code></td>
+                            <td>Full animated chromatic spectrum</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.rainbow</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #FC4A1A;">Blaze</strong></td>
+                            <td><code>&lt;gradient:#FC4A1A:#F7B733&gt;</code></td>
+                            <td>Nether magma red to solar flare yellow</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.blaze</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #C9D6FF;">Moonlight</strong></td>
+                            <td><code>&lt;gradient:#C9D6FF:#E2E2E2&gt;</code></td>
+                            <td>Soft nocturnal lavender to platinum pearl</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.moonlight</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #00F260;">Neon</strong></td>
+                            <td><code>&lt;gradient:#00F260:#0575E6&gt;</code></td>
+                            <td>Cyberpunk electric lime to laser blue</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.neon</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #8A2BE2;">Void</strong></td>
+                            <td><code>&lt;gradient:#0F0C29:#302B63:#24243E&gt;</code></td>
+                            <td>Deep cosmic purple to obsidian shadows</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.void</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #00FF7F;">Toxic</strong></td>
+                            <td><code>&lt;gradient:#98FF98:#00FF7F&gt;</code></td>
+                            <td>Radioactive biohazard green</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.toxic</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #FF99AC;">Cotton Candy</strong></td>
+                            <td><code>&lt;gradient:#FF9A8B:#FF6A88:#FF99AC&gt;</code></td>
+                            <td>Sweet pastel confection pink and peach</td>
+                            <td><span class="tag-pill">luxcustomrank.nameplate.cottoncandy</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-header">Admin Management (/nameplateadmin)</h3>
+                <p>
+                    Administrators have full command-line authority to inspect and assign nameplates to any player without GUI interaction:
+                </p>
+                <ul>
+                    <li><code>/nameplateadmin set &lt;player&gt; &lt;palette&gt;</code> - Assigns a specific gradient palette instantly.</li>
+                    <li><code>/nameplateadmin clear &lt;player&gt;</code> - Removes gradient styling, restoring the player's matching rank color.</li>
+                    <li><code>/nameplateadmin list</code> - Dumps all active palettes and preview tags to chat.</li>
+                    <li><code>/nameplateadmin reload</code> - Hot-reloads <code>config.yml</code> palettes and permissions.</li>
+                </ul>
+
+                <h3 class="subsection-header">Native TAB &amp; Overhead Nametag Integration</h3>
+                <p>
+                    Unlike clunky hologram plugins that spawn laggy floating armor stands following players around, LuxCustomRank natively integrates with Minecraft's core client engine and popular plugins like <strong>TAB (NEZNAMY)</strong>:
+                </p>
+                <ul>
+                    <li><strong>Dynamic Username Injection:</strong> Palette templates automatically replace <code>%name%</code> and <code>%player%</code> with the player's actual in-game username with zero configuration.</li>
+                    <li><strong>TAB Plugin Metadata:</strong> Automatically sets LuckPerms metadata nodes <code>customtabname</code> and <code>customtagname</code>. If your TAB configuration uses <code>customtabname: "%player%"</code>, the gradient palette seamlessly displays in the player list and overhead nametag!</li>
+                    <li><strong>Paper &amp; Spigot Direct Tablist API:</strong> Directly updates <code>player.playerListName()</code> and <code>player.displayName()</code> in real-time on join and palette change.</li>
+                    <li><strong>Zero Hologram Overhead:</strong> 100% native client rendering with zero entity ticking, no teleport desync, and buttery smooth performance.</li>
+                </ul>
 
                 <h2 class="section-header" id="lcr-custom">
                     <span>✏️</span> Custom Titles
@@ -1396,7 +1648,10 @@ gui:
                 <ul>
                     <li>Initial release of LuxCustomRank.</li>
                     <li>Direct LuckPerms User Meta PrefixNode integration.</li>
-                    <li>Interactive 36-slot head color picker GUI.</li>
+                    <li>Interactive 36-slot 3D head color picker GUI (<code>/rankcolor</code>).</li>
+                    <li>Interactive 45-slot Gradient Nameplate picker GUI (<code>/nameplate</code>) with 14 aesthetic palettes.</li>
+                    <li>Native TAB list &amp; Overhead Nametag synchronization (<code>customtabname</code> / <code>customtagname</code>).</li>
+                    <li>Full administrative CLI controls via <code>/nameplateadmin</code>.</li>
                     <li>Anti-abuse length constraints and banned words filtering.</li>
                 </ul>
 
@@ -1423,6 +1678,7 @@ gui:
                 <a href="#gui" class="toc-link">Color GUI</a>
                 <a href="#previews" class="toc-link">Previews</a>
                 <a href="#moderation" class="toc-link">Chat Filter</a>
+                <a href="#welcomemsg" class="toc-link">Welcome Messages</a>
                 <a href="#releases" class="toc-link">Releases</a>
             </div>
             <div id="toc-lcr" class="hidden">
@@ -1432,6 +1688,7 @@ gui:
                 <a href="#lcr-permissions" class="toc-link">Permissions</a>
                 <a href="#lcr-configuration" class="toc-link">Configuration</a>
                 <a href="#lcr-gui" class="toc-link">Rank Colour GUI</a>
+                <a href="#lcr-nameplates" class="toc-link">Gradient Nameplates</a>
                 <a href="#lcr-custom" class="toc-link">Custom Titles</a>
                 <a href="#lcr-filter" class="toc-link">Anti-Abuse Filter</a>
                 <a href="#lcr-releases" class="toc-link">Releases</a>
