@@ -1,907 +1,584 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark" data-plugin="lcc">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxanaStudio Wiki</title>
-    <style>
-        :root {
-            --bg-page: #0f1115;
-            --bg-nav: #0b0c0f;
-            --bg-sidebar: #0f1115;
-            --bg-card: #15181e;
-            --bg-card-hover: #1b1f27;
-            --border: #232730;
-            --border-light: #2d323e;
-            --text-main: #e4e7eb;
-            --text-muted: #8b929e;
-            --text-heading: #ffffff;
-            --accent: #d946ef;
-            --accent-pink: #ec4899;
-            --accent-purple: #a855f7;
-            --accent-blue: #38bdf8;
-            --badge-bg: rgba(56, 189, 248, 0.15);
-            --badge-color: #38bdf8;
-            --active-item-bg: rgba(217, 70, 239, 0.12);
-            --active-item-text: #f472b6;
-            --code-bg: #1a1e26;
-            --code-text: #e2e8f0;
-            --check: #22c55e;
-            --cross: #ef4444;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-page);
-            color: var(--text-main);
-            line-height: 1.6;
-            font-size: 15px;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Top Navigation Header */
-        header.site-header {
-            position: sticky;
-            top: 0;
-            height: 62px;
-            background: var(--bg-nav);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            z-index: 1000;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .back-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 16px;
-            padding: 6px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            transition: color 0.15s;
-        }
-
-        .back-btn:hover {
-            color: var(--text-main);
-        }
-
-        .plugin-brand-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            user-select: none;
-            position: relative;
-        }
-
-        .plugin-icon-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 6px;
-            background: linear-gradient(135deg, var(--accent-pink), var(--accent));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            box-shadow: 0 2px 8px rgba(217, 70, 239, 0.3);
-        }
-
-        .plugin-title {
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--text-heading);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .docs-badge {
-            font-size: 11px;
-            background: var(--badge-bg);
-            color: var(--badge-color);
-            padding: 2px 7px;
-            border-radius: 4px;
-            font-weight: 600;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-
-        .plugin-switch-dropdown {
-            position: absolute;
-            top: 42px;
-            left: 0;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-            padding: 6px;
-            display: none;
-            min-width: 200px;
-            z-index: 200;
-        }
-
-        .plugin-switch-dropdown.show {
-            display: block;
-        }
-
-        .dropdown-opt {
-            padding: 8px 12px;
-            font-size: 13.5px;
-            font-weight: 600;
-            color: var(--text-muted);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .dropdown-opt:hover, .dropdown-opt.active {
-            background: var(--active-item-bg);
-            color: var(--active-item-text);
-        }
-
-        /* Header Middle Nav Links */
-        .header-links {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .header-nav-link {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13.5px;
-            font-weight: 500;
-            transition: color 0.15s;
-        }
-
-        .header-nav-link:hover {
-            color: var(--text-main);
-        }
-
-        /* Header Right Controls */
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 8px;
-            color: var(--text-muted);
-            font-size: 13px;
-            width: 230px;
-        }
-
-        .search-box input {
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            outline: none;
-            width: 100%;
-            font-size: 13px;
-        }
-
-        .search-shortcut {
-            font-size: 11px;
-            background: #1e222b;
-            padding: 2px 6px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-        }
-
-        /* Layout Structure */
-        .layout-container {
-            display: flex;
-            flex: 1;
-            max-width: 1480px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* Left Navigation Sidebar */
-        aside.left-sidebar {
-            width: 260px;
-            background: var(--bg-sidebar);
-            border-right: 1px solid var(--border);
-            padding: 20px 14px;
-            position: sticky;
-            top: 62px;
-            height: calc(100vh - 62px);
-            overflow-y: auto;
-            flex-shrink: 0;
-        }
-
-        .filter-input-box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 7px 12px;
-            margin-bottom: 16px;
-        }
-
-        .filter-input-box input {
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            outline: none;
-            font-size: 13px;
-            width: 100%;
-        }
-
-        .nav-group-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.8px;
-            color: var(--text-muted);
-            padding: 16px 10px 6px;
-        }
-
-        .nav-btn-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 12px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13.5px;
-            font-weight: 500;
-            border-radius: 6px;
-            transition: all 0.15s ease;
-            margin-bottom: 2px;
-        }
-
-        .nav-btn-item:hover {
-            background: var(--bg-card);
-            color: var(--text-main);
-        }
-
-        .nav-btn-item.active {
-            background: var(--active-item-bg);
-            color: var(--active-item-text);
-            font-weight: 600;
-        }
-
-        .nav-icon {
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 18px;
-        }
-
-        /* Center Content Column */
-        main.content-area {
-            flex: 1;
-            padding: 36px 54px 80px;
-            max-width: 880px;
-            min-width: 0;
-        }
-
-        /* Right Table of Contents */
-        aside.right-toc {
-            width: 240px;
-            padding: 36px 20px;
-            position: sticky;
-            top: 62px;
-            height: calc(100vh - 62px);
-            overflow-y: auto;
-            flex-shrink: 0;
-        }
-
-        .toc-title {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-muted);
-            margin-bottom: 14px;
-        }
-
-        .toc-link {
-            display: block;
-            color: var(--text-muted);
-            text-decoration: none;
-            padding: 5px 0;
-            font-size: 13.5px;
-            transition: color 0.15s;
-            line-height: 1.4;
-        }
-
-        .toc-link:hover {
-            color: var(--text-main);
-        }
-
-        /* Page Content Elements */
-        .content-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        h1.page-title {
-            font-size: 34px;
-            font-weight: 800;
-            color: var(--text-heading);
-            letter-spacing: -0.5px;
-        }
-
-        .copy-page-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .copy-page-btn:hover {
-            color: var(--text-main);
-            border-color: var(--border-light);
-        }
-
-        /* Hero Image Container */
-        .hero-banner-container {
-            margin: 16px 0 28px;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        .hero-banner-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .lead-paragraph {
-            font-size: 16px;
-            color: #d1d5db;
-            margin-bottom: 28px;
-            line-height: 1.6;
-        }
-
-        /* Section Headings with Icons */
-        h2.section-header {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-heading);
-            margin: 44px 0 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border);
-            scroll-margin-top: 80px;
-        }
-
-        h3.subsection-header {
-            font-size: 17px;
-            font-weight: 600;
-            color: var(--text-heading);
-            margin: 28px 0 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            scroll-margin-top: 80px;
-        }
-
-        p {
-            margin-bottom: 16px;
-            color: #c9d1d9;
-        }
-
-        ul, ol {
-            margin: 12px 0 20px 24px;
-            color: #c9d1d9;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        a.external-link {
-            color: var(--accent-blue);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        a.external-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Big Download Cards (NightExpress style) */
-        .big-action-card {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 16px 20px;
-            margin: 12px 0;
-            text-decoration: none;
-            color: var(--text-main);
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .big-action-card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-light);
-            transform: translateY(-1px);
-        }
-
-        .action-card-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: var(--accent);
-            border: 1px solid var(--border);
-        }
-
-        .action-card-title {
-            font-size: 15.5px;
-            font-weight: 700;
-            color: var(--text-heading);
-        }
-
-        .action-card-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        /* Compatibility Table */
-        table.compat-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 18px 0 28px;
-            background: var(--bg-card);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            font-size: 14px;
-        }
-
-        table.compat-table th {
-            background: #12151b;
-            padding: 12px 16px;
-            text-align: center;
-            font-weight: 700;
-            color: var(--text-heading);
-            border-bottom: 1px solid var(--border);
-        }
-
-        table.compat-table th:first-child {
-            text-align: left;
-        }
-
-        table.compat-table td {
-            padding: 11px 16px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            color: #d1d5db;
-        }
-
-        table.compat-table td:first-child {
-            text-align: left;
-            font-weight: 600;
-        }
-
-        table.compat-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .mark-check {
-            color: var(--check);
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .mark-cross {
-            color: var(--cross);
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        /* Reference Tables */
-        table.ref-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 18px 0 28px;
-            background: var(--bg-card);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            font-size: 13.5px;
-        }
-
-        table.ref-table th {
-            background: #12151b;
-            padding: 10px 14px;
-            text-align: left;
-            font-weight: 600;
-            color: var(--text-heading);
-            border-bottom: 1px solid var(--border);
-        }
-
-        table.ref-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid var(--border);
-            color: #c9d1d9;
-        }
-
-        table.ref-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Monospace and Tags */
-        code {
-            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-            font-size: 12.5px;
-            background: var(--code-bg);
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: #ff7b72;
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .tag-pill {
-            display: inline-block;
-            font-family: ui-monospace, monospace;
-            font-size: 12px;
-            padding: 2px 7px;
-            border-radius: 4px;
-            background: rgba(168, 85, 247, 0.15);
-            color: #c084fc;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-        }
-
-        .tag-gray {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* Code Block Container */
-        .code-panel {
-            background: #0d1117;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin: 16px 0 24px;
-            overflow: hidden;
-        }
-
-        .code-panel-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 14px;
-            background: #161a22;
-            border-bottom: 1px solid var(--border);
-            font-size: 12px;
-            color: var(--text-muted);
-            font-family: ui-monospace, monospace;
-        }
-
-        .code-copy-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .code-copy-btn:hover {
-            color: var(--text-main);
-            background: var(--bg-card);
-        }
-
-        pre {
-            padding: 14px 16px;
-            overflow-x: auto;
-            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-            font-size: 13px;
-            line-height: 1.5;
-            color: #e6edf3;
-        }
-
-        pre code {
-            background: transparent;
-            padding: 0;
-            color: inherit;
-            border: none;
-        }
-
-        /* Next Page Card (Screenshot 4) */
-        .next-page-box {
-            display: flex;
-            justify-content: flex-end;
-            margin: 48px 0 20px;
-        }
-
-        .next-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 16px 24px;
-            text-decoration: none;
-            text-align: right;
-            transition: all 0.2s ease;
-            min-width: 220px;
-        }
-
-        .next-card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-light);
-            transform: translateX(2px);
-        }
-
-        .next-card-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .next-card-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--accent-blue);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 6px;
-        }
-
-        .section-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            margin: 16px 0 24px;
-            display: block;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        @media (max-width: 1080px) {
-            aside.right-toc {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            aside.left-sidebar {
-                display: none;
-            }
-            main.content-area {
-                padding: 20px;
-            }
-            .header-links, .search-box {
-                display: none;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LuxChatColor · LuxanaStudio Wiki</title>
+<meta name="description" content="Documentation for LuxChatColor and LuxCustomRank, Paper plugins by LuxanaStudio.">
+<meta name="theme-color" content="#0c0d10">
+<link id="favicon" rel="icon" type="image/png" href="images/lcc-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('lux-theme'); } catch (e) {}
+  if (t !== 'light' && t !== 'dark') t = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  document.documentElement.dataset.theme = t;
+  var p = null;
+  try { p = localStorage.getItem('lux-plugin'); } catch (e) {}
+  var h = location.hash;
+  document.documentElement.dataset.plugin = /^#lcr-/.test(h) ? 'lcr' : (/^#/.test(h) && h.length > 1 ? 'lcc' : (p === 'lcr' ? 'lcr' : 'lcc'));
+})();
+</script>
+<style>
+/* ---------- tokens ---------- */
+:root {
+  --font-ui: "Schibsted Grotesk", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --header-h: 56px;
+  --side-w: 272px;
+  --toc-w: 220px;
+}
+
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0c0d10;
+  --surface: #13151a;
+  --surface-2: #1a1d23;
+  --line: rgba(255, 255, 255, .085);
+  --line-strong: rgba(255, 255, 255, .17);
+  --text: #eceef2;
+  --text-2: #b9bcc6;
+  --muted: #8d919c;
+  --code-bg: rgba(255, 255, 255, .07);
+  --code-panel: #0a0b0e;
+  --tile: #0a0b0e;
+  --ok: #4ade80;
+  --ring: rgba(255, 255, 255, .2);
+  --shadow: 0 18px 50px rgba(0, 0, 0, .55);
+  --y-str: #a5e3b4;
+  --y-num: #f1b96e;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --surface-2: #f3f3f0;
+  --line: rgba(20, 22, 28, .1);
+  --line-strong: rgba(20, 22, 28, .24);
+  --text: #15171c;
+  --text-2: #3a3e47;
+  --muted: #666a75;
+  --code-bg: rgba(20, 22, 28, .06);
+  --code-panel: #f4f4f1;
+  --tile: #0a0b0e;
+  --ok: #15803d;
+  --ring: rgba(20, 22, 28, .25);
+  --shadow: 0 18px 50px rgba(20, 22, 28, .16);
+  --y-str: #166534;
+  --y-num: #9a4a07;
+}
+
+/* per-plugin accent, taken from each logo */
+:root[data-plugin="lcc"] { --accent: #ff6aa8; --accent-ink: #1a0610; --accent-soft: rgba(255, 106, 168, .12); }
+:root[data-plugin="lcr"] { --accent: #5db5ff; --accent-ink: #04111f; --accent-soft: rgba(93, 181, 255, .12); }
+:root[data-theme="light"][data-plugin="lcc"] { --accent: #c1236c; --accent-ink: #ffffff; --accent-soft: rgba(193, 35, 108, .09); }
+:root[data-theme="light"][data-plugin="lcr"] { --accent: #1763d1; --accent-ink: #ffffff; --accent-soft: rgba(23, 99, 209, .09); }
+
+/* ---------- base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 15.5px/1.65 var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+[hidden] { display: none !important; }
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+svg.i { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* ---------- top bar ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 60;
+  height: var(--header-h);
+  display: flex; align-items: center; gap: 22px;
+  padding: 0 max(20px, calc((100vw - 1440px) / 2 + 20px));
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.icon-btn.menu-btn { display: none; }
+.wordmark { display: flex; align-items: baseline; gap: 9px; text-decoration: none; font-size: 17px; font-weight: 700; letter-spacing: -.02em; white-space: nowrap; }
+.wordmark .sep { color: var(--line-strong); font-weight: 400; }
+.wordmark .wiki { color: var(--muted); font-weight: 500; }
+.header-spacer { flex: 1; }
+.header-links { display: flex; gap: 22px; }
+.header-links a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color .15s; }
+.header-links a:hover { color: var(--text); }
+.icon-btn {
+  display: grid; place-items: center; width: 34px; height: 34px;
+  background: transparent; border: 1px solid transparent; border-radius: 8px;
+  color: var(--muted); cursor: pointer; transition: color .15s, border-color .15s, background .15s;
+}
+.icon-btn:hover { color: var(--text); border-color: var(--line); background: var(--surface); }
+.search-btn {
+  display: flex; align-items: center; gap: 10px;
+  height: 34px; width: 236px; padding: 0 8px 0 12px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  color: var(--muted); font-size: 13.5px; cursor: pointer; transition: border-color .15s;
+}
+.search-btn:hover { border-color: var(--line-strong); }
+.search-btn span { flex: 1; text-align: left; }
+kbd {
+  font: 500 11px var(--font-ui); color: var(--muted);
+  padding: 2px 6px; border: 1px solid var(--line); border-radius: 5px; background: var(--bg);
+}
+.theme-btn .moon { display: none; }
+:root[data-theme="light"] .theme-btn .sun { display: none; }
+:root[data-theme="light"] .theme-btn .moon { display: block; }
+
+/* ---------- shell ---------- */
+.shell {
+  display: grid;
+  grid-template-columns: var(--side-w) minmax(0, 1fr) var(--toc-w);
+  max-width: 1440px; margin: 0 auto;
+}
+.sidebar {
+  position: sticky; top: var(--header-h); align-self: start;
+  height: calc(100vh - var(--header-h)); overflow-y: auto;
+  padding: 20px 16px 32px 20px;
+  border-right: 1px solid var(--line);
+  scrollbar-width: thin;
+}
+.content { min-width: 0; padding: 52px clamp(24px, 5vw, 68px) 120px; }
+.doc { max-width: 724px; }
+.toc {
+  position: sticky; top: var(--header-h); align-self: start;
+  max-height: calc(100vh - var(--header-h)); overflow-y: auto;
+  padding: 52px 20px 32px 4px;
+}
+
+/* ---------- product switcher ---------- */
+.switcher { position: relative; margin-bottom: 8px; }
+.switcher-btn {
+  width: 100%; display: flex; align-items: center; gap: 12px;
+  padding: 8px 10px 8px 8px; text-align: left; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  transition: border-color .15s;
+}
+.switcher-btn:hover, .switcher-btn[aria-expanded="true"] { border-color: var(--line-strong); }
+.switcher-btn .meta { flex: 1; min-width: 0; line-height: 1.25; }
+.switcher-btn .name { display: block; font-weight: 650; letter-spacing: -.01em; }
+.switcher-btn .sub { display: block; font: 400 12.5px var(--font-ui); color: var(--muted); margin-top: 2px; }
+.switcher-btn .i { color: var(--muted); }
+.tile {
+  width: 38px; height: 38px; flex: none; display: grid; place-items: center;
+  background: var(--tile); border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+}
+.tile img { width: 86%; height: 86%; display: block; }
+.switcher-menu {
+  position: absolute; z-index: 20; top: calc(100% + 6px); left: 0; right: 0;
+  padding: 6px; background: var(--surface); border: 1px solid var(--line-strong);
+  border-radius: 12px; box-shadow: var(--shadow);
+}
+.switcher-opt {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 8px;
+  background: none; border: 0; border-radius: 8px; text-align: left; cursor: pointer; text-decoration: none;
+}
+.switcher-opt:hover, .switcher-opt:focus-visible { background: var(--surface-2); }
+.switcher-opt strong { display: block; font-weight: 650; line-height: 1.25; }
+.switcher-opt small { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.3; }
+.switcher-opt .check { margin-left: auto; color: var(--accent); opacity: 0; }
+.switcher-opt[aria-checked="true"] .check { opacity: 1; }
+
+/* ---------- sidebar nav ---------- */
+.nav-label {
+  font: 600 12.5px var(--font-ui); letter-spacing: 0;
+  color: var(--text-2); padding: 20px 10px 6px;
+}
+.nav a {
+  position: relative; display: block; padding: 6px 10px; border-radius: 6px;
+  font-size: 14.5px; color: var(--text-2); text-decoration: none; transition: color .12s, background .12s;
+}
+.nav a:hover { color: var(--text); background: var(--surface-2); }
+.nav a[aria-current="true"] { color: var(--text); background: var(--surface-2); font-weight: 600; }
+.nav a[aria-current="true"]::before {
+  content: ""; position: absolute; left: 0; top: 7px; bottom: 7px; width: 2px; border-radius: 2px; background: var(--accent);
+}
+.nav a.ext::after { content: "\2197"; margin-left: 6px; font-size: 12px; color: var(--muted); }
+.sidebar-links { display: none; }
+
+/* ---------- on this page ---------- */
+.toc-title { font: 600 13px var(--font-ui); color: var(--text); margin-bottom: 10px; padding-left: 15px; }
+.toc a {
+  display: block; padding: 4px 0 4px 14px; margin-left: 0; border-left: 1px solid var(--line);
+  font-size: 13px; line-height: 1.4; color: var(--muted); text-decoration: none; transition: color .12s;
+}
+.toc a:hover { color: var(--text); }
+.toc a.on { color: var(--text); border-left-color: var(--accent); }
+
+/* ---------- hero ---------- */
+.content { container-type: inline-size; }
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 40px; align-items: end;
+  grid-template-areas: "title title" "body mark"; padding-bottom: 36px;
+}
+.hero h1 {
+  grid-area: title; margin: 0 0 22px;
+  font-size: clamp(34px, 5.4vw, 54px); font-size: min(58px, 7.6cqw);
+  line-height: 1; letter-spacing: -.035em; font-weight: 750; overflow-wrap: anywhere;
+}
+.hero-body { grid-area: body; }
+.hero .lead { font-size: 19px; line-height: 1.45; color: var(--text-2); max-width: 32ch; margin: 0 0 24px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px;
+  border: 1px solid var(--line-strong); border-radius: 8px; background: transparent;
+  font-size: 14.5px; font-weight: 600; color: var(--text); text-decoration: none; cursor: pointer;
+  transition: border-color .15s, background .15s, transform .15s;
+}
+.btn:hover { border-color: var(--text-2); background: var(--surface); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--accent); border-color: var(--accent); filter: brightness(1.08); }
+.hero-mark {
+  grid-area: mark; width: 148px; height: 148px; display: grid; place-items: center; padding: 16px;
+  background: var(--tile); border-radius: 32px; border: 1px solid var(--line-strong);
+}
+.hero-mark img { width: 100%; height: 100%; display: block; }
+.facts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px;
+  background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+}
+.facts > div { background: var(--bg); padding: 13px 16px 14px; }
+.facts dt { font: 500 13px var(--font-ui); color: var(--muted); }
+.facts dd { margin-top: 3px; font-weight: 600; font-size: 14.5px; }
+
+/* ---------- prose ---------- */
+.doc h2 {
+  position: relative; margin: 76px 0 18px; padding-top: 26px;
+  border-top: 1px solid var(--line);
+  font-size: 30px; line-height: 1.15; letter-spacing: -.025em; font-weight: 700;
+}
+.doc .hero + .facts + h2 { margin-top: 64px; }
+.doc h3 { margin: 40px 0 12px; font-size: 18.5px; line-height: 1.3; letter-spacing: -.015em; font-weight: 650; }
+.doc h2, .doc h3, .doc tr { scroll-margin-top: calc(var(--header-h) + 24px); }
+.anchor {
+  margin-left: 10px; font: 400 .7em var(--font-ui); color: var(--muted); text-decoration: none; opacity: 0; transition: opacity .15s;
+}
+h2:hover .anchor, h3:hover .anchor, .anchor:focus-visible { opacity: 1; }
+.anchor:hover { color: var(--accent); }
+.doc p { margin-bottom: 16px; color: var(--text-2); }
+.doc p strong, .doc li strong { color: var(--text); font-weight: 650; }
+.doc ul, .doc ol { margin: 4px 0 22px; padding-left: 22px; color: var(--text-2); }
+.doc li { margin-bottom: 9px; padding-left: 4px; }
+.doc li::marker { color: var(--muted); }
+.doc a.external-link { color: var(--accent); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); text-underline-offset: 3px; }
+.doc a.external-link:hover { text-decoration-color: var(--accent); }
+
+code {
+  font: 400 .86em var(--font-mono); padding: 2px 6px; border-radius: 5px;
+  background: var(--code-bg); color: var(--text); word-break: break-word;
+}
+pre code { padding: 0; background: none; border-radius: 0; font-size: inherit; word-break: normal; }
+
+.release { display: flex; align-items: center; gap: 10px; margin: 32px 0 10px !important; font: 650 19px var(--font-ui) !important; letter-spacing: -.01em !important; }
+.release em {
+  font: 600 12px var(--font-ui); font-style: normal;
+  color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); padding: 1px 7px; border-radius: 99px;
+}
+
+.tip-banner {
+  margin: 18px 0 24px; padding: 14px 18px; color: var(--text-2);
+  background: var(--accent-soft); border-left: 2px solid var(--accent); border-radius: 0 8px 8px 0;
+}
+.tip-banner strong { color: var(--text); }
+
+/* ---------- link cards ---------- */
+.link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 28px 0 8px; }
+.big-action-card {
+  position: relative; display: block; padding: 16px 46px 16px 18px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  text-decoration: none; transition: border-color .15s, transform .15s;
+}
+.big-action-card::after { content: "\2197"; position: absolute; right: 18px; top: 15px; color: var(--muted); transition: color .15s, transform .15s; }
+.big-action-card:hover { border-color: var(--accent); }
+.big-action-card:hover::after { color: var(--accent); transform: translate(2px, -2px); }
+.action-card-title { font-weight: 650; }
+.action-card-desc { font-size: 13.5px; line-height: 1.45; color: var(--muted); margin-top: 3px; }
+
+/* ---------- tables ---------- */
+.table-wrap { margin: 22px 0 32px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow-x: auto; scrollbar-width: thin; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap th {
+  padding: 11px 16px; text-align: left; white-space: nowrap;
+  font: 600 13px var(--font-ui); color: var(--text-2);
+  background: var(--surface-2); border-bottom: 1px solid var(--line);
+}
+.table-wrap td { padding: 12px 16px; vertical-align: top; color: var(--text-2); border-bottom: 1px solid var(--line); }
+.table-wrap tr:last-child td { border-bottom: 0; }
+.table-wrap tbody tr { transition: background .15s; }
+.table-wrap tbody tr:hover { background: var(--surface-2); }
+.ref-table { min-width: 520px; }
+.ref-table td:first-child { color: var(--text); }
+.ref-table td code { padding: 0; background: none; color: inherit; font-size: 12.8px; }
+.ref-table td code + code { margin-left: 4px; }
+.ref-table td:first-child code { color: var(--text); font-weight: 500; }
+.compat-table th, .compat-table td { text-align: center; }
+.compat-table th:first-child, .compat-table td:first-child { text-align: left; color: var(--text); font-weight: 600; }
+.mark-check { color: var(--ok); font-weight: 700; }
+.mark-cross { color: var(--muted); }
+.tag-pill {
+  display: inline-block; font: 400 12px/1.5 var(--font-mono); padding: 1px 7px; border-radius: 5px;
+  color: var(--text-2); border: 1px solid var(--line-strong); background: transparent; white-space: nowrap;
+}
+.ref-table .sub, .compat-table .sub { margin-top: 5px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+.ref-table .sub code { color: var(--text-2); }
+.ref-table .sub .tag-pill { margin-left: 2px; }
+.ref-table td { word-break: normal; overflow-wrap: break-word; }
+.tag-gray { font-size: 13px; color: var(--muted); }
+.swatch {
+  display: inline-block; width: 46px; height: 12px; margin-right: 12px; vertical-align: -1px;
+  border-radius: 4px; background: var(--g); box-shadow: inset 0 0 0 1px var(--ring);
+}
+tr.flash td { animation: flash 1.8s ease-out; }
+@keyframes flash { 0%, 35% { background: var(--accent-soft); box-shadow: inset 0 1px 0 var(--accent), inset 0 -1px 0 var(--accent); } 100% { background: transparent; box-shadow: none; } }
+
+/* ---------- code ---------- */
+.code-panel { margin: 20px 0 30px; border: 1px solid var(--line); border-radius: 10px; background: var(--code-panel); overflow: hidden; }
+.code-panel-bar {
+  display: flex; align-items: center; justify-content: space-between; padding: 7px 8px 7px 16px;
+  border-bottom: 1px solid var(--line); font: 400 12px var(--font-mono); color: var(--muted);
+}
+.code-copy-btn {
+  display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 9px;
+  background: transparent; border: 1px solid transparent; border-radius: 6px; color: var(--muted);
+  font: 500 12px var(--font-ui); cursor: pointer; transition: color .15s, border-color .15s;
+}
+.code-copy-btn:hover { color: var(--text); border-color: var(--line); }
+.code-copy-btn.done { color: var(--ok); }
+.code-panel pre { margin: 0; padding: 16px 18px; overflow-x: auto; font: 400 13px/1.7 var(--font-mono); color: var(--text); tab-size: 2; scrollbar-width: thin; }
+.y-c { color: var(--muted); font-style: italic; }
+.y-k { color: var(--accent); }
+.y-s { color: var(--y-str); }
+.y-n { color: var(--y-num); }
+.y-p { color: var(--muted); }
+
+/* ---------- screenshots ---------- */
+.shot { margin: 22px 0 30px; }
+.shot img {
+  display: block; width: auto; max-width: 100%; height: auto;
+  border: 1px solid var(--line-strong); border-radius: 8px; background: var(--code-panel);
+}
+.shot figcaption { margin-top: 9px; font: 400 13px var(--font-ui); color: var(--muted); }
+
+/* ---------- doc footer ---------- */
+.doc-foot { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; margin-top: 88px; padding-top: 28px; border-top: 1px solid var(--line); }
+.switch-card {
+  display: flex; align-items: center; gap: 14px; padding: 12px 18px 12px 12px; max-width: 460px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px; text-decoration: none; transition: border-color .15s;
+}
+.switch-card:hover { border-color: var(--line-strong); }
+.switch-card .tile { width: 46px; height: 46px; }
+.switch-card small { display: block; font: 500 12.5px var(--font-ui); color: var(--muted); }
+.switch-card strong { display: block; font-size: 17px; letter-spacing: -.01em; }
+.switch-card em { display: block; font-style: normal; font-size: 13px; color: var(--muted); line-height: 1.35; }
+.to-top { font-size: 14px; color: var(--muted); text-decoration: none; }
+.to-top:hover { color: var(--text); }
+
+/* ---------- search palette ---------- */
+.palette { position: fixed; inset: 0; z-index: 100; display: flex; justify-content: center; align-items: flex-start; padding: 12vh 16px 16px; background: rgba(5, 6, 8, .62); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+:root[data-theme="light"] .palette { background: rgba(20, 22, 28, .35); }
+.palette-box { width: 100%; max-width: 620px; max-height: 70vh; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+.palette-input { display: flex; align-items: center; gap: 12px; padding: 0 16px; height: 54px; border-bottom: 1px solid var(--line); color: var(--muted); }
+.palette-input input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--text); font: 400 16px var(--font-ui); }
+.palette-input input::placeholder { color: var(--muted); }
+.palette-list { list-style: none; margin: 0; padding: 6px; overflow-y: auto; flex: 1; }
+.palette-group { padding: 10px 10px 4px; font: 600 12.5px var(--font-ui); color: var(--muted); }
+.palette-item { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+.palette-item[aria-selected="true"] { background: var(--surface-2); box-shadow: inset 2px 0 0 var(--accent); }
+.palette-item .tile { width: 28px; height: 28px; border-radius: 7px; }
+.palette-item .txt { min-width: 0; flex: 1; line-height: 1.35; }
+.palette-item .lbl { display: block; font-size: 14.5px; font-weight: 550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.palette-item .det { display: block; font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.palette-item mark { background: none; color: var(--accent); }
+.palette-item .kind { font: 500 12px var(--font-ui); color: var(--muted); }
+.palette-empty { padding: 28px 16px; text-align: center; color: var(--muted); }
+.palette-foot { display: flex; gap: 18px; padding: 9px 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+.palette-foot kbd { margin-right: 4px; }
+
+.toast {
+  position: fixed; z-index: 120; left: 50%; bottom: 28px; transform: translate(-50%, 12px); opacity: 0; pointer-events: none;
+  padding: 9px 16px; background: var(--text); color: var(--bg); border-radius: 8px; font-size: 13.5px; font-weight: 600;
+  transition: opacity .18s, transform .18s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.scrim { display: none; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1180px) {
+  .shell { grid-template-columns: var(--side-w) minmax(0, 1fr); }
+  .toc { display: none; }
+}
+@media (max-width: 900px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .icon-btn.menu-btn { display: grid; margin-left: -8px; }
+  .header-links { display: none; }
+  .search-btn { width: 34px; padding: 0; justify-content: center; }
+  .search-btn span, .search-btn kbd { display: none; }
+  .sidebar {
+    position: fixed; z-index: 80; top: 0; left: 0; bottom: 0; width: min(320px, 86vw); height: auto;
+    padding-top: 20px; background: var(--bg); border-right: 1px solid var(--line-strong);
+    transform: translateX(-102%); transition: transform .22s ease, box-shadow .22s;
+  }
+  body.nav-open .sidebar { transform: none; box-shadow: var(--shadow); }
+  body.nav-open .scrim { display: block; position: fixed; inset: 0; z-index: 70; background: rgba(5, 6, 8, .55); }
+  .sidebar-links { display: block; }
+  .content { padding-top: 36px; }
+  .hero { grid-template-columns: minmax(0, 1fr); grid-template-areas: "mark" "title" "body"; row-gap: 0; }
+  .hero-mark { width: 96px; height: 96px; padding: 11px; border-radius: 24px; margin-bottom: 26px; }
+  .doc h2 { font-size: 26px; margin-top: 60px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 15px; }
+  .hero .lead { font-size: 17.5px; }
+  .site-header { padding: 0 14px; gap: 12px; }
+}
+@media (max-width: 640px) {
+  .ref-table { min-width: 0; }
+  .ref-table thead { display: none; }
+  .ref-table, .ref-table tbody, .ref-table tr, .ref-table td { display: block; }
+  .ref-table tr { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .ref-table tr:last-child { border-bottom: 0; }
+  .ref-table td { padding: 2px 0; border: 0; }
+  .ref-table td + td { margin-top: 2px; }
+  .table-wrap { margin-left: 0; margin-right: 0; }
+}
+@media print {
+  .site-header, .sidebar, .toc, .palette, .toast, .doc-foot { display: none !important; }
+  .shell { display: block; }
+}
+
+</style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-select" viewBox="0 0 24 24"><path d="m7 15 5 5 5-5M7 9l5-5 5 5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+</svg>
 
-    <!-- TOP HEADER (NIGHTEXPRESS STYLE) -->
-    <header class="site-header">
-        <div class="header-left">
-            <button class="back-btn" title="Back" onclick="history.back()">❮</button>
+<header class="site-header">
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false"><svg class="i"><use href="#i-menu"/></svg></button>
+  <a class="wordmark" href="#about"><span>LuxanaStudio</span><span class="sep">/</span><span class="wiki">Wiki</span></a>
+  <div class="header-spacer"></div>
+  <nav class="header-links" aria-label="Community">
+    <a href="https://discord.gg/luxanastudio" target="_blank" rel="noopener">Discord</a>
+    <a href="https://github.com/LuxanaStudio" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://builtbybit.com" target="_blank" rel="noopener">BuiltByBit</a>
+  </nav>
+  <button class="search-btn" id="searchBtn" aria-label="Search the wiki"><svg class="i"><use href="#i-search"/></svg><span>Search</span><kbd id="kbdHint">Ctrl K</kbd></button>
+  <button class="icon-btn theme-btn" id="themeBtn" aria-label="Toggle light and dark theme"><svg class="i sun"><use href="#i-sun"/></svg><svg class="i moon"><use href="#i-moon"/></svg></button>
+</header>
 
-            <!-- Plugin Selector Dropdown -->
-            <div class="plugin-brand-box" onclick="toggleDropdown()">
-                <div class="plugin-icon-avatar" id="brand-avatar">🎨</div>
-                <div class="plugin-title">
-                    <span id="brand-name">LuxChatColor</span>
-                    <span class="docs-badge">Docs</span>
-                    <span style="font-size: 10px; color: var(--text-muted);">▼</span>
-                </div>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="switcher">
+      <button class="switcher-btn" id="swBtn" aria-haspopup="true" aria-expanded="false">
+        <span class="tile"><img id="swMark" src="images/lcc-mark.png" alt=""></span>
+        <span class="meta"><span class="name" id="swName">LuxChatColor</span><span class="sub" id="swSub">v1.2.0 docs</span></span>
+        <svg class="i"><use href="#i-select"/></svg>
+      </button>
+      <div class="switcher-menu" id="swMenu" role="menu" hidden>
+        <button class="switcher-opt" role="menuitemradio" aria-checked="true" data-plugin="lcc">
+          <span class="tile"><img src="images/lcc-mark.png" alt=""></span>
+          <span><strong>LuxChatColor</strong><small>Chat colours &amp; previews</small></span>
+          <svg class="i check"><use href="#i-check"/></svg>
+        </button>
+        <button class="switcher-opt" role="menuitemradio" aria-checked="false" data-plugin="lcr">
+          <span class="tile"><img src="images/lcr-mark.png" alt=""></span>
+          <span><strong>LuxCustomRank</strong><small>Rank colours &amp; titles</small></span>
+          <svg class="i check"><use href="#i-check"/></svg>
+        </button>
+      </div>
+    </div>
+<nav class="nav" data-nav="lcc" aria-label="LuxChatColor documentation">
+<div class="nav-label">Start</div>
+<a href="#about">About</a>
+<a href="#prerequisites">Requirements</a>
+<a href="#installation">Installation</a>
+<div class="nav-label">Reference</div>
+<a href="#commands">Commands</a>
+<a href="#permissions">Permissions</a>
+<a href="#configuration">Configuration</a>
+<div class="nav-label">Features</div>
+<a href="#gui">Color Selection GUI</a>
+<a href="#previews">Item &amp; Inventory Previews</a>
+<a href="#moderation">Chat Filter</a>
+<a href="#welcomemsg">Welcome Messages</a>
+<div class="nav-label">Project</div>
+<a href="#releases">Releases</a>
+<div class="nav-label">Integrations</div>
+<a class="ext" href="https://luckperms.net" target="_blank" rel="noopener">LuckPerms</a>
+<a class="ext" href="https://docs.advntr.dev/minimessage/" target="_blank" rel="noopener">MiniMessage format</a>
+</nav>
+<nav class="nav" data-nav="lcr" aria-label="LuxCustomRank documentation" hidden>
+<div class="nav-label">Start</div>
+<a href="#lcr-about">About</a>
+<a href="#lcr-prerequisites">Requirements</a>
+<a href="#lcr-installation">Installation</a>
+<div class="nav-label">Reference</div>
+<a href="#lcr-commands">Commands</a>
+<a href="#lcr-permissions">Permissions</a>
+<a href="#lcr-configuration">Configuration</a>
+<div class="nav-label">Features</div>
+<a href="#lcr-gui">Rank Colour GUI</a>
+<a href="#lcr-nameplates">Gradient Nameplates</a>
+<a href="#lcr-custom">Custom Titles</a>
+<a href="#lcr-filter">Anti-Abuse Filter</a>
+<div class="nav-label">Project</div>
+<a href="#lcr-releases">Releases</a>
+<div class="nav-label">Integrations</div>
+<a class="ext" href="https://luckperms.net" target="_blank" rel="noopener">LuckPerms</a>
+</nav>
+    <div class="sidebar-links">
+      <div class="nav-label">Community</div>
+      <nav class="nav">
+        <a class="ext" href="https://discord.gg/luxanastudio" target="_blank" rel="noopener">Discord</a>
+        <a class="ext" href="https://github.com/LuxanaStudio" target="_blank" rel="noopener">GitHub</a>
+        <a class="ext" href="https://builtbybit.com" target="_blank" rel="noopener">BuiltByBit</a>
+      </nav>
+    </div>
+  </aside>
 
-                <div class="plugin-switch-dropdown" id="pluginDropdown">
-                    <div class="dropdown-opt active" id="opt-lcc" onclick="switchPlugin('lcc', event)">
-                        <span>🎨</span> LuxChatColor
-                    </div>
-                    <div class="dropdown-opt" id="opt-lcr" onclick="switchPlugin('lcr', event)">
-                        <span>👑</span> LuxCustomRank
-                    </div>
-                </div>
-            </div>
-        </div>
+  <main class="content" id="main">
+    <article class="doc" data-doc="lcc">
 
-        <div class="header-links">
-            <a href="#about" class="header-nav-link"><span>🏠</span> Home</a>
-            <a href="#releases" class="header-nav-link"><span>📜</span> Releases</a>
-            <a href="https://discord.gg/luxanastudio" target="_blank" class="header-nav-link"><span>💬</span> Discord</a>
-            <a href="https://github.com/LuxanaStudio" target="_blank" class="header-nav-link"><span>🐙</span> Github</a>
-            <a href="https://builtbybit.com" target="_blank" class="header-nav-link"><span>☕</span> BuiltByBit</a>
-        </div>
+                <section class="hero" id="about">
+  <h1>LuxChatColor</h1>
+  <div class="hero-body">
+    <p class="lead">Chat colours, item previews and moderation for Paper.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://builtbybit.com" target="_blank" rel="noopener">Download on BuiltByBit</a>
+      <a class="btn" href="#installation">Installation guide</a>
+    </div>
+  </div>
+  <div class="hero-mark"><img src="images/lcc-mark.png" alt="LuxChatColor logo" width="384" height="384"></div>
+</section>
+<dl class="facts"><div><dt>Platforms</dt><dd>Paper, Purpur, Spigot</dd></div><div><dt>Latest</dt><dd>1.2.0</dd></div><div><dt>Optional plugin</dt><dd>LuckPerms</dd></div><div><dt>Text format</dt><dd>MiniMessage</dd></div></dl>
 
-        <div class="header-right">
-            <div class="search-box">
-                <span>🔍</span>
-                <input type="text" id="globalSearch" placeholder="Search" onkeyup="filterNav()">
-                <span class="search-shortcut">Ctrl+K</span>
-            </div>
-            <button class="back-btn" title="Toggle Theme" onclick="alert('Dark theme is default.')">🌙</button>
-        </div>
-    </header>
-
-    <!-- MAIN THREE-COLUMN LAYOUT -->
-    <div class="layout-container">
-
-        <!-- LEFT SIDEBAR -->
-        <aside class="left-sidebar">
-            <div class="filter-input-box">
-                <span>≡</span>
-                <input type="text" id="sidebarFilter" placeholder="Filter" onkeyup="filterSidebar()">
-            </div>
-
-            <!-- LUXCHATCOLOR SIDEBAR -->
-            <div id="sidebar-lcc">
-                <a href="#about" class="nav-btn-item active" onclick="makeActive(this)">
-                    <span class="nav-icon">🏠</span> About
-                </a>
-                <a href="#installation" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">📥</span> Installation
-                </a>
-                <a href="#commands" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">&gt;_</span> Commands
-                </a>
-                <a href="#permissions" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">⛔</span> Permissions
-                </a>
-                <a href="#configuration" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">⚙️</span> Configuration
-                </a>
-                <a href="#gui" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">🎨</span> Color Selection GUI
-                </a>
-                <a href="#previews" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">🗡️</span> Previews ([item] & [inv])
-                </a>
-                <a href="#moderation" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">🛡️</span> Chat Filter
-                </a>
-                <a href="#welcomemsg" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">✨</span> Welcome Messages
-                </a>
-                <a href="#releases" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">📜</span> Releases
-                </a>
-
-                <div class="nav-group-label">INTEGRATIONS</div>
-                <a href="#integrations" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">◫</span> LuckPerms
-                </a>
-                <a href="#integrations" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">◫</span> MiniMessage
-                </a>
-            </div>
-
-            <!-- LUXCUSTOMRANK SIDEBAR -->
-            <div id="sidebar-lcr" class="hidden">
-                <a href="#lcr-about" class="nav-btn-item active" onclick="makeActive(this)">
-                    <span class="nav-icon">🏠</span> About
-                </a>
-                <a href="#lcr-installation" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">📥</span> Installation
-                </a>
-                <a href="#lcr-commands" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">&gt;_</span> Commands
-                </a>
-                <a href="#lcr-permissions" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">⛔</span> Permissions
-                </a>
-                <a href="#lcr-configuration" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">⚙️</span> Configuration
-                </a>
-                <a href="#lcr-gui" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">👑</span> Rank Colour GUI
-                </a>
-                <a href="#lcr-nameplates" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">✨</span> Gradient Nameplates
-                </a>
-                <a href="#lcr-custom" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">✏️</span> Custom Titles
-                </a>
-                <a href="#lcr-filter" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">🚫</span> Anti-Abuse Filter
-                </a>
-                <a href="#lcr-releases" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">📜</span> Releases
-                </a>
-
-                <div class="nav-group-label">INTEGRATIONS</div>
-                <a href="#lcr-about" class="nav-btn-item" onclick="makeActive(this)">
-                    <span class="nav-icon">◫</span> LuckPerms User Meta
-                </a>
-            </div>
-        </aside>
-
-        <!-- CENTER CONTENT -->
-        <main class="content-area">
-
-            <!-- ================================================================= -->
-            <!-- LUXCHATCOLOR CONTENT (EXACT NIGHTEXPRESS STYLE)                   -->
-            <!-- ================================================================= -->
-            <div id="doc-lcc">
-                <div class="content-header">
-                    <h1 class="page-title">About</h1>
-                    <button class="copy-page-btn" onclick="copyPageUrl()">📋 Copy</button>
-                </div>
-
-                <div class="hero-banner-container">
-                    <img src="images/lcc-banner.png" alt="LuxChatColor Banner">
-                </div>
-
-                <p class="lead-paragraph">
-                    Welcome to <strong>LuxChatColor</strong> documentation! Follow the steps below to get up and running.
-                </p>
-
-                <!-- Prerequisites & Platforms -->
-                <h2 class="section-header" id="prerequisites">
-                    <span>📋</span> Prerequisites & Compatibility
-                </h2>
+                <h2 id="prerequisites" data-short="Requirements">Prerequisites & Compatibility</h2>
                 <p>The following versions and platforms are supported:</p>
 
-                <table class="compat-table">
+                <div class="table-wrap"><table class="compat-table">
                     <thead>
                         <tr>
                             <th>Server Version</th>
@@ -914,48 +591,41 @@
                     <tbody>
                         <tr>
                             <td>1.21.x</td>
-                            <td><span class="mark-check">✓</span></td>
-                            <td><span class="mark-check">✓</span></td>
-                            <td><span class="mark-check">✓</span></td>
+                            <td><span class="mark-check" role="img" aria-label="Supported">✓</span></td>
+                            <td><span class="mark-check" role="img" aria-label="Supported">✓</span></td>
+                            <td><span class="mark-check" role="img" aria-label="Supported">✓</span></td>
                             <td>21</td>
                         </tr>
                         <tr>
                             <td>1.20.x</td>
-                            <td><span class="mark-check">✓</span></td>
-                            <td><span class="mark-check">✓</span></td>
-                            <td><span class="mark-cross">✕</span></td>
+                            <td><span class="mark-check" role="img" aria-label="Supported">✓</span></td>
+                            <td><span class="mark-check" role="img" aria-label="Supported">✓</span></td>
+                            <td><span class="mark-cross" role="img" aria-label="Not supported">—</span></td>
                             <td>21</td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
 
-                <p><strong>Optional Plugins:</strong></p>
+                <p><strong>Optional Plugin:</strong></p>
                 <ul>
                     <li><a href="https://luckperms.net" target="_blank" class="external-link">LuckPerms ↗</a> - For permission groups and color rank assignments.</li>
-                    <li><a href="https://docs.advntr.dev/minimessage/" target="_blank" class="external-link">MiniMessage ↗</a> - For rich gradient and hex text parsing.</li>
                 </ul>
+                <p><strong>Text format:</strong> colors and messages accept the <a href="https://docs.advntr.dev/minimessage/" target="_blank" rel="noopener" class="external-link">MiniMessage ↗</a> format (gradients, hex colors, formatting tags). It is built into Paper, so there is nothing extra to install.</p>
 
-                <!-- Big Action Cards (Screenshot 2) -->
-                <a href="https://builtbybit.com" target="_blank" class="big-action-card">
-                    <div class="action-card-icon">🛒</div>
+                <div class="link-grid"><a href="https://builtbybit.com" target="_blank" rel="noopener" class="big-action-card">
                     <div>
                         <div class="action-card-title">Download on BuiltByBit</div>
                         <div class="action-card-desc">Get the latest jar, automatic updates, and licensing.</div>
                     </div>
                 </a>
 
-                <a href="https://papermc.io" target="_blank" class="big-action-card">
-                    <div class="action-card-icon">🚀</div>
+                <a href="https://papermc.io" target="_blank" rel="noopener" class="big-action-card">
                     <div>
                         <div class="action-card-title">Download Paper</div>
                         <div class="action-card-desc">Recommended modern high-performance Minecraft server software.</div>
                     </div>
-                </a>
-
-                <!-- Installation Section (Screenshot 3) -->
-                <h2 class="section-header" id="installation">
-                    <span>📥</span> Installation
-                </h2>
+                </a></div>
+<h2 id="installation">Installation</h2>
                 <p><strong>LuxChatColor</strong> can be downloaded from the following platforms:</p>
                 <ul>
                     <li><a href="https://builtbybit.com" target="_blank" class="external-link">BuiltByBit ↗</a></li>
@@ -967,101 +637,11 @@
                     Put the downloaded <code>JAR</code> file (<code>LuxChatColor-1.2.0.jar</code>) into your server's <code>/plugins/</code> folder and restart it. You are all set!
                 </p>
 
-                <!-- Commands Section -->
-                <h2 class="section-header" id="commands">
-                    <span>&gt;_</span> Commands
-                </h2>
-                <img src="images/lcc-commands.png" alt="Commands Overview" class="section-image">
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Aliases</th>
-                            <th>Permission</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>/chatcolors</code></td>
-                            <td><code>/color</code>, <code>/colors</code></td>
-                            <td><span class="tag-pill">luxchatcolor.use</span></td>
-                            <td>Opens the color selection GUI.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/chatcolors &lt;name&gt;</code></td>
-                            <td><code>/color &lt;name&gt;</code></td>
-                            <td><span class="tag-pill">luxchatcolor.color.&lt;name&gt;</span></td>
-                            <td>Equips a color directly via name tag.</td>
-                        </tr>
-                        <tr>
-                            <td><code>[item]</code> or <code>[i]</code></td>
-                            <td><code>/item</code>, <code>/i</code></td>
-                            <td><span class="tag-pill">luxchatcolor.preview.item</span></td>
-                            <td>Displays held item with native client tooltip.</td>
-                        </tr>
-                        <tr>
-                            <td><code>[inv]</code></td>
-                            <td><code>/inv</code></td>
-                            <td><span class="tag-pill">luxchatcolor.preview.inventory</span></td>
-                            <td>Shares a clickable read-only snapshot of inventory.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/lccadmin gui</code></td>
-                            <td><code>/luxchatcoloradmin gui</code></td>
-                            <td><span class="tag-pill">luxchatcolor.admin</span></td>
-                            <td>Opens the in-game visual editor.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/lccadmin reload</code></td>
-                            <td><code>/luxchatcoloradmin reload</code></td>
-                            <td><span class="tag-pill">luxchatcolor.admin</span></td>
-                            <td>Reloads configuration and filters.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/welcomemsg</code></td>
-                            <td><code>/welcome</code>, <code>/joinmsg</code></td>
-                            <td><span class="tag-pill">luxchatcolor.welcomemsg.use</span></td>
-                            <td>Opens the 54-slot Welcome Message Spaces GUI.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/welcomemsg preview</code></td>
-                            <td><code>/welcome preview</code></td>
-                            <td><span class="tag-pill">luxchatcolor.welcomemsg.use</span></td>
-                            <td>Simulates your join message announcement in chat.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/welcomemsg set &lt;space&gt; &lt;msg&gt;</code></td>
-                            <td><code>/welcome set</code></td>
-                            <td><span class="tag-pill">luxchatcolor.welcomemsg.spaces.&lt;N&gt;</span></td>
-                            <td>Sets custom join text for a specific space directly.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/welcomemsg clear &lt;space&gt;</code></td>
-                            <td><code>/welcome clear</code></td>
-                            <td><span class="tag-pill">luxchatcolor.welcomemsg.spaces.&lt;N&gt;</span></td>
-                            <td>Clears custom join text for a specific space.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/welcomemsg reset</code></td>
-                            <td><code>/welcome reset</code></td>
-                            <td><span class="tag-pill">luxchatcolor.welcomemsg.use</span></td>
-                            <td>Wipes all custom spaces and reverts to tier default.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/lccadmin testjoin &lt;tier|firsttime&gt; [player]</code></td>
-                            <td><code>/luxchatcoloradmin testjoin</code></td>
-                            <td><span class="tag-pill">luxchatcolor.admin</span></td>
-                            <td>Broadcasts a test join banner or first-time join count.</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h2 id="commands">Commands</h2>
+                <div class="table-wrap"><table class="ref-table"><thead><tr><th>Command</th><th>Description</th></tr></thead><tbody><tr data-label="/chatcolors" data-detail="Opens the color selection GUI."><td><div class="cmd"><code>/chatcolors</code></div><div class="sub">Aliases: <code>/color</code>, <code>/colors</code></div></td><td>Opens the color selection GUI.<div class="sub">Requires <span class="tag-pill">luxchatcolor.use</span></div></td></tr><tr data-label="/chatcolors &lt;name&gt;" data-detail="Equips a color directly via name tag."><td><div class="cmd"><code>/chatcolors &lt;name&gt;</code></div><div class="sub">Aliases: <code>/color &lt;name&gt;</code></div></td><td>Equips a color directly via name tag.<div class="sub">Requires <span class="tag-pill">luxchatcolor.color.&lt;name&gt;</span></div></td></tr><tr data-label="[item] or [i]" data-detail="Displays held item with native client tooltip."><td><div class="cmd"><code>[item]</code> or <code>[i]</code></div><div class="sub">Aliases: <code>/item</code>, <code>/i</code></div></td><td>Displays held item with native client tooltip.<div class="sub">Requires <span class="tag-pill">luxchatcolor.preview.item</span></div></td></tr><tr data-label="[inv]" data-detail="Shares a clickable read-only snapshot of inventory."><td><div class="cmd"><code>[inv]</code></div><div class="sub">Aliases: <code>/inv</code></div></td><td>Shares a clickable read-only snapshot of inventory.<div class="sub">Requires <span class="tag-pill">luxchatcolor.preview.inventory</span></div></td></tr><tr data-label="/lccadmin gui" data-detail="Opens the in-game visual editor."><td><div class="cmd"><code>/lccadmin gui</code></div><div class="sub">Aliases: <code>/luxchatcoloradmin gui</code></div></td><td>Opens the in-game visual editor.<div class="sub">Requires <span class="tag-pill">luxchatcolor.admin</span></div></td></tr><tr data-label="/lccadmin reload" data-detail="Reloads configuration and filters."><td><div class="cmd"><code>/lccadmin reload</code></div><div class="sub">Aliases: <code>/luxchatcoloradmin reload</code></div></td><td>Reloads configuration and filters.<div class="sub">Requires <span class="tag-pill">luxchatcolor.admin</span></div></td></tr><tr data-label="/welcomemsg" data-detail="Opens the 54-slot Welcome Message Spaces GUI."><td><div class="cmd"><code>/welcomemsg</code></div><div class="sub">Aliases: <code>/welcome</code>, <code>/joinmsg</code></div></td><td>Opens the 54-slot Welcome Message Spaces GUI.<div class="sub">Requires <span class="tag-pill">luxchatcolor.welcomemsg.use</span></div></td></tr><tr data-label="/welcomemsg preview" data-detail="Simulates your join message announcement in chat."><td><div class="cmd"><code>/welcomemsg preview</code></div><div class="sub">Aliases: <code>/welcome preview</code></div></td><td>Simulates your join message announcement in chat.<div class="sub">Requires <span class="tag-pill">luxchatcolor.welcomemsg.use</span></div></td></tr><tr data-label="/welcomemsg set &lt;space&gt; &lt;msg&gt;" data-detail="Sets custom join text for a specific space directly."><td><div class="cmd"><code>/welcomemsg set &lt;space&gt; &lt;msg&gt;</code></div><div class="sub">Aliases: <code>/welcome set</code></div></td><td>Sets custom join text for a specific space directly.<div class="sub">Requires <span class="tag-pill">luxchatcolor.welcomemsg.spaces.&lt;N&gt;</span></div></td></tr><tr data-label="/welcomemsg clear &lt;space&gt;" data-detail="Clears custom join text for a specific space."><td><div class="cmd"><code>/welcomemsg clear &lt;space&gt;</code></div><div class="sub">Aliases: <code>/welcome clear</code></div></td><td>Clears custom join text for a specific space.<div class="sub">Requires <span class="tag-pill">luxchatcolor.welcomemsg.spaces.&lt;N&gt;</span></div></td></tr><tr data-label="/welcomemsg reset" data-detail="Wipes all custom spaces and reverts to tier default."><td><div class="cmd"><code>/welcomemsg reset</code></div><div class="sub">Aliases: <code>/welcome reset</code></div></td><td>Wipes all custom spaces and reverts to tier default.<div class="sub">Requires <span class="tag-pill">luxchatcolor.welcomemsg.use</span></div></td></tr><tr data-label="/lccadmin testjoin &lt;tier|firsttime&gt; [player]" data-detail="Broadcasts a test join banner or first-time join count."><td><div class="cmd"><code>/lccadmin testjoin &lt;tier|firsttime&gt; [player]</code></div><div class="sub">Aliases: <code>/luxchatcoloradmin testjoin</code></div></td><td>Broadcasts a test join banner or first-time join count.<div class="sub">Requires <span class="tag-pill">luxchatcolor.admin</span></div></td></tr></tbody></table></div>
 
-                <!-- Permissions Section -->
-                <h2 class="section-header" id="permissions">
-                    <span>⛔</span> Permissions
-                </h2>
-                <table class="ref-table">
+                <h2 id="permissions">Permissions</h2>
+                <div class="table-wrap"><table class="ref-table">
                     <thead>
                         <tr>
                             <th>Permission</th>
@@ -1126,12 +706,9 @@
                             <td>Grants access to a configured server rank tier join banner (e.g. <code>owner</code>, <code>vip</code>).</td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
 
-                <!-- Configuration Section -->
-                <h2 class="section-header" id="configuration">
-                    <span>⚙️</span> Configuration
-                </h2>
+                <h2 id="configuration">Configuration</h2>
                 <p>File path: <code>plugins/LuxChatColor/config.yml</code></p>
                 <div class="code-panel">
                     <div class="code-panel-bar">
@@ -1162,11 +739,8 @@ moderation:
     kick-violations: 9</code></pre>
                 </div>
 
-                <!-- Features Breakdown -->
-                <h2 class="section-header" id="gui">
-                    <span>🎨</span> Color Selection GUI
-                </h2>
-                <img src="images/gui-chatcolors.png" alt="In-game /chatcolors GUI" style="max-width: 480px; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 16px 0 20px; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+                <h2 id="gui" data-short="Color GUI">Color Selection GUI</h2>
+                <figure class="shot"><img src="images/gui-chatcolors.png" alt="In-game /chatcolors GUI" loading="lazy"><figcaption>In-game /chatcolors GUI</figcaption></figure>
                 <p>
                     Players type <code>/chatcolors</code> (or <code>/color</code>) to open a 54-slot menu built with custom textured skull skins and color blocks:
                 </p>
@@ -1176,32 +750,25 @@ moderation:
                     <li><strong>Reset Barrier (Slot 45):</strong> Clicking the red barrier unselects your active color, restoring default white chat.</li>
                 </ul>
 
-                <h2 class="section-header" id="previews">
-                    <span>🗡️</span> Previews ([item], [i] & [inv])
-                </h2>
-                <h3 class="subsection-header">Item Tooltip Hover Previews ([item] or [i])</h3>
+                <h2 id="previews" data-short="Previews">Previews ([item], [i] & [inv])</h2>
+                <h3>Item Tooltip Hover Previews ([item] or [i])</h3>
                 <p>
                     Typing <code>[item]</code> or <code>[i]</code> in chat replaces the tag with the held item's localized name. Hovering over it in chat renders the client's native tooltip, displaying custom names, enchantments, lore lines, attributes, and attack speed:
                 </p>
-                <img src="images/item-tooltip.png" alt="In-game item tooltip preview" style="max-width: 420px; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 12px 0 24px; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+                <figure class="shot"><img src="images/item-tooltip.png" alt="In-game item tooltip preview" loading="lazy"><figcaption>In-game item tooltip preview</figcaption></figure>
 
-                <h3 class="subsection-header">Inventory Snapshot Previews ([inv])</h3>
+                <h3>Inventory Snapshot Previews ([inv])</h3>
                 <p>
                     Typing <code>[inv]</code> shares a clickable link in chat. Clicking opens a read-only snapshot GUI revealing the sender's main inventory, equipped armor, and offhand slots:
                 </p>
-                <img src="images/inv-preview.png" alt="In-game inventory snapshot preview" style="max-width: 480px; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 12px 0 24px; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+                <figure class="shot"><img src="images/inv-preview.png" alt="In-game inventory snapshot preview" loading="lazy"><figcaption>In-game inventory snapshot preview</figcaption></figure>
 
-                <h2 class="section-header" id="moderation">
-                    <span>🛡️</span> Chat Filter
-                </h2>
+                <h2 id="moderation" data-short="Chat Filter">Chat Filter</h2>
                 <p>
                     Rule files in <code>plugins/LuxChatColor/filters/</code> match prohibited words and regex patterns with automated escalation ladders (Warning at 3, Mute at 6, Kick at 9).
                 </p>
 
-                <!-- Welcome Messages Section -->
-                <h2 class="section-header" id="welcomemsg">
-                    <span>✨</span> Welcome Messages & Multi-Slot Spaces
-                </h2>
+                <h2 id="welcomemsg" data-short="Welcome Messages">Welcome Messages & Multi-Slot Spaces</h2>
                 <p>
                     LuxChatColor includes a high-end join broadcast engine with <strong>Multi-Slot Spaces</strong>. Players can configure up to 20 distinct custom join messages, which automatically rotate at random with equal probability whenever they connect to the server!
                 </p>
@@ -1218,56 +785,48 @@ moderation:
                     <li><strong>Rejoin Spam Cooldown:</strong> Configurable cooldown (default 30s) prevents players from spamming join broadcasts by rapidly reconnecting.</li>
                 </ul>
 
-                <!-- Releases Section -->
-                <h2 class="section-header" id="releases">
-                    <span>📜</span> Releases
-                </h2>
-                <p><strong>v1.2.0 (Latest)</strong></p>
+                <h2 id="releases">Releases</h2>
+                <h3 class="release"><span>v1.2.0</span><em>Latest</em></h3>
                 <ul>
                     <li>Implemented dynamic <strong>Welcome Messages & 20-Slot Spaces System</strong> with chance-based rotation, chat prompt editing, server rank tiers, and first-join counter.</li>
                     <li>Separated rank prefix coloring into sister plugin (<code>LuxCustomRank</code>).</li>
                     <li>Fixed null component exception on <code>/chatcolors none</code>.</li>
                     <li>Enhanced inventory snapshot caching and garbage collection.</li>
                 </ul>
-                <p><strong>v1.1.0</strong></p>
+                <h3 class="release"><span>v1.1.0</span></h3>
                 <ul>
                     <li>Added in-game visual editor (<code>/lccadmin gui</code>).</li>
                     <li>Added multi-tier moderation escalation ladder.</li>
                 </ul>
 
-                <!-- Next Navigation Card (Screenshot 4) -->
-                <div class="next-page-box">
-                    <a href="#commands" class="next-card">
-                        <div class="next-card-label">Next</div>
-                        <div class="next-card-title">Commands →</div>
-                    </a>
-                </div>
-            </div>
+                <footer class="doc-foot">
+  <a class="switch-card" href="#lcr-about">
+    <span class="tile"><img src="images/lcr-mark.png" alt=""></span>
+    <span><small>Also from LuxanaStudio</small><strong>LuxCustomRank</strong><em>Self-service rank colors, custom titles &amp; LuckPerms prefixes.</em></span>
+  </a>
+  <a class="to-top" href="#about">Back to top &uarr;</a>
+</footer>
+            
+    </article>
+    <article class="doc" data-doc="lcr" hidden>
 
-            <!-- ================================================================= -->
-            <!-- LUXCUSTOMRANK CONTENT                                             -->
-            <!-- ================================================================= -->
-            <div id="doc-lcr" class="hidden">
-                <div class="content-header">
-                    <h1 class="page-title">About</h1>
-                    <button class="copy-page-btn" onclick="copyPageUrl()">📋 Copy</button>
-                </div>
+                <section class="hero" id="lcr-about">
+  <h1>LuxCustomRank</h1>
+  <div class="hero-body">
+    <p class="lead">Self-service rank colors, custom titles &amp; LuckPerms prefixes.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://builtbybit.com" target="_blank" rel="noopener">Download on BuiltByBit</a>
+      <a class="btn" href="#lcr-installation">Installation guide</a>
+    </div>
+  </div>
+  <div class="hero-mark"><img src="images/lcr-mark.png" alt="LuxCustomRank logo" width="384" height="384"></div>
+</section>
+<dl class="facts"><div><dt>Platforms</dt><dd>Paper, Purpur, Spigot</dd></div><div><dt>Latest</dt><dd>1.0.0</dd></div><div><dt>Requires</dt><dd>LuckPerms</dd></div></dl>
 
-                <div class="hero-banner-container">
-                    <img src="images/lcr-banner.png" alt="LuxCustomRank Banner">
-                </div>
-
-                <p class="lead-paragraph">
-                    Welcome to <strong>LuxCustomRank</strong> documentation! Follow the steps below to configure self-service rank colors and custom titles.
-                </p>
-
-                <!-- Prerequisites & Platforms -->
-                <h2 class="section-header" id="lcr-prerequisites">
-                    <span>📋</span> Prerequisites & Compatibility
-                </h2>
+                <h2 id="lcr-prerequisites" data-short="Requirements">Prerequisites & Compatibility</h2>
                 <p>The following versions and platforms are supported:</p>
 
-                <table class="compat-table">
+                <div class="table-wrap"><table class="compat-table">
                     <thead>
                         <tr>
                             <th>Server Version</th>
@@ -1280,122 +839,49 @@ moderation:
                     <tbody>
                         <tr>
                             <td>1.21.x</td>
-                            <td><span class="mark-check">✓</span></td>
-                            <td><span class="mark-check">✓</span></td>
-                            <td><span class="mark-check">✓</span></td>
+                            <td><span class="mark-check" role="img" aria-label="Supported">✓</span></td>
+                            <td><span class="mark-check" role="img" aria-label="Supported">✓</span></td>
+                            <td><span class="mark-check" role="img" aria-label="Supported">✓</span></td>
                             <td>21</td>
                         </tr>
                         <tr>
                             <td>1.20.x</td>
-                            <td><span class="mark-check">✓</span></td>
-                            <td><span class="mark-check">✓</span></td>
-                            <td><span class="mark-cross">✕</span></td>
+                            <td><span class="mark-check" role="img" aria-label="Supported">✓</span></td>
+                            <td><span class="mark-check" role="img" aria-label="Supported">✓</span></td>
+                            <td><span class="mark-cross" role="img" aria-label="Not supported">—</span></td>
                             <td>21</td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
 
                 <p><strong>Required Plugin:</strong></p>
                 <ul>
                     <li><a href="https://luckperms.net" target="_blank" class="external-link">LuckPerms ↗</a> (Required) - LuxCustomRank sets user meta PrefixNodes directly in LuckPerms.</li>
                 </ul>
 
-                <!-- Big Action Cards -->
-                <a href="https://builtbybit.com" target="_blank" class="big-action-card">
-                    <div class="action-card-icon">🛒</div>
+                <div class="link-grid"><a href="https://builtbybit.com" target="_blank" rel="noopener" class="big-action-card">
                     <div>
                         <div class="action-card-title">Download on BuiltByBit</div>
                         <div class="action-card-desc">Get LuxCustomRank with instant updates.</div>
                     </div>
                 </a>
 
-                <a href="https://luckperms.net/download" target="_blank" class="big-action-card">
-                    <div class="action-card-icon">⚙️</div>
+                <a href="https://luckperms.net/download" target="_blank" rel="noopener" class="big-action-card">
                     <div>
                         <div class="action-card-title">Download LuckPerms</div>
                         <div class="action-card-desc">Industry-standard permissions management for Minecraft.</div>
                     </div>
-                </a>
-
-                <!-- Installation Section -->
-                <h2 class="section-header" id="lcr-installation">
-                    <span>📥</span> Installation
-                </h2>
+                </a></div>
+<h2 id="lcr-installation">Installation</h2>
                 <p>
                     Put <code>LuxCustomRank-1.0.0.jar</code> into your server's <code>/plugins/</code> folder and restart it. Configure your permissions and you are set!
                 </p>
 
-                <!-- Commands Section -->
-                <h2 class="section-header" id="lcr-commands">
-                    <span>&gt;_</span> Commands
-                </h2>
-                <img src="images/lcr-commands.png" alt="Commands Overview" class="section-image">
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Aliases</th>
-                            <th>Permission</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>/rankcolor</code></td>
-                            <td><code>/rc</code>, <code>/rankcolors</code></td>
-                            <td><span class="tag-pill">luxcustomrank.color</span></td>
-                            <td>Opens the visual rank color picker GUI.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/nameplate</code></td>
-                            <td><code>/np</code>, <code>/gradient</code></td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate</span></td>
-                            <td>Opens the 45-slot gradient nameplate picker GUI.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/customrank &lt;title&gt;</code></td>
-                            <td><code>/customprefix</code>, <code>/setrank</code></td>
-                            <td><span class="tag-pill">luxcustomrank.prefix</span></td>
-                            <td>Sets your personal custom prefix or rank title.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/rankclear</code></td>
-                            <td><code>/resetrank</code>, <code>/resetprefix</code></td>
-                            <td><span class="tag-pill">luxcustomrank.clear</span></td>
-                            <td>Clears custom prefix and restores group rank.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/nameplateadmin set &lt;player&gt; &lt;palette&gt;</code></td>
-                            <td><code>/npa set</code></td>
-                            <td><span class="tag-pill">luxcustomrank.admin</span></td>
-                            <td>Force-assigns a gradient nameplate to a player.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/nameplateadmin clear &lt;player&gt;</code></td>
-                            <td><code>/npa clear</code></td>
-                            <td><span class="tag-pill">luxcustomrank.admin</span></td>
-                            <td>Clears a player's nameplate back to matching rank color.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/nameplateadmin list</code></td>
-                            <td><code>/npa list</code></td>
-                            <td><span class="tag-pill">luxcustomrank.admin</span></td>
-                            <td>Lists all 14 pre-made gradient palettes.</td>
-                        </tr>
-                        <tr>
-                            <td><code>/luxcustomrankadmin reload</code></td>
-                            <td><code>/lcra reload</code></td>
-                            <td><span class="tag-pill">luxcustomrank.admin</span></td>
-                            <td>Reloads configuration and color heads.</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h2 id="lcr-commands">Commands</h2>
+                <div class="table-wrap"><table class="ref-table"><thead><tr><th>Command</th><th>Description</th></tr></thead><tbody><tr data-label="/rankcolor" data-detail="Opens the visual rank color picker GUI."><td><div class="cmd"><code>/rankcolor</code></div><div class="sub">Aliases: <code>/rc</code>, <code>/rankcolors</code></div></td><td>Opens the visual rank color picker GUI.<div class="sub">Requires <span class="tag-pill">luxcustomrank.color</span></div></td></tr><tr data-label="/nameplate" data-detail="Opens the 45-slot gradient nameplate picker GUI."><td><div class="cmd"><code>/nameplate</code></div><div class="sub">Aliases: <code>/np</code>, <code>/gradient</code></div></td><td>Opens the 45-slot gradient nameplate picker GUI.<div class="sub">Requires <span class="tag-pill">luxcustomrank.nameplate</span></div></td></tr><tr data-label="/customrank &lt;title&gt;" data-detail="Sets your personal custom prefix or rank title."><td><div class="cmd"><code>/customrank &lt;title&gt;</code></div><div class="sub">Aliases: <code>/customprefix</code>, <code>/setrank</code></div></td><td>Sets your personal custom prefix or rank title.<div class="sub">Requires <span class="tag-pill">luxcustomrank.prefix</span></div></td></tr><tr data-label="/rankclear" data-detail="Clears custom prefix and restores group rank."><td><div class="cmd"><code>/rankclear</code></div><div class="sub">Aliases: <code>/resetrank</code>, <code>/resetprefix</code></div></td><td>Clears custom prefix and restores group rank.<div class="sub">Requires <span class="tag-pill">luxcustomrank.clear</span></div></td></tr><tr data-label="/nameplateadmin set &lt;player&gt; &lt;palette&gt;" data-detail="Force-assigns a gradient nameplate to a player."><td><div class="cmd"><code>/nameplateadmin set &lt;player&gt; &lt;palette&gt;</code></div><div class="sub">Aliases: <code>/npa set</code></div></td><td>Force-assigns a gradient nameplate to a player.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr><tr data-label="/nameplateadmin clear &lt;player&gt;" data-detail="Clears a player&#x27;s nameplate back to matching rank color."><td><div class="cmd"><code>/nameplateadmin clear &lt;player&gt;</code></div><div class="sub">Aliases: <code>/npa clear</code></div></td><td>Clears a player's nameplate back to matching rank color.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr><tr data-label="/nameplateadmin list" data-detail="Lists all 14 pre-made gradient palettes."><td><div class="cmd"><code>/nameplateadmin list</code></div><div class="sub">Aliases: <code>/npa list</code></div></td><td>Lists all 14 pre-made gradient palettes.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr><tr data-label="/luxcustomrankadmin reload" data-detail="Reloads configuration and color heads."><td><div class="cmd"><code>/luxcustomrankadmin reload</code></div><div class="sub">Aliases: <code>/lcra reload</code></div></td><td>Reloads configuration and color heads.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr></tbody></table></div>
 
-                <!-- Permissions Section -->
-                <h2 class="section-header" id="lcr-permissions">
-                    <span>⛔</span> Permissions
-                </h2>
-                <table class="ref-table">
+                <h2 id="lcr-permissions">Permissions</h2>
+                <div class="table-wrap"><table class="ref-table">
                     <thead>
                         <tr>
                             <th>Permission</th>
@@ -1455,12 +941,9 @@ moderation:
                             <td>Access to admin reload command.</td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
 
-                <!-- Configuration Section -->
-                <h2 class="section-header" id="lcr-configuration">
-                    <span>⚙️</span> Configuration
-                </h2>
+                <h2 id="lcr-configuration">Configuration</h2>
                 <p>File path: <code>plugins/LuxCustomRank/config.yml</code></p>
                 <div class="code-panel">
                     <div class="code-panel-bar">
@@ -1487,10 +970,8 @@ gui:
   reset-slot: 31</code></pre>
                 </div>
 
-                <h2 class="section-header" id="lcr-gui">
-                    <span>👑</span> Rank Colour GUI
-                </h2>
-                <img src="images/lcr-gui-preview.png" alt="Rank Color GUI Preview" style="max-width: 480px; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 16px 0 20px; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+                <h2 id="lcr-gui" data-short="Rank Colour GUI">Rank Colour GUI</h2>
+                <figure class="shot"><img src="images/lcr-gui-preview.png" alt="Rank Color GUI Preview" loading="lazy"><figcaption>Rank Color GUI Preview</figcaption></figure>
                 <p>
                     Running <code>/rankcolor</code> opens a 36-slot GUI featuring 3D colored orb heads powered by Minecraft-Heads. Clicking any unlocked head updates the player's personal rank color in LuckPerms without server restarts.
                 </p>
@@ -1499,112 +980,14 @@ gui:
                     <li><strong>LuxChatColor Lore Engine:</strong> Lore cards feature authentic <code>&lt;smallcaps:rank color&gt;</code> headings, colorized bullet bars (<code>&amp;%code%| ▸</code>), and dynamic status pills (<code>&#FF0000&amp;lLOCKED</code>, <code>&lt;green&gt;&lt;bold&gt;SELECTED&lt;/bold&gt;</code>, <code>&amp;e&amp;lCLICK HERE</code>) with item glint on active selection.</li>
                 </ul>
 
-                <!-- Gradient Nameplates Section -->
-                <h2 class="section-header" id="lcr-nameplates">
-                    <span>✨</span> Gradient Nameplates (/nameplate &amp; /nameplateadmin)
-                </h2>
+                <h2 id="lcr-nameplates" data-short="Gradient Nameplates">Gradient Nameplates (/nameplate &amp; /nameplateadmin)</h2>
                 <p>
                     Type <code>/nameplate</code> (or <code>/np</code>) to open a 45-slot visual palette menu with <strong>14 pre-made gradient styles</strong>. Selecting a nameplate applies a smooth multi-stop gradient directly across the player's username in chat while preserving their bold rank prefix!
                 </p>
 
-                <table class="ref-table">
-                    <thead>
-                        <tr>
-                            <th>Palette</th>
-                            <th>Gradient Tag</th>
-                            <th>Description</th>
-                            <th>Permission</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong style="color: #FF6B35;">Sunset</strong></td>
-                            <td><code>&lt;gradient:#FF6B35:#FF2E63&gt;</code></td>
-                            <td>Warm twilight orange to hot pink</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.sunset</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #0099FF;">Ocean</strong></td>
-                            <td><code>&lt;gradient:#0099FF:#00D4AA&gt;</code></td>
-                            <td>Deep ocean blue to turquoise aqua wave</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.ocean</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #38EF7D;">Forest</strong></td>
-                            <td><code>&lt;gradient:#11998E:#38EF7D&gt;</code></td>
-                            <td>Deep pine teal to vivid emerald green</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.forest</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #E100FF;">Royal</strong></td>
-                            <td><code>&lt;gradient:#7F00FF:#E100FF&gt;</code></td>
-                            <td>Imperial violet to royal magenta</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.royal</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #FF416C;">Cherry</strong></td>
-                            <td><code>&lt;gradient:#FF416C:#FF4B2B&gt;</code></td>
-                            <td>Japanese sakura blossom to ember fire</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.cherry</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #11FFBD;">Ice</strong></td>
-                            <td><code>&lt;gradient:#AAFFA9:#11FFBD&gt;</code></td>
-                            <td>Frosted mint to arctic cyan freeze</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.ice</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #FFD200;">Gold</strong></td>
-                            <td><code>&lt;gradient:#F7971E:#FFD200&gt;</code></td>
-                            <td>Molten amber shimmer to 24k bright gold</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.gold</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Rainbow</strong></td>
-                            <td><code>&lt;rainbow&gt;</code></td>
-                            <td>Full animated chromatic spectrum</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.rainbow</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #FC4A1A;">Blaze</strong></td>
-                            <td><code>&lt;gradient:#FC4A1A:#F7B733&gt;</code></td>
-                            <td>Nether magma red to solar flare yellow</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.blaze</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #C9D6FF;">Moonlight</strong></td>
-                            <td><code>&lt;gradient:#C9D6FF:#E2E2E2&gt;</code></td>
-                            <td>Soft nocturnal lavender to platinum pearl</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.moonlight</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #00F260;">Neon</strong></td>
-                            <td><code>&lt;gradient:#00F260:#0575E6&gt;</code></td>
-                            <td>Cyberpunk electric lime to laser blue</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.neon</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #8A2BE2;">Void</strong></td>
-                            <td><code>&lt;gradient:#0F0C29:#302B63:#24243E&gt;</code></td>
-                            <td>Deep cosmic purple to obsidian shadows</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.void</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #00FF7F;">Toxic</strong></td>
-                            <td><code>&lt;gradient:#98FF98:#00FF7F&gt;</code></td>
-                            <td>Radioactive biohazard green</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.toxic</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong style="color: #FF99AC;">Cotton Candy</strong></td>
-                            <td><code>&lt;gradient:#FF9A8B:#FF6A88:#FF99AC&gt;</code></td>
-                            <td>Sweet pastel confection pink and peach</td>
-                            <td><span class="tag-pill">luxcustomrank.nameplate.cottoncandy</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrap"><table class="ref-table"><thead><tr><th>Palette</th><th>Gradient tag &amp; permission</th></tr></thead><tbody><tr data-label="Sunset" data-detail="Warm twilight orange to hot pink"><td><span class="swatch" style="--g:linear-gradient(90deg,#FF6B35,#FF2E63)"></span><strong>Sunset</strong><div class="sub">Warm twilight orange to hot pink</div></td><td><code>&lt;gradient:#FF6B35:#FF2E63&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.sunset</span></div></td></tr><tr data-label="Ocean" data-detail="Deep ocean blue to turquoise aqua wave"><td><span class="swatch" style="--g:linear-gradient(90deg,#0099FF,#00D4AA)"></span><strong>Ocean</strong><div class="sub">Deep ocean blue to turquoise aqua wave</div></td><td><code>&lt;gradient:#0099FF:#00D4AA&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.ocean</span></div></td></tr><tr data-label="Forest" data-detail="Deep pine teal to vivid emerald green"><td><span class="swatch" style="--g:linear-gradient(90deg,#11998E,#38EF7D)"></span><strong>Forest</strong><div class="sub">Deep pine teal to vivid emerald green</div></td><td><code>&lt;gradient:#11998E:#38EF7D&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.forest</span></div></td></tr><tr data-label="Royal" data-detail="Imperial violet to royal magenta"><td><span class="swatch" style="--g:linear-gradient(90deg,#7F00FF,#E100FF)"></span><strong>Royal</strong><div class="sub">Imperial violet to royal magenta</div></td><td><code>&lt;gradient:#7F00FF:#E100FF&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.royal</span></div></td></tr><tr data-label="Cherry" data-detail="Japanese sakura blossom to ember fire"><td><span class="swatch" style="--g:linear-gradient(90deg,#FF416C,#FF4B2B)"></span><strong>Cherry</strong><div class="sub">Japanese sakura blossom to ember fire</div></td><td><code>&lt;gradient:#FF416C:#FF4B2B&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.cherry</span></div></td></tr><tr data-label="Ice" data-detail="Frosted mint to arctic cyan freeze"><td><span class="swatch" style="--g:linear-gradient(90deg,#AAFFA9,#11FFBD)"></span><strong>Ice</strong><div class="sub">Frosted mint to arctic cyan freeze</div></td><td><code>&lt;gradient:#AAFFA9:#11FFBD&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.ice</span></div></td></tr><tr data-label="Gold" data-detail="Molten amber shimmer to 24k bright gold"><td><span class="swatch" style="--g:linear-gradient(90deg,#F7971E,#FFD200)"></span><strong>Gold</strong><div class="sub">Molten amber shimmer to 24k bright gold</div></td><td><code>&lt;gradient:#F7971E:#FFD200&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.gold</span></div></td></tr><tr data-label="Rainbow" data-detail="Full animated chromatic spectrum"><td><span class="swatch" style="--g:linear-gradient(90deg,#ff2d2d,#ff9f1a,#ffe600,#2ee62e,#19c8ff,#3a3aff,#c21aff)"></span><strong>Rainbow</strong><div class="sub">Full animated chromatic spectrum</div></td><td><code>&lt;rainbow&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.rainbow</span></div></td></tr><tr data-label="Blaze" data-detail="Nether magma red to solar flare yellow"><td><span class="swatch" style="--g:linear-gradient(90deg,#FC4A1A,#F7B733)"></span><strong>Blaze</strong><div class="sub">Nether magma red to solar flare yellow</div></td><td><code>&lt;gradient:#FC4A1A:#F7B733&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.blaze</span></div></td></tr><tr data-label="Moonlight" data-detail="Soft nocturnal lavender to platinum pearl"><td><span class="swatch" style="--g:linear-gradient(90deg,#C9D6FF,#E2E2E2)"></span><strong>Moonlight</strong><div class="sub">Soft nocturnal lavender to platinum pearl</div></td><td><code>&lt;gradient:#C9D6FF:#E2E2E2&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.moonlight</span></div></td></tr><tr data-label="Neon" data-detail="Cyberpunk electric lime to laser blue"><td><span class="swatch" style="--g:linear-gradient(90deg,#00F260,#0575E6)"></span><strong>Neon</strong><div class="sub">Cyberpunk electric lime to laser blue</div></td><td><code>&lt;gradient:#00F260:#0575E6&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.neon</span></div></td></tr><tr data-label="Void" data-detail="Deep cosmic purple to obsidian shadows"><td><span class="swatch" style="--g:linear-gradient(90deg,#0F0C29,#302B63,#24243E)"></span><strong>Void</strong><div class="sub">Deep cosmic purple to obsidian shadows</div></td><td><code>&lt;gradient:#0F0C29:#302B63:#24243E&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.void</span></div></td></tr><tr data-label="Toxic" data-detail="Radioactive biohazard green"><td><span class="swatch" style="--g:linear-gradient(90deg,#98FF98,#00FF7F)"></span><strong>Toxic</strong><div class="sub">Radioactive biohazard green</div></td><td><code>&lt;gradient:#98FF98:#00FF7F&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.toxic</span></div></td></tr><tr data-label="Cotton Candy" data-detail="Sweet pastel confection pink and peach"><td><span class="swatch" style="--g:linear-gradient(90deg,#FF9A8B,#FF6A88,#FF99AC)"></span><strong>Cotton Candy</strong><div class="sub">Sweet pastel confection pink and peach</div></td><td><code>&lt;gradient:#FF9A8B:#FF6A88:#FF99AC&gt;</code><div class="sub"><span class="tag-pill">luxcustomrank.nameplate.cottoncandy</span></div></td></tr></tbody></table></div>
 
-                <h3 class="subsection-header">Admin Management (/nameplateadmin)</h3>
+                <h3>Admin Management (/nameplateadmin)</h3>
                 <p>
                     Administrators have full command-line authority to inspect and assign nameplates to any player without GUI interaction:
                 </p>
@@ -1615,7 +998,7 @@ gui:
                     <li><code>/nameplateadmin reload</code> - Hot-reloads <code>config.yml</code> palettes and permissions.</li>
                 </ul>
 
-                <h3 class="subsection-header">Native TAB &amp; Overhead Nametag Integration</h3>
+                <h3>Native TAB &amp; Overhead Nametag Integration</h3>
                 <p>
                     Unlike clunky hologram plugins that spawn laggy floating armor stands following players around, LuxCustomRank natively integrates with Minecraft's core client engine and popular plugins like <strong>TAB (NEZNAMY)</strong>:
                 </p>
@@ -1626,25 +1009,18 @@ gui:
                     <li><strong>Zero Hologram Overhead:</strong> 100% native client rendering with zero entity ticking, no teleport desync, and buttery smooth performance.</li>
                 </ul>
 
-                <h2 class="section-header" id="lcr-custom">
-                    <span>✏️</span> Custom Titles
-                </h2>
+                <h2 id="lcr-custom">Custom Titles</h2>
                 <p>
                     Players with <code>luxcustomrank.prefix</code> can type <code>/customrank &b[VIP]</code> or <code>/customrank &6[KNIGHT]</code> to assign their own personal prefix.
                 </p>
 
-                <h2 class="section-header" id="lcr-filter">
-                    <span>🚫</span> Anti-Abuse Filter
-                </h2>
+                <h2 id="lcr-filter">Anti-Abuse Filter</h2>
                 <p>
                     Custom prefixes are strictly validated against character length limits and the <code>banned-words</code> list to prevent staff impersonation.
                 </p>
 
-                <!-- Releases Section -->
-                <h2 class="section-header" id="lcr-releases">
-                    <span>📜</span> Releases
-                </h2>
-                <p><strong>v1.0.0 (Latest)</strong></p>
+                <h2 id="lcr-releases">Releases</h2>
+                <h3 class="release"><span>v1.0.0</span><em>Latest</em></h3>
                 <ul>
                     <li>Initial release of LuxCustomRank.</li>
                     <li>Direct LuckPerms User Meta PrefixNode integration.</li>
@@ -1655,122 +1031,354 @@ gui:
                     <li>Anti-abuse length constraints and banned words filtering.</li>
                 </ul>
 
-                <!-- Next Navigation Card -->
-                <div class="next-page-box">
-                    <a href="#lcr-commands" class="next-card">
-                        <div class="next-card-label">Next</div>
-                        <div class="next-card-title">Commands →</div>
-                    </a>
-                </div>
-            </div>
+                <footer class="doc-foot">
+  <a class="switch-card" href="#about">
+    <span class="tile"><img src="images/lcc-mark.png" alt=""></span>
+    <span><small>Also from LuxanaStudio</small><strong>LuxChatColor</strong><em>Chat colours, item previews and moderation for Paper.</em></span>
+  </a>
+  <a class="to-top" href="#lcr-about">Back to top &uarr;</a>
+</footer>
+            
+    </article>
+  </main>
 
-        </main>
+  <aside class="toc" id="toc" aria-label="On this page"></aside>
+</div>
+<div class="scrim" id="scrim"></div>
 
-        <!-- RIGHT TOC (ON THIS PAGE) -->
-        <aside class="right-toc">
-            <div class="toc-title">CONTENTS</div>
-            <div id="toc-lcc">
-                <a href="#prerequisites" class="toc-link">Prerequisites</a>
-                <a href="#installation" class="toc-link">Installation</a>
-                <a href="#commands" class="toc-link">Commands</a>
-                <a href="#permissions" class="toc-link">Permissions</a>
-                <a href="#configuration" class="toc-link">Configuration</a>
-                <a href="#gui" class="toc-link">Color GUI</a>
-                <a href="#previews" class="toc-link">Previews</a>
-                <a href="#moderation" class="toc-link">Chat Filter</a>
-                <a href="#welcomemsg" class="toc-link">Welcome Messages</a>
-                <a href="#releases" class="toc-link">Releases</a>
-            </div>
-            <div id="toc-lcr" class="hidden">
-                <a href="#lcr-prerequisites" class="toc-link">Prerequisites</a>
-                <a href="#lcr-installation" class="toc-link">Installation</a>
-                <a href="#lcr-commands" class="toc-link">Commands</a>
-                <a href="#lcr-permissions" class="toc-link">Permissions</a>
-                <a href="#lcr-configuration" class="toc-link">Configuration</a>
-                <a href="#lcr-gui" class="toc-link">Rank Colour GUI</a>
-                <a href="#lcr-nameplates" class="toc-link">Gradient Nameplates</a>
-                <a href="#lcr-custom" class="toc-link">Custom Titles</a>
-                <a href="#lcr-filter" class="toc-link">Anti-Abuse Filter</a>
-                <a href="#lcr-releases" class="toc-link">Releases</a>
-            </div>
-        </aside>
-
+<div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Search the wiki" hidden>
+  <div class="palette-box">
+    <div class="palette-input">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input id="paletteInput" type="text" placeholder="Search commands, permissions, sections…" autocomplete="off" spellcheck="false" aria-label="Search">
+      <kbd>Esc</kbd>
     </div>
+    <ul class="palette-list" id="paletteList" role="listbox"></ul>
+    <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script>
-        function toggleDropdown() {
-            document.getElementById('pluginDropdown').classList.toggle('show');
-        }
+<script>
+(function () {
+  'use strict';
 
-        window.onclick = function(event) {
-            if (!event.target.closest('.plugin-brand-box')) {
-                document.getElementById('pluginDropdown').classList.remove('show');
-            }
-        }
+  var PLUGINS = {
+    lcc: { name: 'LuxChatColor', version: 'v1.2.0', home: 'about', mark: 'images/lcc-mark.png' },
+    lcr: { name: 'LuxCustomRank', version: 'v1.0.0', home: 'lcr-about', mark: 'images/lcr-mark.png' }
+  };
+  var root = document.documentElement;
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
+  };
+  var current = 'lcc';
 
-        function switchPlugin(id, event) {
-            if (event) event.stopPropagation();
-            const isLcc = (id === 'lcc');
+  /* ---------- toast ---------- */
+  var toastEl = $('#toast'), toastTimer;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 1800);
+  }
 
-            document.getElementById('brand-name').innerText = isLcc ? 'LuxChatColor' : 'LuxCustomRank';
-            document.getElementById('brand-avatar').innerText = isLcc ? '🎨' : '👑';
+  /* ---------- theme ---------- */
+  $('#themeBtn').addEventListener('click', function () {
+    var next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    root.dataset.theme = next;
+    store.set('lux-theme', next);
+  });
 
-            document.getElementById('opt-lcc').classList.toggle('active', isLcc);
-            document.getElementById('opt-lcr').classList.toggle('active', !isLcc);
+  /* ---------- headings: ids, anchors, short titles ---------- */
+  function headText(h) {
+    return $$('.anchor', h).length
+      ? Array.prototype.filter.call(h.childNodes, function (n) { return !(n.classList && n.classList.contains('anchor')); })
+          .map(function (n) { return n.textContent; }).join('').trim()
+      : h.textContent.trim();
+  }
+  var usedIds = {};
+  $$('[id]').forEach(function (e) { usedIds[e.id] = 1; });
+  $$('.doc').forEach(function (doc) {
+    var p = doc.dataset.doc;
+    $$('h2, h3', doc).forEach(function (h) {
+      if (!h.id) {
+        var base = p + '-' + headText(h).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''), id = base, n = 2;
+        while (usedIds[id]) id = base + '-' + n++;
+        h.id = id; usedIds[id] = 1;
+      }
+      var a = document.createElement('a');
+      a.className = 'anchor'; a.href = '#' + h.id; a.textContent = '#';
+      a.setAttribute('aria-label', 'Link to ' + headText(h));
+      a.addEventListener('click', function () {
+        var url = location.href.split('#')[0] + '#' + h.id;
+        if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { toast('Link copied'); }, function () {});
+      });
+      h.appendChild(a);
+    });
+  });
 
-            document.getElementById('sidebar-lcc').classList.toggle('hidden', !isLcc);
-            document.getElementById('sidebar-lcr').classList.toggle('hidden', isLcc);
+  /* ---------- on this page ---------- */
+  var tocEl = $('#toc');
+  function buildToc(p) {
+    var doc = $('.doc[data-doc="' + p + '"]');
+    tocEl.innerHTML = '<div class="toc-title">On this page</div>';
+    $$('h2', doc).forEach(function (h) {
+      var a = document.createElement('a');
+      a.href = '#' + h.id; a.textContent = h.dataset.short || headText(h);
+      tocEl.appendChild(a);
+    });
+  }
 
-            document.getElementById('doc-lcc').classList.toggle('hidden', !isLcc);
-            document.getElementById('doc-lcr').classList.toggle('hidden', isLcc);
+  /* ---------- plugin state ---------- */
+  function setPlugin(p) {
+    if (!PLUGINS[p]) p = 'lcc';
+    var info = PLUGINS[p];
+    var changed = p !== current;
+    current = p;
+    root.dataset.plugin = p;
+    $$('.doc').forEach(function (d) { d.hidden = d.dataset.doc !== p; });
+    $$('.nav[data-nav]').forEach(function (n) { n.hidden = n.dataset.nav !== p; });
+    $('#swMark').src = info.mark;
+    $('#swName').textContent = info.name;
+    $('#swSub').textContent = info.version + ' docs';
+    $$('.switcher-opt').forEach(function (o) { o.setAttribute('aria-checked', String(o.dataset.plugin === p)); });
+    var fav = $('#favicon'); if (fav) fav.href = info.mark;
+    document.title = info.name + ' · LuxanaStudio Wiki';
+    store.set('lux-plugin', p);
+    if (changed || !tocEl.children.length) buildToc(p);
+    return changed;
+  }
 
-            document.getElementById('toc-lcc').classList.toggle('hidden', !isLcc);
-            document.getElementById('toc-lcr').classList.toggle('hidden', isLcc);
+  /* ---------- routing ---------- */
+  function route(initial) {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var el = id && document.getElementById(id);
+    var doc = el && el.closest('.doc');
+    if (doc) {
+      var swapped = setPlugin(doc.dataset.doc);
+      var how = (swapped || initial) ? 'instant' : 'smooth';
+      requestAnimationFrame(function () {
+        if (el.matches('.hero')) window.scrollTo({ top: 0, behavior: how }); else el.scrollIntoView({ behavior: how });
+        spy();
+      });
+    } else {
+      setPlugin(initial ? (store.get('lux-plugin') || 'lcc') : current);
+      if (!id) window.scrollTo({ top: 0, behavior: 'instant' });
+      spy();
+    }
+    closeNav();
+  }
+  window.addEventListener('hashchange', function () { route(false); });
 
-            document.getElementById('pluginDropdown').classList.remove('show');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+  /* ---------- scroll-spy ---------- */
+  var ticking = false;
+  function spy() {
+    var doc = $('.doc[data-doc="' + current + '"]');
+    if (!doc) return;
+    var heads = [$('.hero', doc)].concat($$('h2', doc));
+    var cur = heads[0], limit = 56 + 90;
+    heads.forEach(function (h) { if (h && h.getBoundingClientRect().top <= limit) cur = h; });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) cur = heads[heads.length - 1];
+    var id = cur.id;
+    $$('.nav[data-nav="' + current + '"] a[href^="#"]').forEach(function (a) {
+      if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+    $$('a', tocEl).forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + id); });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; spy(); }); }
+  }, { passive: true });
 
-        function makeActive(el) {
-            document.querySelectorAll('.nav-btn-item').forEach(item => item.classList.remove('active'));
-            el.classList.add('active');
-        }
+  /* ---------- product switcher ---------- */
+  var swBtn = $('#swBtn'), swMenu = $('#swMenu');
+  function swToggle(open) {
+    swMenu.hidden = !open; swBtn.setAttribute('aria-expanded', String(open));
+  }
+  swBtn.addEventListener('click', function (e) { e.stopPropagation(); swToggle(swMenu.hidden); });
+  $$('.switcher-opt').forEach(function (o) {
+    o.addEventListener('click', function () {
+      swToggle(false);
+      var target = '#' + PLUGINS[o.dataset.plugin].home;
+      if (location.hash === target) route(false); else location.hash = target;
+    });
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.switcher')) swToggle(false); });
 
-        function copyCode(btn) {
-            const pre = btn.closest('.code-panel').querySelector('pre code');
-            navigator.clipboard.writeText(pre.innerText).then(() => {
-                const old = btn.innerText;
-                btn.innerText = 'Copied!';
-                btn.style.color = '#38bdf8';
-                setTimeout(() => {
-                    btn.innerText = old;
-                    btn.style.color = '';
-                }, 2000);
-            });
-        }
+  /* ---------- mobile drawer ---------- */
+  function closeNav() { document.body.classList.remove('nav-open'); $('#menuBtn').setAttribute('aria-expanded', 'false'); }
+  $('#menuBtn').addEventListener('click', function () {
+    var open = document.body.classList.toggle('nav-open');
+    this.setAttribute('aria-expanded', String(open));
+  });
+  $('#scrim').addEventListener('click', closeNav);
 
-        function copyPageUrl() {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                alert('Page URL copied to clipboard!');
-            });
-        }
+  /* ---------- code panels ---------- */
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function val(v) {
+    return esc(v).replace(/("(?:[^"\\]|\\.)*")|\b(true|false)\b|\b(\d+)\b/g, function (m, s, b, n) {
+      return s ? '<span class="y-s">' + s + '</span>' : '<span class="y-n">' + (b || n) + '</span>';
+    });
+  }
+  function hlLine(line) {
+    if (/^\s*#/.test(line)) return '<span class="y-c">' + esc(line) + '</span>';
+    var k = line.match(/^(\s*)(-\s+)?([A-Za-z0-9_.\-]+)(:)(\s.*|)$/);
+    if (k) return esc(k[1]) + (k[2] ? '<span class="y-p">' + esc(k[2]) + '</span>' : '') +
+      '<span class="y-k">' + esc(k[3]) + '</span><span class="y-p">:</span>' + val(k[5]);
+    var l = line.match(/^(\s*)(-\s+)(.*)$/);
+    if (l) return esc(l[1]) + '<span class="y-p">' + esc(l[2]) + '</span>' + val(l[3]);
+    return esc(line);
+  }
+  $$('.code-panel').forEach(function (panel) {
+    var code = $('pre code', panel);
+    var raw = code.textContent;
+    panel.dataset.raw = raw;
+    code.innerHTML = raw.split('\n').map(hlLine).join('\n');
+    var btn = $('.code-copy-btn', panel);
+    btn.innerHTML = '<svg class="i"><use href="#i-copy"/></svg><span>Copy</span>';
+    btn.addEventListener('click', function () {
+      var done = function () {
+        btn.classList.add('done'); btn.innerHTML = '<svg class="i"><use href="#i-check"/></svg><span>Copied</span>';
+        setTimeout(function () { btn.classList.remove('done'); btn.innerHTML = '<svg class="i"><use href="#i-copy"/></svg><span>Copy</span>'; }, 1800);
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(panel.dataset.raw).then(done, function () { toast('Copy failed'); });
+      else toast('Copy not available here');
+    });
+  });
 
-        function filterSidebar() {
-            const query = document.getElementById('sidebarFilter').value.toLowerCase();
-            const activeSidebar = document.querySelector('.left-sidebar > div:not(.hidden)');
-            const items = activeSidebar.querySelectorAll('.nav-btn-item');
+  /* ---------- search palette ---------- */
+  var pal = $('#palette'), input = $('#paletteInput'), list = $('#paletteList');
+  var index = [], shown = [], sel = 0, opener = null;
 
-            items.forEach(item => {
-                const text = item.innerText.toLowerCase();
-                item.style.display = text.includes(query) ? 'flex' : 'none';
-            });
-        }
+  function sectionOf(el) {
+    var n = el.closest('.table-wrap') || el;
+    while (n && n.tagName !== 'H2') n = n.previousElementSibling;
+    return n ? (n.dataset.short || headText(n)) : '';
+  }
+  function buildIndex() {
+    index = [];
+    $$('.doc').forEach(function (doc) {
+      var p = doc.dataset.doc;
+      index.push({ p: p, kind: 'Page', label: PLUGINS[p].name, detail: $('.hero .lead', doc).textContent, el: $('.hero', doc), text: PLUGINS[p].name + ' overview' });
+      $$('h2, h3', doc).forEach(function (h) {
+        index.push({ p: p, kind: h.tagName === 'H2' ? 'Section' : 'Topic', label: headText(h), detail: h.tagName === 'H2' ? '' : sectionOf(h), el: h, text: headText(h) });
+      });
+      $$('.ref-table tbody tr', doc).forEach(function (tr) {
+        var cells = $$('td', tr).map(function (c) { return c.textContent.replace(/\s+/g, ' ').trim(); });
+        var desc = tr.dataset.detail || cells.slice(1).sort(function (a, b) { return b.length - a.length; })[0] || '';
+        index.push({ p: p, kind: 'Row', label: tr.dataset.label || cells[0], detail: desc, section: sectionOf(tr), el: tr, text: cells.join(' ') });
+      });
+    });
+  }
+  function score(item, terms) {
+    var l = item.label.toLowerCase(), t = (item.text + ' ' + item.detail + ' ' + PLUGINS[item.p].name).toLowerCase(), s = 0;
+    for (var i = 0; i < terms.length; i++) {
+      var q = terms[i];
+      if (l.indexOf(q) === 0) s += 6; else if (l.indexOf(q) > -1) s += 4; else if (t.indexOf(q) > -1) s += 1; else return 0;
+    }
+    if (item.p === current) s += 1.5;
+    if (item.kind === 'Section' || item.kind === 'Page') s += .5;
+    return s;
+  }
+  function hi(text, terms) {
+    var frag = document.createDocumentFragment(), low = text.toLowerCase(), pos = 0;
+    while (pos < text.length) {
+      var best = -1, bl = 0;
+      terms.forEach(function (q) { var i = low.indexOf(q, pos); if (i > -1 && (best < 0 || i < best)) { best = i; bl = q.length; } });
+      if (best < 0) break;
+      if (best > pos) frag.appendChild(document.createTextNode(text.slice(pos, best)));
+      var m = document.createElement('mark'); m.textContent = text.slice(best, best + bl); frag.appendChild(m);
+      pos = best + bl;
+    }
+    if (pos < text.length) frag.appendChild(document.createTextNode(text.slice(pos)));
+    return frag;
+  }
+  function render() {
+    var q = input.value.trim().toLowerCase(), terms = q ? q.split(/\s+/) : [];
+    list.innerHTML = '';
+    if (!terms.length) {
+      shown = index.filter(function (i) { return i.p === current && (i.kind === 'Section' || i.kind === 'Page'); });
+      addGroup('Jump to · ' + PLUGINS[current].name);
+    } else {
+      shown = index.map(function (i) { return { i: i, s: score(i, terms) }; })
+        .filter(function (r) { return r.s > 0; })
+        .sort(function (a, b) { return b.s - a.s; }).slice(0, 14).map(function (r) { return r.i; });
+      if (!shown.length) {
+        var e = document.createElement('li'); e.className = 'palette-empty'; e.textContent = 'Nothing matches “' + input.value.trim() + '”'; list.appendChild(e); return;
+      }
+    }
+    sel = 0;
+    shown.forEach(function (item, n) {
+      var li = document.createElement('li');
+      li.className = 'palette-item'; li.setAttribute('role', 'option'); li.setAttribute('aria-selected', String(n === 0));
+      var tile = document.createElement('span'); tile.className = 'tile';
+      var im = document.createElement('img'); im.src = PLUGINS[item.p].mark; im.alt = ''; tile.appendChild(im);
+      var txt = document.createElement('span'); txt.className = 'txt';
+      var lbl = document.createElement('span'); lbl.className = 'lbl'; lbl.appendChild(hi(item.label, terms));
+      var det = document.createElement('span'); det.className = 'det';
+      var d = item.kind === 'Row' ? item.section + ' · ' + item.detail : (item.detail || PLUGINS[item.p].name);
+      det.textContent = d;
+      txt.appendChild(lbl); txt.appendChild(det);
+      var kind = document.createElement('span'); kind.className = 'kind'; kind.textContent = item.kind === 'Row' ? '' : item.kind;
+      li.appendChild(tile); li.appendChild(txt); li.appendChild(kind);
+      li.addEventListener('mousemove', function () { choose(n); });
+      li.addEventListener('click', function () { go(item); });
+      list.appendChild(li);
+    });
+  }
+  function addGroup(t) { var g = document.createElement('li'); g.className = 'palette-group'; g.setAttribute('role', 'presentation'); g.textContent = t; list.appendChild(g); }
+  function choose(n) {
+    var items = $$('.palette-item', list);
+    if (!items.length) return;
+    sel = (n + items.length) % items.length;
+    items.forEach(function (li, k) { li.setAttribute('aria-selected', String(k === sel)); });
+    items[sel].scrollIntoView({ block: 'nearest' });
+  }
+  function openPalette() {
+    if (!index.length) buildIndex();
+    opener = document.activeElement; closeNav();
+    pal.hidden = false; input.value = ''; render(); input.focus();
+  }
+  function closePalette() { pal.hidden = true; if (opener && opener.focus) opener.focus(); }
+  function go(item) {
+    closePalette();
+    var host = item.el.closest('.doc');
+    var h = item.el.matches('tr') ? null : item.el;
+    var sec = item.el.closest('.table-wrap') || item.el;
+    while (sec && sec.tagName !== 'H2' && !sec.matches('.hero')) sec = sec.previousElementSibling;
+    var target = h || sec || item.el;
+    var swapped = host.dataset.doc !== current;
+    if (swapped) setPlugin(host.dataset.doc);
+    var how = swapped ? 'instant' : 'smooth';
+    if (target && target.id) history.replaceState(null, '', '#' + target.id);
+    requestAnimationFrame(function () {
+      if (item.el.matches('.hero')) window.scrollTo({ top: 0, behavior: how }); else item.el.scrollIntoView({ block: 'start', behavior: how });
+      if (item.el.matches('tr')) { item.el.classList.remove('flash'); void item.el.offsetWidth; item.el.classList.add('flash'); }
+      spy();
+    });
+  }
+  $('#searchBtn').addEventListener('click', openPalette);
+  pal.addEventListener('mousedown', function (e) { if (e.target === pal) closePalette(); });
+  input.addEventListener('input', render);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); choose(sel + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); choose(sel - 1); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (shown[sel]) go(shown[sel]); }
+  });
+  document.addEventListener('keydown', function (e) {
+    var typing = /^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || '')) || e.target.isContentEditable;
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); pal.hidden ? openPalette() : closePalette(); }
+    else if (e.key === '/' && !typing && pal.hidden) { e.preventDefault(); openPalette(); }
+    else if (e.key === 'Escape') { if (!pal.hidden) closePalette(); else { swToggle(false); closeNav(); } }
+  });
+  $('#kbdHint').textContent = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent) ? '⌘K' : 'Ctrl K';
 
-        function filterNav() {
-            const query = document.getElementById('globalSearch').value.toLowerCase();
-            document.getElementById('sidebarFilter').value = query;
-            filterSidebar();
-        }
-    </script>
+  /* ---------- go ---------- */
+  route(true);
+})();
+
+</script>
 </body>
 </html>
