@@ -547,6 +547,7 @@ tr.flash td { animation: flash 1.8s ease-out; }
 <div class="nav-label">Project</div>
 <a href="#lcr-releases">Releases</a>
 <div class="nav-label">Integrations</div>
+<a href="#lcr-tab">TAB integration</a>
 <a class="ext" href="https://luckperms.net" target="_blank" rel="noopener">LuckPerms</a>
 </nav>
     <div class="sidebar-links">
@@ -878,7 +879,7 @@ moderation:
                 </p>
 
                 <h2 id="lcr-commands">Commands</h2>
-                <div class="table-wrap"><table class="ref-table"><thead><tr><th>Command</th><th>Description</th></tr></thead><tbody><tr data-label="/rankcolor" data-detail="Opens the visual rank color picker GUI."><td><div class="cmd"><code>/rankcolor</code></div><div class="sub">Aliases: <code>/rc</code>, <code>/rankcolors</code></div></td><td>Opens the visual rank color picker GUI.<div class="sub">Requires <span class="tag-pill">luxcustomrank.color</span></div></td></tr><tr data-label="/nameplate" data-detail="Opens the 45-slot gradient nameplate picker GUI."><td><div class="cmd"><code>/nameplate</code></div><div class="sub">Aliases: <code>/np</code>, <code>/gradient</code></div></td><td>Opens the 45-slot gradient nameplate picker GUI.<div class="sub">Requires <span class="tag-pill">luxcustomrank.nameplate</span></div></td></tr><tr data-label="/customrank &lt;title&gt;" data-detail="Sets your personal custom prefix or rank title."><td><div class="cmd"><code>/customrank &lt;title&gt;</code></div><div class="sub">Aliases: <code>/customprefix</code>, <code>/setrank</code></div></td><td>Sets your personal custom prefix or rank title.<div class="sub">Requires <span class="tag-pill">luxcustomrank.prefix</span></div></td></tr><tr data-label="/rankclear" data-detail="Clears custom prefix and restores group rank."><td><div class="cmd"><code>/rankclear</code></div><div class="sub">Aliases: <code>/resetrank</code>, <code>/resetprefix</code></div></td><td>Clears custom prefix and restores group rank.<div class="sub">Requires <span class="tag-pill">luxcustomrank.clear</span></div></td></tr><tr data-label="/nameplateadmin set &lt;player&gt; &lt;palette&gt;" data-detail="Force-assigns a gradient nameplate to a player."><td><div class="cmd"><code>/nameplateadmin set &lt;player&gt; &lt;palette&gt;</code></div><div class="sub">Aliases: <code>/npa set</code></div></td><td>Force-assigns a gradient nameplate to a player.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr><tr data-label="/nameplateadmin clear &lt;player&gt;" data-detail="Clears a player&#x27;s nameplate back to matching rank color."><td><div class="cmd"><code>/nameplateadmin clear &lt;player&gt;</code></div><div class="sub">Aliases: <code>/npa clear</code></div></td><td>Clears a player's nameplate back to matching rank color.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr><tr data-label="/nameplateadmin list" data-detail="Lists all 14 pre-made gradient palettes."><td><div class="cmd"><code>/nameplateadmin list</code></div><div class="sub">Aliases: <code>/npa list</code></div></td><td>Lists all 14 pre-made gradient palettes.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr><tr data-label="/luxcustomrankadmin reload" data-detail="Reloads configuration and color heads."><td><div class="cmd"><code>/luxcustomrankadmin reload</code></div><div class="sub">Aliases: <code>/lcra reload</code></div></td><td>Reloads configuration and color heads.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr></tbody></table></div>
+                <div class="table-wrap"><table class="ref-table"><thead><tr><th>Command</th><th>Description</th></tr></thead><tbody><tr data-label="/rankcolor" data-detail="Opens the visual rank color picker GUI."><td><div class="cmd"><code>/rankcolor</code></div><div class="sub">Aliases: <code>/rc</code>, <code>/rankcolors</code></div></td><td>Opens the visual rank color picker GUI.<div class="sub">Requires <span class="tag-pill">luxcustomrank.color</span></div></td></tr><tr data-label="/nameplate" data-detail="Opens the 45-slot gradient nameplate picker GUI."><td><div class="cmd"><code>/nameplate</code></div><div class="sub">Aliases: <code>/np</code>, <code>/gradient</code></div></td><td>Opens the 45-slot gradient nameplate picker GUI.<div class="sub">Requires <span class="tag-pill">luxcustomrank.nameplate</span></div></td></tr><tr data-label="/customrank &lt;title&gt;" data-detail="Sets your personal custom prefix or rank title."><td><div class="cmd"><code>/customrank &lt;title&gt;</code></div><div class="sub">Aliases: <code>/customprefix</code>, <code>/setrank</code></div></td><td>Sets your personal custom prefix or rank title.<div class="sub">Requires <span class="tag-pill">luxcustomrank.prefix</span></div></td></tr><tr data-label="/rankclear" data-detail="Clears custom prefix and restores group rank."><td><div class="cmd"><code>/rankclear</code></div><div class="sub">Aliases: <code>/resetrank</code>, <code>/resetprefix</code></div></td><td>Clears custom prefix and restores group rank.<div class="sub">Requires <span class="tag-pill">luxcustomrank.clear</span></div></td></tr><tr data-label="/nameplateadmin set &lt;player&gt; &lt;palette&gt;" data-detail="Force-assigns a gradient nameplate to a player."><td><div class="cmd"><code>/nameplateadmin set &lt;player&gt; &lt;palette&gt;</code></div><div class="sub">Aliases: <code>/npa set</code></div></td><td>Force-assigns a gradient nameplate to a player.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr><tr data-label="/nameplateadmin clear &lt;player&gt;" data-detail="Clears a player&#x27;s nameplate back to matching rank color."><td><div class="cmd"><code>/nameplateadmin clear &lt;player&gt;</code></div><div class="sub">Aliases: <code>/npa clear</code></div></td><td>Clears a player's nameplate back to matching rank color.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr><tr data-label="/nameplateadmin list" data-detail="Lists all 14 pre-made gradient palettes."><td><div class="cmd"><code>/nameplateadmin list</code></div><div class="sub">Aliases: <code>/npa list</code></div></td><td>Lists all 14 pre-made gradient palettes.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr><tr data-label="/luxcustomrankadmin reload" data-detail="Reloads configuration and color heads."><td><div class="cmd"><code>/luxcustomrankadmin reload</code></div><div class="sub">Aliases: <code>/lcra reload</code></div></td><td>Reloads configuration and color heads.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr><tr data-label="/luxcustomrankadmin debug [player]" data-detail="Shows the tablist name meta and the expected name."><td><div class="cmd"><code>/luxcustomrankadmin debug [player]</code></div><div class="sub">Aliases: <code>/lcra debug</code></div></td><td>Shows the stored tablist name meta, the expected name and whether they match — use this when a name is invisible in TAB.<div class="sub">Requires <span class="tag-pill">luxcustomrank.admin</span></div></td></tr></tbody></table></div>
 
                 <h2 id="lcr-permissions">Permissions</h2>
                 <div class="table-wrap"><table class="ref-table">
@@ -967,7 +968,30 @@ gui:
   title: "&lt;dark_gray&gt;Pick your Rank Colour"
   size: 36
   filler: "GRAY_STAINED_GLASS_PANE"
-  reset-slot: 31</code></pre>
+  reset-slot: 31
+
+nameplates:
+  gui:
+    title: "&lt;dark_gray&gt;Pick your Nameplate"
+    size: 45
+    filler: "GRAY_STAINED_GLASS_PANE"
+    reset-slot: 40
+  plates:
+    sunset:
+      gradient-format: "&lt;gradient:#FF6B35:#FF2E63&gt;%name%&lt;/gradient&gt;"
+
+nametag:
+  # auto   = colour the vanilla name only when TAB is not installed
+  # always = also do it with TAB (disable TAB scoreboard-teams first)
+  # never  = never touch the vanilla name
+  custom-name: auto
+  # vanilla = TAB flat team colour | display = TextDisplay gradient overhead
+  overhead: vanilla
+
+tab:
+  # Safety net for the tablist name: re-check every N seconds and re-save the
+  # customtabname meta only when it is missing or stale (0 = disabled)
+  auto-sync-seconds: 10</code></pre>
                 </div>
 
                 <h2 id="lcr-gui" data-short="Rank Colour GUI">Rank Colour GUI</h2>
@@ -998,15 +1022,136 @@ gui:
                     <li><code>/nameplateadmin reload</code> - Hot-reloads <code>config.yml</code> palettes and permissions.</li>
                 </ul>
 
-                <h3>Native TAB &amp; Overhead Nametag Integration</h3>
+                <h3 id="lcr-tab">TAB (NEZNAMY) Integration</h3>
                 <p>
-                    Unlike clunky hologram plugins that spawn laggy floating armor stands following players around, LuxCustomRank natively integrates with Minecraft's core client engine and popular plugins like <strong>TAB (NEZNAMY)</strong>:
+                    LuxCustomRank turns every gradient palette into legacy hex codes and stores the finished name in <strong>LuckPerms user meta</strong>, so TAB can render exactly the same gradient in the player list. The plugin always writes a visible value &ndash; even before the player picks a colour or a nameplate &ndash; because TAB treats an empty placeholder in <code>customtabname</code> as an empty name, which makes players <strong>invisible in the tablist</strong>. On top of that, <code>tab.auto-sync-seconds</code> (default <code>10</code>) re-checks every online player and re-saves the meta only when it is missing or stale, so a failed or too-early LuckPerms write self-heals.
                 </p>
+
+                <div class="table-wrap"><table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>LuckPerms meta key</th>
+                            <th>Contents</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>customtabname</code></td>
+                            <td>Finished name in legacy hex (<code>&amp;#RRGGBB</code>): the chosen gradient, or the plain rank colour when no nameplate is selected.</td>
+                        </tr>
+                        <tr>
+                            <td><code>customtagname</code></td>
+                            <td>Copy of the same value. TAB has no such property &ndash; it is only written for third-party plugins that read it. Do not point a TAB nametag at it.</td>
+                        </tr>
+                        <tr>
+                            <td><code>lux_formatted_name</code></td>
+                            <td>Same value, exposed for chat and nametag plugins.</td>
+                        </tr>
+                        <tr>
+                            <td><code>lux_nameplate_hex</code></td>
+                            <td>Same value, legacy hex form.</td>
+                        </tr>
+                        <tr>
+                            <td><code>lux_rank_title</code>, <code>lux_rank_color</code>, <code>lux_nameplate</code>, <code>lux_nameplate_format</code></td>
+                            <td>Internal plugin state. Do not edit by hand.</td>
+                        </tr>
+                    </tbody>
+                </table></div>
+
+                <h4>1. Tablist name</h4>
+                <p>
+                    TAB stores name formatting in <code>groups.yml</code> (or <code>users.yml</code> for a single player), not in <code>config.yml</code>. Add the meta placeholder to <code>_DEFAULT_</code> so it applies to every player:
+                </p>
+                <div class="code-panel">
+                    <div class="code-panel-bar">
+                        <span>plugins/TAB/groups.yml</span>
+                        <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>_DEFAULT_:
+  tabprefix: "%luckperms-prefix%"
+  customtabname: "%luckperms_meta_customtabname%"
+  tabsuffix: ""</code></pre>
+                </div>
+                <p>
+                    <strong>PlaceholderAPI note:</strong> TAB's built-in LuckPerms placeholders only expose <code>%luckperms-prefix%</code> and <code>%luckperms-suffix%</code>. Reading meta requires the LuckPerms PlaceholderAPI expansion (<code>%luckperms_meta_customtabname%</code>). Watch the spelling: it is <code>luckperms_meta_&lt;key&gt;</code> with <strong>underscores</strong>, never <code>%luckperms-meta-customtabname%</code>. Without PlaceholderAPI, keep <code>customtabname: "%player%"</code> &ndash; the tablist stays readable, it just shows no gradient.
+                </p>
+                <div class="code-panel" style="padding:16px 18px;font-size:14px">
+                    <strong>Name still invisible without a colour?</strong> That means the placeholder resolved to nothing. Check in this order:
+                    <ol>
+                        <li><code>/luxcustomrankadmin debug &lt;player&gt;</code> &ndash; prints the stored <code>customtabname</code>, the expected name and whether they match. A non-empty value here means the plugin side is fine and TAB is overriding it.</li>
+                        <li>Run <code>/tab player &lt;player&gt; customtabname</code> (no value) to clear a per-player override, and check <code>per-world:</code> / <code>users.yml</code> for a higher-priority empty <code>customtabname</code>.</li>
+                        <li>Run <code>/papi parse me %luckperms_meta_customtabname%</code> &ndash; if it prints the raw placeholder, the LuckPerms expansion is missing or the key is misspelled.</li>
+                    </ol>
+                </div>
+
+                <h4>2. Name above the head (overhead nametag)</h4>
+                <p>
+                    This is <strong>not</strong> controlled by <code>customtabname</code>. TAB draws the overhead nametag with scoreboard teams, and teams can only add a prefix and a suffix around the real username &ndash; the name itself cannot be changed, and the name colour can only be <em>one</em> of the 16 legacy colours. A gradient above the head is impossible with TAB's teams alone.
+                </p>
+                <p>
+                    LuxCustomRank therefore ships its own overhead renderer: <code>nametag.overhead: display</code> spawns a <code>TextDisplay</code> above every player (Paper 1.19.4+) and draws the exact same gradient that the tablist uses. It is a full Adventure component, so RGB works.
+                </p>
+                <div class="code-panel">
+                    <div class="code-panel-bar">
+                        <span>plugins/LuxCustomRank/config.yml</span>
+                        <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>nametag:
+  overhead: display   # vanilla = TAB flat colour, display = real gradient
+
+  display:
+    height: 2.25                 # blocks above the player's feet
+    update-interval-ticks: 2     # lower = smoother, more packets
+    view-range: 1.0
+    line-width: 400
+    shadow: true</code></pre>
+                </div>
+                <p>
+                    Because TAB/Minecraft would still draw its own nametag underneath, hide it in TAB while keeping teams for sorting and collision:
+                </p>
+                <div class="code-panel">
+                    <div class="code-panel-bar">
+                        <span>plugins/TAB/config.yml</span>
+                        <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>scoreboard-teams:
+  enabled: true
+  # true = TAB hides the vanilla nametag, LuxCustomRank draws the gradient one
+  invisible-nametags: true</code></pre>
+                </div>
+                <ul>
+                    <li><strong>Alternative (no display entities):</strong> set <code>scoreboard-teams.enabled: false</code> and <code>nametag.custom-name: always</code>. LuxCustomRank then writes the gradient onto the player entity, but TAB sorting, collision and nametag visibility stop working.</li>
+                    <li><strong>Flat colour only:</strong> keep <code>nametag.overhead: vanilla</code>. TAB tints the name with the last colour code of <code>tagprefix</code>, so set <code>tagprefix: "%luckperms-prefix%"</code> (LuxCustomRank already ends its prefix with a colour code). No RGB, no gradient.</li>
+                    <li><strong>Third-party:</strong> CustomNameplates, UnlimitedNameTags, DisplayNameTags or NotJustNameplates do the same job as the <code>display</code> mode.</li>
+                </ul>
+
+                <div class="code-panel">
+                    <div class="code-panel-bar">
+                        <span>plugins/TAB/config.yml</span>
+                        <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>tablist-name-formatting:
+  enabled: true
+
+scoreboard-teams:
+  # Only for the "no display entities" alternative above:
+  # false = let LuxCustomRank write the gradient onto the player entity
+  enabled: true</code></pre>
+                </div>
+
+                <h4>3. Chat</h4>
+                <p>
+                    LuxCustomRank also sets <code>player.displayName()</code> to an Adventure component that contains the same gradient. Whether chat shows it depends entirely on the chat plugin's format string: a format that uses the <strong>display name component</strong> (for example <code>%player_displayname%</code> from the Player expansion, or the player's Adventure display name) renders the gradient; a format that only uses the raw username (<code>%player_name%</code>) cannot, because the raw name has no formatting at all. Change the chat format to the display-name placeholder and the gradient appears there too.
+                </p>
+
+                <p>
+                    If you were given a single <code>nametag:</code> block with <code>prefix</code>/<code>suffix</code>/<code>customtabname</code>, it is the same idea &ndash; current TAB versions keep those keys in <code>groups.yml</code> as <code>tabprefix</code>, <code>customtabname</code> and <code>tabsuffix</code>.
+                </p>
+
                 <ul>
                     <li><strong>Dynamic Username Injection:</strong> Palette templates automatically replace <code>%name%</code> and <code>%player%</code> with the player's actual in-game username with zero configuration.</li>
-                    <li><strong>TAB Plugin Metadata:</strong> Automatically sets LuckPerms metadata nodes <code>customtabname</code> and <code>customtagname</code>. If your TAB configuration uses <code>customtabname: "%player%"</code>, the gradient palette seamlessly displays in the player list and overhead nametag!</li>
-                    <li><strong>Paper &amp; Spigot Direct Tablist API:</strong> Directly updates <code>player.playerListName()</code> and <code>player.displayName()</code> in real-time on join and palette change.</li>
-                    <li><strong>Zero Hologram Overhead:</strong> 100% native client rendering with zero entity ticking, no teleport desync, and buttery smooth performance.</li>
+                    <li><strong>Paper &amp; Spigot Direct Tablist API:</strong> LuxCustomRank also updates <code>player.playerListName()</code> and <code>player.displayName()</code> in real-time on join and palette change, so servers without TAB still see the change.</li>
+                    <li><strong>Zero Hologram Overhead by default:</strong> 100% native client rendering with zero entity ticking. The optional <code>nametag.overhead: display</code> mode adds one lightweight text display per player so the overhead name can use the real gradient.</li>
                 </ul>
 
                 <h2 id="lcr-custom">Custom Titles</h2>
@@ -1026,7 +1171,10 @@ gui:
                     <li>Direct LuckPerms User Meta PrefixNode integration.</li>
                     <li>Interactive 36-slot 3D head color picker GUI (<code>/rankcolor</code>).</li>
                     <li>Interactive 45-slot Gradient Nameplate picker GUI (<code>/nameplate</code>) with 14 aesthetic palettes.</li>
-                    <li>Native TAB list &amp; Overhead Nametag synchronization (<code>customtabname</code> / <code>customtagname</code>).</li>
+                    <li>Native TAB tablist synchronization through LuckPerms meta (<code>customtabname</code>), plus a flat overhead colour via the team colour.</li>
+                    <li>Tablist names are always populated (and re-checked every <code>tab.auto-sync-seconds</code>), so players no longer turn invisible with TAB before choosing a colour or nameplate.</li>
+                    <li>Nameplate gradients are no longer forced bold by default.</li>
+                    <li>New overhead renderer: <code>nametag.overhead: display</code> draws the real gradient above the player's head with a <code>TextDisplay</code> (Paper 1.19.4+).</li>
                     <li>Full administrative CLI controls via <code>/nameplateadmin</code>.</li>
                     <li>Anti-abuse length constraints and banned words filtering.</li>
                 </ul>
